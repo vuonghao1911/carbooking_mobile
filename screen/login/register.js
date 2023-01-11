@@ -54,7 +54,7 @@ export default Register = ({ navigation }) => {
       if (account.checkRegister) {
         navigation.navigate("Second");
       } else {
-        console.log("Register");
+        console.log("register failed");
       }
 
       console.log(account);
