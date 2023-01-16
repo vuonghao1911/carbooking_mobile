@@ -15,6 +15,8 @@ import {
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Swiper from "react-native-swiper";
+import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
+import Contex from "../store/Context";
 
 const Items = ({ item, navigation }) => (
   <TouchableOpacity
@@ -52,28 +54,17 @@ const Items = ({ item, navigation }) => (
 );
 
 export default Start = ({ navigation }) => {
+  const { state, depatch } = React.useContext(Contex);
+  const { user, vetificaitonId } = state;
+
+  console.log("user", user);
+
   const [listImg, setListImg] = useState([
     "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135062/istockphoto-869683786-612x612_ffddpd.png",
     "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135060/360_F_266909519_YCRZy0e3fPNHOXkPMDq3RSFyTN3BGAVe_u7skua.png",
     "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135058/360_F_71848853_001bQi5QfpAOahc3ZPr42IL9j20NBlB1_cuz6wn.png",
   ]);
 
-  const getBookData = async () => {
-    try {
-      let response = await fetch(
-        "https://6348d6f7a59874146b11ea5c.mockapi.io/api/list/plant"
-      );
-      let json = await response.json();
-      setListImg(json);
-      console.log("data", json);
-      // console.log("json", book);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    //  getBookData();
-  }, []);
   const renderItem = ({ item }) => (
     <Items item={item} navigation={navigation} />
   );
@@ -113,7 +104,7 @@ export default Start = ({ navigation }) => {
               </Text>
               <Text
                 style={{ fontWeight: "bold", fontSize: 15, color: "#D86A23" }}>
-                Nguyen Vuong Hao
+                {user ? user.firstName + user.lastName : "Nguyen Vuong Hao"}
               </Text>
             </View>
           </View>
@@ -128,16 +119,21 @@ export default Start = ({ navigation }) => {
         <View style={styles.viewPaner}>
           <Text style={{ fontSize: 40, color: "#D86A23" }}>FURISAS</Text>
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate("SearchRoute")}>
+          <View style={styles.viewSearch}>
+            <Ionicons name="search-outline" size={25} color={"white"} />
 
-        <View style={styles.viewSearch}>
-          <Ionicons name="search-outline" size={25} color={"white"} />
-          <TextInput
-            style={styles.styeInput}
-            placeholder="Search..."
-            placeholderTextColor="white"
-          />
-          <Ionicons name="options-outline" size={25} color={"white"} />
-        </View>
+            <Text
+              style={{
+                fontSize: 18,
+                color: "white",
+                fontWeight: "bold",
+                marginRight: 70,
+              }}>
+              MUA VÉ XE
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <Text
         style={{
@@ -187,18 +183,20 @@ const styles = StyleSheet.create({
     color: "white",
   },
   viewSearch: {
+    backgroundColor: "#D86A23",
     width: "80%",
-    backgroundColor: "gray",
+
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     borderRadius: 20,
-    marginLeft: 40,
+    marginLeft: 35,
     marginBottom: 30,
     marginTop: 20,
+    height: 50,
   },
   viewPaner: {
-    width: "80%",
+    width: "75%",
     backgroundColor: "white",
 
     alignItems: "center",

@@ -75,7 +75,7 @@ const ModalCalendar = ({ showModel, setText, SetShowModel }) => {
         style={{ marginTop: 0, borderRadius: 10 }}
         onDayPress={(day) => {
           console.log("selected day", day);
-          setText(day.day);
+          setText(day);
           SetShowModel(!showModel);
         }}
         minDate={date}

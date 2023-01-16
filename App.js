@@ -6,6 +6,8 @@ import Start from "./screen/login/start";
 import InStart from "./screen/login/instart";
 import InNumberPhone from "./screen/login/inNumberPhone";
 import Register from "./screen/login/register";
+import SearchRoute from "./screen/route/searchRoute";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Provider from "../appchat_react/store/Provider";
@@ -56,6 +58,20 @@ export default function App() {
             name="register"
             component={Register}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SearchRoute"
+            component={SearchRoute}
+            options={{
+              title: "Tìm Chuyến Xe",
+              headerStyle: {
+                backgroundColor: "#D86A23",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -80,6 +80,7 @@ const LoginScreen = ({ navigation }) => {
             <View>
               <Text style={styles.name_label}>Mật khẩu:</Text>
               <TextInput
+                secureTextEntry={true}
                 placeholder="Mật khẩu"
                 style={styles.input}
                 onChangeText={(text) => setPassword(text)}></TextInput>

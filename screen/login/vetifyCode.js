@@ -42,7 +42,6 @@ const VeifyCode = ({ navigation }) => {
       .auth()
       .signInWithCredential(credential)
       .then((result) => {
-        depatch(SetUser(result));
         console.log("result", result);
         if (checkLogin) {
           navigation.navigate("Second");
