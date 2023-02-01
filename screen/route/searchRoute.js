@@ -19,6 +19,8 @@ import Swiper from "react-native-swiper";
 import ModalCalendar from "../../components/ModalCalendar";
 import ModalDepture from "../../components/ModalDepture";
 import ModalDestination from "../../components/ModalDestination";
+import { Listroute } from "../../data/dataTest";
+import ItemRoute from "../../components/route/ItemRoute";
 
 export default SearchRoute = ({ navigation }) => {
   var [date, setDate] = useState(new Date());
@@ -186,26 +188,20 @@ export default SearchRoute = ({ navigation }) => {
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          color: "green",
+          color: "#D86A23",
           marginLeft: 20,
+          marginBottom: 10,
         }}>
-        Categories
+        Danh Sách Chuyến Xe
       </Text>
       <View style={styles.viewBody}>
-        <Swiper style={styles.wrapper} loop={true} autoplay={true}>
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135058/360_F_71848853_001bQi5QfpAOahc3ZPr42IL9j20NBlB1_cuz6wn.png",
-            }}
-          />
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135060/360_F_266909519_YCRZy0e3fPNHOXkPMDq3RSFyTN3BGAVe_u7skua.png",
-            }}
-          />
-        </Swiper>
+        <FlatList
+          data={Listroute}
+          renderItem={({ item }) => (
+            <ItemRoute item={item} navigation={navigation} />
+          )}
+          // keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
@@ -227,8 +223,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
     marginLeft: 80,
-    marginBottom: 30,
-    marginTop: 20,
+    marginBottom: 20,
+    marginTop: 10,
     height: 50,
     borderWidth: 1,
     borderColor: "#9506D8",
@@ -237,22 +233,20 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     padding: 10,
-    //alignItems: "center",
-    // justifyContent: "center",
-    borderRadius: 20,
     marginLeft: 20,
     marginBottom: 30,
-    // marginTop: 40,
     height: 200,
     borderWidth: 1,
     borderColor: "#D86A23",
     shadowColor: "#9506D8",
     shadowRadius: 10,
     elevation: 40,
+    borderRadius: 5,
   },
   viewBody: {
     backgroundColor: "#E3FAF4",
-    height: 400,
+    height: 300,
+    alignItems: "center",
   },
   viewPlace: {
     flexDirection: "row",

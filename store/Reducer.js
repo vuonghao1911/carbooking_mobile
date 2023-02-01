@@ -2,7 +2,7 @@ import {
   SET_CHECKLOGIN,
   SET_USER,
   SET_PHONENUMBER,
-  SET_SHOWUPDATEFORM,
+  SET_ROUTEVEHICAL,
   SET_SHOWALERT,
   SET_SHOWTABHISTORYSEARH,
   SET_VETIFICATIONID,
@@ -21,7 +21,8 @@ const initState = {
   user: null,
   phoneNumber: null,
   checkLogin: false,
-  showUpdateForm: false,
+  routeVehical: null,
+  //////
   showAlert: false,
   showTabHistorySearch: false,
   showTabInfo: false,
@@ -63,10 +64,10 @@ const Reducer = (state, action) => {
         ...state,
         checkLogin: action.payload,
       };
-    case SET_SHOWUPDATEFORM:
+    case SET_ROUTEVEHICAL:
       return {
         ...state,
-        showUpdateForm: action.payload,
+        routeVehical: action.payload,
       };
 
     case SET_USER:

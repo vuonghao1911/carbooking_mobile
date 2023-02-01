@@ -72,6 +72,7 @@ const ModalCalendar = ({ showModel, setText, SetShowModel }) => {
       animationOut={"fadeOut"}
       onBackdropPress={() => SetShowModel(!showModel)}>
       <Calendar
+        initialDate={"2023-02-04"}
         style={{ marginTop: 0, borderRadius: 10 }}
         onDayPress={(day) => {
           console.log("selected day", day);

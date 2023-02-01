@@ -4,7 +4,7 @@ export const SET_PHONENUMBER = "set_phoneNumber";
 export const SET_USER = "set_User";
 export const SET_VETIFICATIONID = "Set_VetificationId";
 export const SET_CHECKLOGIN = "set_CheckLogin";
-export const SET_SHOWUPDATEFORM = "set_ShowUpdateForm";
+export const SET_ROUTEVEHICAL = "set_RouteVehicle";
 export const SET_SHOWALERT = "set_ShowAlert";
 export const SET_SHOWTABHISTORYSEARH = "set_ShowTabHistorySearch";
 export const SET_LOADINGSEARCHFUNC = "set_LoadingSearchFunc";
@@ -55,9 +55,9 @@ export const SetCheckLogin = (payload) => {
     payload,
   };
 };
-export const SetShowUpdateForm = (payload) => {
+export const SetRouteVehicle = (payload) => {
   return {
-    type: SET_SHOWUPDATEFORM,
+    type: SET_ROUTEVEHICAL,
     payload,
   };
 };

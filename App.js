@@ -7,6 +7,7 @@ import InStart from "./screen/login/instart";
 import InNumberPhone from "./screen/login/inNumberPhone";
 import Register from "./screen/login/register";
 import SearchRoute from "./screen/route/searchRoute";
+import SelectChair from "./screen/route/selectChair";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -64,6 +65,20 @@ export default function App() {
             component={SearchRoute}
             options={{
               title: "Tìm Chuyến Xe",
+              headerStyle: {
+                backgroundColor: "#D86A23",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="selectChair"
+            component={SelectChair}
+            options={{
+              title: "Đặt Vé",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },
