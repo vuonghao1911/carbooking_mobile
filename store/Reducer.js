@@ -3,7 +3,7 @@ import {
   SET_USER,
   SET_PHONENUMBER,
   SET_ROUTEVEHICAL,
-  SET_SHOWALERT,
+  SET_LISTCHAIRS,
   SET_SHOWTABHISTORYSEARH,
   SET_VETIFICATIONID,
   SET_LOADINGSEARCHFUNC,
@@ -23,7 +23,7 @@ const initState = {
   checkLogin: false,
   routeVehical: null,
   //////
-  showAlert: false,
+  listChairs: [],
   showTabHistorySearch: false,
   showTabInfo: false,
 
@@ -75,10 +75,10 @@ const Reducer = (state, action) => {
         ...state,
         user: action.payload,
       };
-    case SET_SHOWALERT:
+    case SET_LISTCHAIRS:
       return {
         ...state,
-        showAlert: action.payload,
+        listChairs: action.payload,
       };
     case SET_SHOWTABHISTORYSEARH:
       return {

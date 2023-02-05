@@ -5,7 +5,7 @@ export const SET_USER = "set_User";
 export const SET_VETIFICATIONID = "Set_VetificationId";
 export const SET_CHECKLOGIN = "set_CheckLogin";
 export const SET_ROUTEVEHICAL = "set_RouteVehicle";
-export const SET_SHOWALERT = "set_ShowAlert";
+export const SET_LISTCHAIRS = "set_ListChairs";
 export const SET_SHOWTABHISTORYSEARH = "set_ShowTabHistorySearch";
 export const SET_LOADINGSEARCHFUNC = "set_LoadingSearchFunc";
 export const SET_SEARCHINGSTATUS = "set_SearchStatus";
@@ -62,9 +62,9 @@ export const SetRouteVehicle = (payload) => {
   };
 };
 
-export const SetShowALert = (payload) => {
+export const SetListChairs = (payload) => {
   return {
-    type: SET_SHOWALERT,
+    type: SET_LISTCHAIRS,
     payload,
   };
 };

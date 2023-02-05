@@ -16,14 +16,35 @@ import "intl";
 import "intl/locale-data/jsonp/en";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Swiper from "react-native-swiper";
-import { SetUser, SetVetificaitonId, SetCheckLogin } from "../../store/Actions";
+import {
+  SetUser,
+  SetVetificaitonId,
+  SetCheckLogin,
+  SetListChairs,
+} from "../../store/Actions";
 import Contex from "../../store/Context";
+import { listChair, listChairLiMo } from "../../data/dataTest";
+import ItemChair from "../../components/route/ItemChair";
+import ItemChairLiMo from "../../components/route/itemChairLiMo";
+import ItemChairLiMoSe from "../../components/route/itemChairLiMoSecond";
 
 export default SelectChair = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, routeVehical } = state;
+  const { user, routeVehical, listChairs } = state;
+  const [price, setPrice] = React.useState();
 
-  console.log("route", routeVehical);
+  console.log("chair", price);
+  const listFirstFloor = listChairLiMo.slice(0, listChairLiMo.length / 2);
+  const listSecondFloor = listChairLiMo.slice(
+    listChairLiMo.length / 2,
+    listChairLiMo.length
+  );
+
+  const [typing, setTyping] = useState("Floor1");
+
+  React.useEffect(() => {
+    depatch(SetListChairs([]));
+  }, [routeVehical]);
 
   return (
     <View style={styles.container}>
@@ -64,24 +85,84 @@ export default SelectChair = ({ navigation }) => {
           color: "#003104",
           marginLeft: 20,
         }}>
-        {`Chọn ghế (` + `${routeVehical.intendTime}` + `/5)`}
+        {`Chọn ghế (` + `${listChairs.length}` + `/5)`}
       </Text>
-      <View style={styles.viewBody}>
-        <Swiper style={styles.wrapper} loop={true} autoplay={true}>
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135058/360_F_71848853_001bQi5QfpAOahc3ZPr42IL9j20NBlB1_cuz6wn.png",
-            }}
-          />
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135060/360_F_266909519_YCRZy0e3fPNHOXkPMDq3RSFyTN3BGAVe_u7skua.png",
-            }}
-          />
-        </Swiper>
+      <View
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+        }}>
+        <View style={styles.viewBody}>
+          {routeVehical.carType == "Xe Thuong" ? (
+            <FlatList
+              data={listChair}
+              numColumns={4}
+              columnWrapperStyle={styles.row}
+              renderItem={({ item }) => (
+                <ItemChair
+                  item={item}
+                  navigation={navigation}
+                  setPrice={setPrice}
+                />
+              )}
+            />
+          ) : (
+            <View style={{ marginLeft: 10 }}>
+              <View style={styles.viewFloor}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setTyping("Floor1");
+                  }}>
+                  {typing === "Floor1" ? (
+                    <Text style={styles.text2}>TANG 1</Text>
+                  ) : (
+                    <Text style={styles.text1}>TANG 1</Text>
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setTyping("Floor2");
+                  }}>
+                  {typing === "Floor2" ? (
+                    <Text style={styles.text2}>TANG 2</Text>
+                  ) : (
+                    <Text style={styles.text1}>TANG 2</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {typing === "Floor1" ? (
+                <FlatList
+                  data={listFirstFloor}
+                  numColumns={3}
+                  columnWrapperStyle={styles.row}
+                  renderItem={({ item }) => (
+                    <ItemChairLiMo
+                      item={item}
+                      navigation={navigation}
+                      setPrice={setPrice}
+                    />
+                  )}
+                />
+              ) : (
+                <FlatList
+                  data={listSecondFloor}
+                  numColumns={3}
+                  columnWrapperStyle={styles.row}
+                  renderItem={({ item }) => (
+                    <ItemChairLiMoSe
+                      item={item}
+                      navigation={navigation}
+                      setPrice={setPrice}
+                    />
+                  )}
+                />
+              )}
+            </View>
+          )}
+        </View>
       </View>
+
       <View style={{ flexDirection: "column", alignItems: "center" }}>
         <View style={styles.viewInFoRoute}>
           <View
@@ -114,7 +195,10 @@ export default SelectChair = ({ navigation }) => {
           <View style={styles.viewPrice}>
             <Text style={{ fontSize: 17 }}>Tiền tạm tính: </Text>
             <Text style={{ fontWeight: "bold", fontSize: 17, marginLeft: 5 }}>
-              {new Intl.NumberFormat("en-US").format(`${routeVehical.price}`)} d
+              {new Intl.NumberFormat("en-US").format(
+                `${routeVehical.price * listChairs.length}`
+              )}{" "}
+              d
             </Text>
           </View>
           <View style={styles.viewPrice}>
@@ -166,7 +250,11 @@ const styles = StyleSheet.create({
 
   viewBody: {
     backgroundColor: "#E3FAF4",
+
     height: 400,
+    width: "85%",
+
+    //marginLeft: 30,
   },
   viewInFoRoute: {
     flexDirection: "column",
@@ -184,5 +272,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     marginLeft: 10,
+  },
+  row: {},
+  viewFloor: {
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "orange",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginBottom: 10,
+  },
+  text1: {
+    fontSize: 16,
+  },
+
+  text2: {
+    fontSize: 16,
+    color: "#D86A23",
   },
 });
