@@ -72,24 +72,21 @@ export default function SecondScreen({ navigation, route }) {
         //name="Feed"
         // component={Feed}
         options={{
-          tabBarLabel: "Chats",
-          tabBarColor: "#0688FE",
+          tabBarLabel: "Home",
+          tabBarColor: "#D86A23",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="chatbubbles" color={color} size={25} />
+            <Ionicons name="home" color={color} size={25} />
           ),
         }}
       />
       <Tab.Screen
         name="Contacts"
         component={ContactsSreen}
-        //options={{headerShown: false,
-        // }}
-
         options={{
-          tabBarLabel: "Contacts",
+          tabBarLabel: "Lich Su",
           tabBarColor: "#009387",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="people" color={color} size={25} />
+            <Ionicons name="timer" color={color} size={25} />
           ),
         }}
       />

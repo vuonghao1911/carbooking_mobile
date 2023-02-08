@@ -6,10 +6,10 @@ export const SET_VETIFICATIONID = "Set_VetificationId";
 export const SET_CHECKLOGIN = "set_CheckLogin";
 export const SET_ROUTEVEHICAL = "set_RouteVehicle";
 export const SET_LISTCHAIRS = "set_ListChairs";
-export const SET_SHOWTABHISTORYSEARH = "set_ShowTabHistorySearch";
-export const SET_LOADINGSEARCHFUNC = "set_LoadingSearchFunc";
-export const SET_SEARCHINGSTATUS = "set_SearchStatus";
-export const SET_SHOWTABINFO = "set_ShowTabInfo";
+export const SET_PLACEFROM = "set_PlaceFrom";
+export const SET_PLACETO = "set_PlaceTo";
+export const SET_BUSSTATION = "set_BusStation";
+export const SET_TICKETUSERINFO = "set_TicketUserInfo";
 export const SET_INDEXTAB = "set_IndexTab";
 export const SET_USERCHATTING = "set_UserChatting";
 export const SET_SEARCHEDUSERS = "set_SearchUsers";
@@ -30,9 +30,9 @@ export const SetIndexTab = (payload) => {
   };
 };
 
-export const SetShowTabInfo = (payload) => {
+export const SetTicketUserInfo = (payload) => {
   return {
-    type: SET_SHOWTABINFO,
+    type: SET_TICKETUSERINFO,
     payload,
   };
 };
@@ -69,23 +69,23 @@ export const SetListChairs = (payload) => {
   };
 };
 
-export const SetShowTabHistorySearch = (payload) => {
+export const SetPlaceFrom = (payload) => {
   return {
-    type: SET_SHOWTABHISTORYSEARH,
+    type: SET_PLACEFROM,
     payload,
   };
 };
 
-export const SetLoadingSearchFunc = (payload) => {
+export const SetPlaceTo = (payload) => {
   return {
-    type: SET_LOADINGSEARCHFUNC,
+    type: SET_PLACETO,
     payload,
   };
 };
 
-export const SetSearchingStatus = (payload) => {
+export const SetBusStation = (payload) => {
   return {
-    type: SET_SEARCHINGSTATUS,
+    type: SET_BUSSTATION,
     payload,
   };
 };

@@ -206,15 +206,19 @@ export default SelectChair = ({ navigation }) => {
               *Khuyến mãi:
             </Text>
             <Text style={{ fontStyle: "italic", color: "gray", marginLeft: 5 }}>
-              Mua 1 tang 1
+              Mua trên 3 ve giam 10% giá hóa đơn tối đa 200.000đ
             </Text>
           </View>
         </View>
-        <View style={styles.viewSearch}>
-          <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-            Tiếp Theo
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={styles.viewSearch}
+          onPress={() => navigation.navigate("routeDetails")}>
+          <View>
+            <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
+              Tiếp Theo
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -227,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E3FAF4",
   },
   viewInFo: {
-    margin: 15,
+    margin: 10,
     //  flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
@@ -243,8 +247,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
 
-    marginBottom: 30,
-    marginTop: 20,
+    marginTop: 10,
     height: 50,
   },
 
@@ -258,7 +261,7 @@ const styles = StyleSheet.create({
   },
   viewInFoRoute: {
     flexDirection: "column",
-    height: 100,
+    height: 120,
     borderWidth: 1,
     borderRadius: 10,
     width: "80%",
@@ -272,6 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     marginLeft: 10,
+    width: "70%",
   },
   row: {},
   viewFloor: {

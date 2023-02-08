@@ -4,11 +4,11 @@ import {
   SET_PHONENUMBER,
   SET_ROUTEVEHICAL,
   SET_LISTCHAIRS,
-  SET_SHOWTABHISTORYSEARH,
+  SET_PLACEFROM,
   SET_VETIFICATIONID,
-  SET_LOADINGSEARCHFUNC,
-  SET_SEARCHINGSTATUS,
-  SET_SHOWTABINFO,
+  SET_PLACETO,
+  SET_BUSSTATION,
+  SET_TICKETUSERINFO,
   SET_INDEXTAB,
   SET_USERCHATTING,
   SET_SEARCHEDUSERS,
@@ -24,16 +24,16 @@ const initState = {
   routeVehical: null,
   //////
   listChairs: [],
-  showTabHistorySearch: false,
-  showTabInfo: false,
+  placeFrom: null,
+  ticketUserInfo: null,
 
   //user is searching
   // userSearched: null,
   userSearched: [],
-  loadingSearchFunc: true,
+  placeTo: null,
 
   // state searching currently
-  searchingStatus: false,
+  busStation: null,
 
   //0: tab message
   //1: tab friend
@@ -80,30 +80,30 @@ const Reducer = (state, action) => {
         ...state,
         listChairs: action.payload,
       };
-    case SET_SHOWTABHISTORYSEARH:
+    case SET_PLACEFROM:
       return {
         ...state,
-        showTabHistorySearch: action.payload,
+        placeFrom: action.payload,
       };
     case SET_VETIFICATIONID:
       return {
         ...state,
         vetificationId: action.payload,
       };
-    case SET_LOADINGSEARCHFUNC:
+    case SET_PLACETO:
       return {
         ...state,
-        loadingSearchFunc: action.payload,
+        placeTo: action.payload,
       };
-    case SET_SEARCHINGSTATUS:
+    case SET_BUSSTATION:
       return {
         ...state,
-        searchingStatus: action.payload,
+        busStation: action.payload,
       };
-    case SET_SHOWTABINFO:
+    case SET_TICKETUSERINFO:
       return {
         ...state,
-        showTabInfo: action.payload,
+        ticketUserInfo: action.payload,
       };
     case SET_INDEXTAB:
       return {

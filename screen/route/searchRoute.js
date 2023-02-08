@@ -21,8 +21,19 @@ import ModalDepture from "../../components/ModalDepture";
 import ModalDestination from "../../components/ModalDestination";
 import { Listroute } from "../../data/dataTest";
 import ItemRoute from "../../components/route/ItemRoute";
+import {
+  SetUser,
+  SetVetificaitonId,
+  SetCheckLogin,
+  SetListChairs,
+  SetPlaceFrom,
+  SetPlaceTo,
+} from "../../store/Actions";
+import Contex from "../../store/Context";
 
 export default SearchRoute = ({ navigation }) => {
+  const { state, depatch } = React.useContext(Contex);
+  const { user, routeVehical, listChairs } = state;
   var [date, setDate] = useState(new Date());
   const [showModel, SetShowModel] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -171,7 +182,11 @@ export default SearchRoute = ({ navigation }) => {
           <Ionicons name="search-outline" size={25} color={"#9506D8"} />
           <TouchableOpacity
             // onPress={() => navigation.navigate("InStart")}
-            onPress={() => navigation.navigate("Second")}>
+            onPress={() => {
+              // navigation.navigate("Second")
+              depatch(SetPlaceFrom(depture));
+              depatch(SetPlaceTo(destination));
+            }}>
             <Text
               style={{
                 fontSize: 18,

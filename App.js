@@ -8,6 +8,9 @@ import InNumberPhone from "./screen/login/inNumberPhone";
 import Register from "./screen/login/register";
 import SearchRoute from "./screen/route/searchRoute";
 import SelectChair from "./screen/route/selectChair";
+import RouteDetails from "./screen/route/routeDetails";
+import TicketInfo from "./screen/route/ticketInfo";
+import HistoryTicket from "./screen/contacts";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -79,6 +82,34 @@ export default function App() {
             component={SelectChair}
             options={{
               title: "Đặt Vé",
+              headerStyle: {
+                backgroundColor: "#D86A23",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="routeDetails"
+            component={RouteDetails}
+            options={{
+              title: "Thong Tin Lien Lac",
+              headerStyle: {
+                backgroundColor: "#D86A23",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="ticketInfo"
+            component={TicketInfo}
+            options={{
+              title: "Thong Tin ve",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },

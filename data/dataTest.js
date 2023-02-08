@@ -403,3 +403,61 @@ export const listChairLiMo = [
     id: 1213415,
   },
 ];
+
+export const ListTicket = [
+  {
+    intendTime: 4,
+    departure: "Ben Tre",
+    destination: "TpHCM",
+    startTime: "07:00",
+    endTime: "05:00",
+    carType: "Xe Thuong",
+    price: 200000,
+    chair: [
+      {
+        seats: "01",
+      },
+      {
+        seats: "02",
+      },
+    ],
+    date: "23-01-2023",
+  },
+
+  {
+    intendTime: 4,
+    departure: "Ben Tre",
+    destination: "TpHCM",
+    startTime: "02:00",
+    endTime: "05:00",
+    carType: "Xe Thuong",
+    price: 200000,
+    chair: [
+      {
+        seats: "01",
+      },
+      {
+        seats: "02",
+      },
+    ],
+    date: "23-01-2023",
+  },
+  {
+    intendTime: 4,
+    departure: "Ben Tre",
+    destination: "TpHCM",
+    startTime: "04:00",
+    endTime: "05:00",
+    carType: "Xe Thuong",
+    price: 200000,
+    chair: [
+      {
+        seats: "01",
+      },
+      {
+        seats: "02",
+      },
+    ],
+    date: "23-01-2023",
+  },
+];

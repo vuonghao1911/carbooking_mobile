@@ -29,7 +29,33 @@ const ModalDepture = ({
   setSelectedIdDep,
 }) => {
   const [depture, setDept] = useState([
-    { name: "Ben Tre", id: 1 },
+    {
+      name: "Ben Tre",
+      id: 1,
+      busStation: [
+        {
+          location:
+            "Bến xe Miền Tây(số 395 Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, TP.HCM)",
+          _id: {
+            $oid: "63da8c5cee09e7dba6d76fb2",
+          },
+        },
+        {
+          location:
+            "Bến xe Miền Đông(số 501 đường Hoàng Hữu Nam, Phường Long Bình, Quận 9, Tp. Thủ Đức)",
+          _id: {
+            $oid: "63da8c5cee09e7dba6d76fb3",
+          },
+        },
+        {
+          location:
+            "Bến xe An Sương(số 720, quốc lộ 1A, khu phố 3B, phường Thạnh Lộc, Quận 12, TPHCM)",
+          _id: {
+            $oid: "63da8c5cee09e7dba6d76fb4",
+          },
+        },
+      ],
+    },
     { name: "TpHcm", id: 2 },
     { name: "Ha Noi", id: 3 },
     { name: "Da Nang", id: 4 },
