@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 30 : 25,
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
+    backgroundColor: "#F2F2F2",
   },
   viewInFo: {
     margin: 15,
@@ -210,10 +210,9 @@ const styles = StyleSheet.create({
     borderColor: "#9506D8",
     shadowColor: "#9506D8",
     shadowRadius: 10,
-    elevation: 40,
+    elevation: 5,
   },
   viewBody: {
-    backgroundColor: "#E3FAF4",
     height: 400,
   },
   Item: {
@@ -226,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 0,
     borderWidth: 0,
-    borderColor: "#E3FAF4",
+
     borderRadius: 15,
     margin: 10,
   },

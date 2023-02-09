@@ -33,28 +33,7 @@ export default Items = ({ item, navigation }) => {
         depatch(SetRouteVehicle(item));
         navigation.navigate("selectChair");
       }}>
-      <View
-        style={[
-          item.status
-            ? styles.Item
-            : {
-                backgroundColor: "gray",
-                flexDirection: "column",
-                width: 350,
-                height: 200,
-
-                justifyContent: "space-around",
-                alignItems: "flex-start",
-                padding: 0,
-                borderWidth: 0,
-                borderColor: "#E3FAF4",
-                borderTopEndRadius: 25,
-                margin: 10,
-                paddingLeft: 15,
-                borderWidth: 1,
-                borderColor: "#D86A23",
-              },
-        ]}>
+      <View style={[styles.Item]}>
         <View>
           <Text style={{ marginLeft: 5, fontSize: 25 }}>
             {item.startTime} - {item.endTime}
@@ -137,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 30 : 25,
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
+    backgroundColor: "#F2F2F2",
   },
 
   Item: {

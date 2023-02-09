@@ -78,10 +78,4 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#009387",
   },
-  viewItemInfo: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 5,
-  },
 });

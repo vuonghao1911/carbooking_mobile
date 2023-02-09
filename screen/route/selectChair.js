@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
   },
   viewInFo: {
     margin: 10,
@@ -252,8 +251,6 @@ const styles = StyleSheet.create({
   },
 
   viewBody: {
-    backgroundColor: "#E3FAF4",
-
     height: 400,
     width: "85%",
 

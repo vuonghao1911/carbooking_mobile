@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
+import ModalSelectOption from "../ModalSelectOptions";
 import {
   SetUser,
   SetVetificaitonId,
@@ -26,6 +26,7 @@ import Contex from "../../store/Context";
 export default Items = ({ item, navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, routeVehical } = state;
+  const [showModel, SetShowModel] = useState(false);
 
   return (
     <TouchableOpacity
@@ -34,6 +35,7 @@ export default Items = ({ item, navigation }) => {
         navigation.navigate("selectChair");
       }}>
       <View style={[styles.Item]}>
+        <ModalSelectOption showModel={showModel} SetShowModel={SetShowModel} />
         <View style={styles.viewLeft}>
           <View
             style={{
@@ -93,7 +95,7 @@ export default Items = ({ item, navigation }) => {
                   marginTop: 5,
                   fontStyle: "italic",
                 }}>
-                Thời gian: {item.intendTime} tiếng {"        "}
+                Thời gian: {item.intendTime} tiếng
               </Text>
             </View>
             <View style={styles.viewItemInfo}>
@@ -108,6 +110,15 @@ export default Items = ({ item, navigation }) => {
             </View>
           </View>
         </View>
+        <TouchableOpacity
+          style={{
+            flexDirection: "column",
+            alignContent: "flex-start",
+            marginTop: -120,
+          }}
+          onPress={() => SetShowModel(!showModel)}>
+          <Ionicons name="ellipsis-horizontal" color={"orange"} size={20} />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

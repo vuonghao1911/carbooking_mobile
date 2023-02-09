@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
+
     justifyContent: "space-between",
   },
 

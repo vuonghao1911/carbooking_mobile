@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     flex: 1,
 
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
+    backgroundColor: "#F2F2F2",
   },
 
   viewSearch: {
@@ -255,11 +255,10 @@ const styles = StyleSheet.create({
     borderColor: "#D86A23",
     shadowColor: "#9506D8",
     shadowRadius: 10,
-    elevation: 40,
-    borderRadius: 5,
+    elevation: 20,
+    borderRadius: 10,
   },
   viewBody: {
-    backgroundColor: "#E3FAF4",
     height: 300,
     alignItems: "center",
   },

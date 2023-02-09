@@ -137,15 +137,15 @@ export default RouteDetails = ({ navigation }) => {
             <Picker
               selectedValue={busLocation}
               style={{ height: 30 }}
-              onValueChange={(itemValue, itemIndex) =>
-                setBusLocation(itemValue)
-              }>
+              onValueChange={(itemValue, itemIndex) => {
+                setBusLocation(itemValue);
+              }}>
               {placeFrom.busStation.map((item, index) => {
                 return (
                   <Picker.Item
                     style={{ fontSize: 12 }}
                     label={item.location}
-                    value={index}
+                    value={item.location}
                     key={index}
                   />
                 );
@@ -227,7 +227,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#E3FAF4",
   },
   viewPrice: {
     justifyContent: "space-around",
