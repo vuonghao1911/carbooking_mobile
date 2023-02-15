@@ -9,7 +9,7 @@ import {
   SET_PLACETO,
   SET_BUSSTATION,
   SET_TICKETUSERINFO,
-  SET_INDEXTAB,
+  SET_TICKET,
   SET_USERCHATTING,
   SET_SEARCHEDUSERS,
   SET_IDCONVERSATION,
@@ -38,7 +38,7 @@ const initState = {
   //0: tab message
   //1: tab friend
   //2: something
-  indexTab: 0,
+  ticket: null,
 
   //user is chatting
   userChatting: null,
@@ -105,10 +105,10 @@ const Reducer = (state, action) => {
         ...state,
         ticketUserInfo: action.payload,
       };
-    case SET_INDEXTAB:
+    case SET_TICKET:
       return {
         ...state,
-        indexTab: action.payload,
+        ticket: action.payload,
       };
     case SET_USERCHATTING:
       return {

@@ -10,7 +10,7 @@ export const SET_PLACEFROM = "set_PlaceFrom";
 export const SET_PLACETO = "set_PlaceTo";
 export const SET_BUSSTATION = "set_BusStation";
 export const SET_TICKETUSERINFO = "set_TicketUserInfo";
-export const SET_INDEXTAB = "set_IndexTab";
+export const SET_TICKET = "set_Ticket";
 export const SET_USERCHATTING = "set_UserChatting";
 export const SET_SEARCHEDUSERS = "set_SearchUsers";
 export const SET_IDCONVERSATION = "set_IdConversation";
@@ -23,9 +23,9 @@ export const SetPhoneNumber = (payload) => {
   };
 };
 
-export const SetIndexTab = (payload) => {
+export const SetTicket = (payload) => {
   return {
-    type: SET_INDEXTAB,
+    type: SET_TICKET,
     payload,
   };
 };

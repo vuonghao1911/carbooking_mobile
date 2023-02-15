@@ -31,6 +31,7 @@ export default TicketInfo = ({ navigation }) => {
     routeVehical,
     busStation,
     ticketUserInfo,
+    ticket,
   } = state;
   const [busLocation, setBusLocation] = React.useState(
     placeFrom.busStation[0].location
@@ -44,7 +45,7 @@ export default TicketInfo = ({ navigation }) => {
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.viewInfo}>
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#009387" }}>
             Thong tin khach hang
           </Text>
           <View style={styles.viewItemInfo}>
@@ -52,7 +53,7 @@ export default TicketInfo = ({ navigation }) => {
               Ho va Ten
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10 }}>
-              {ticketUserInfo.fullName}
+              {ticket.lastName} {ticket.firstName}
             </Text>
           </View>
 
@@ -61,7 +62,7 @@ export default TicketInfo = ({ navigation }) => {
               So Dien Thoai
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10 }}>
-              {ticketUserInfo.phone}
+              {ticket.phone}
             </Text>
           </View>
         </View>
@@ -71,7 +72,7 @@ export default TicketInfo = ({ navigation }) => {
             style={{
               fontSize: 18,
               fontWeight: "bold",
-              color: "black",
+              color: "#009387",
               marginBottom: 10,
             }}>
             Thong Tin Chuyen Di
@@ -82,11 +83,11 @@ export default TicketInfo = ({ navigation }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontSize: 15, marginRight: 10 }}>
-                {placeFrom.name}
+                {ticket.departure}
               </Text>
-              <Ionicons name="shuffle" size={20} color={"#730E80"} />
+              <Ionicons name="shuffle" size={20} color={"#009387"} />
               <Text style={{ fontSize: 15, marginLeft: 10 }}>
-                {placeTo.name}
+                {ticket.destination}
               </Text>
             </View>
           </View>
@@ -100,10 +101,10 @@ export default TicketInfo = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginRight: 10,
-                  color: "#730E80",
+                  color: "#009387",
                   fontWeight: "bold",
                 }}>
-                {routeVehical.startTime} - {routeVehical.endTime}
+                {ticket.startTime} - {ticket.endTime}
               </Text>
             </View>
           </View>
@@ -118,7 +119,7 @@ export default TicketInfo = ({ navigation }) => {
                   marginRight: 10,
                   color: "black",
                 }}>
-                {listChairs.length}
+                {ticket.chair.length}
               </Text>
             </View>
           </View>
@@ -128,14 +129,14 @@ export default TicketInfo = ({ navigation }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <FlatList
-                data={listChairs}
+                data={ticket.chair}
                 renderItem={({ item, index }) => {
                   return (
                     <Text
                       style={{
                         fontSize: 15,
                         marginRight: 10,
-                        color: "#730E80",
+                        color: "#009387",
                         fontWeight: "bold",
                       }}>
                       {item.seats}
@@ -158,7 +159,7 @@ export default TicketInfo = ({ navigation }) => {
                   marginRight: 10,
                   color: "black",
                 }}>
-                {busStation}
+                {ticket.busStation}
               </Text>
             </View>
           </View>
@@ -171,11 +172,11 @@ export default TicketInfo = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginRight: 10,
-                  color: "#730E80",
+                  color: "#009387",
                   fontWeight: "bold",
                 }}>
                 {new Intl.NumberFormat("en-US").format(
-                  `${routeVehical.price * listChairs.length}`
+                  `${ticket.price * ticket.chair.length}`
                 )}{" "}
                 d
               </Text>
@@ -191,7 +192,7 @@ export default TicketInfo = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginRight: 10,
-                  color: "#730E80",
+                  color: "#009387",
                   fontStyle: "italic",
                 }}>
                 Mua trên 3 ve giam 10% giá hóa đơn tối đa 200.000đ
@@ -200,16 +201,6 @@ export default TicketInfo = ({ navigation }) => {
           </View>
           <View style={{ flexDirection: "column", alignItems: "center" }}>
             <View style={styles.viewInFoRoute}>
-              <View style={styles.viewPrice}>
-                <Text style={{ fontSize: 17 }}>Tiền tạm tính: </Text>
-                <Text
-                  style={{ fontWeight: "bold", fontSize: 17, marginRight: 20 }}>
-                  {new Intl.NumberFormat("en-US").format(
-                    `${routeVehical.price * listChairs.length}`
-                  )}{" "}
-                  d
-                </Text>
-              </View>
               <View style={styles.viewPrice}>
                 <Text
                   style={{ fontStyle: "italic", color: "gray", fontSize: 16 }}>
@@ -232,25 +223,15 @@ export default TicketInfo = ({ navigation }) => {
                     fontWeight: "bold",
                     fontSize: 18,
                     marginRight: 20,
-                    color: "#730E80",
+                    color: "#009387",
                   }}>
                   {new Intl.NumberFormat("en-US").format(
-                    `${routeVehical.price * listChairs.length - 60000}`
+                    `${ticket.price * ticket.chair.length - 60000}`
                   )}{" "}
                   d
                 </Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.viewSearch}
-              onPress={() => navigation.navigate("routeDetails")}>
-              <View>
-                <Text
-                  style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-                  Xac Nhan
-                </Text>
-              </View>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -263,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
 
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
 
   viewInfo: {
@@ -302,10 +283,10 @@ const styles = StyleSheet.create({
   },
   viewInFoRoute: {
     flexDirection: "column",
-    height: 120,
+    height: 90,
     borderWidth: 1,
     borderRadius: 10,
     width: "90%",
-    borderColor: "#9506D8",
+    borderColor: "#009387",
   },
 });

@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     flex: 1,
 
     flexDirection: "column",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "white",
   },
 
   viewSearch: {

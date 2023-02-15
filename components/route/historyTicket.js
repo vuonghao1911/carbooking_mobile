@@ -15,11 +15,13 @@ import {
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ModalSelectOption from "../ModalSelectOptions";
+
 import {
   SetUser,
   SetVetificaitonId,
   SetCheckLogin,
   SetRouteVehicle,
+  SetTicket,
 } from "../../store/Actions";
 import Contex from "../../store/Context";
 
@@ -31,11 +33,12 @@ export default Items = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        depatch(SetRouteVehicle(item));
-        navigation.navigate("selectChair");
+        depatch(SetTicket(item));
+        navigation.navigate("ticketDetails");
       }}>
       <View style={[styles.Item]}>
         <ModalSelectOption showModel={showModel} SetShowModel={SetShowModel} />
+
         <View style={styles.viewLeft}>
           <View
             style={{
@@ -116,7 +119,10 @@ export default Items = ({ item, navigation }) => {
             alignContent: "flex-start",
             marginTop: -120,
           }}
-          onPress={() => SetShowModel(!showModel)}>
+          onPress={() => {
+            depatch(SetTicket(item));
+            SetShowModel(!showModel);
+          }}>
           <Ionicons name="ellipsis-horizontal" color={"orange"} size={20} />
         </TouchableOpacity>
       </View>

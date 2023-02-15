@@ -422,6 +422,11 @@ export const ListTicket = [
       },
     ],
     date: "23-01-2023",
+    lastName: "Hao",
+    firstName: "Vuong",
+    phone: "01123141",
+    busStation:
+      "Bến xe Miền Tây(số 395 Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, TP.HCM)",
   },
 
   {
@@ -441,7 +446,13 @@ export const ListTicket = [
       },
     ],
     date: "23-01-2023",
+    lastName: "Hao",
+    firstName: "Vuong",
+    phone: "01123141",
+    busStation:
+      "Bến xe Miền Tây(số 395 Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, TP.HCM)",
   },
+
   {
     intendTime: 4,
     departure: "Ben Tre",
@@ -459,5 +470,10 @@ export const ListTicket = [
       },
     ],
     date: "23-01-2023",
+    lastName: "Hao",
+    firstName: "Vuong",
+    phone: "01123141",
+    busStation:
+      "Bến xe Miền Tây(số 395 Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, TP.HCM)",
   },
 ];

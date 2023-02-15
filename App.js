@@ -10,7 +10,10 @@ import SearchRoute from "./screen/route/searchRoute";
 import SelectChair from "./screen/route/selectChair";
 import RouteDetails from "./screen/route/routeDetails";
 import TicketInfo from "./screen/route/ticketInfo";
-import HistoryTicket from "./screen/contacts";
+import IconOption from "./components/IconOption";
+import TicketDetails from "./screen/route/ticketDetails";
+
+import { Text } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -113,6 +116,23 @@ export default function App() {
               headerStyle: {
                 backgroundColor: "#D86A23",
               },
+
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="ticketDetails"
+            component={TicketDetails}
+            options={{
+              title: "Thong Tin ve",
+              headerStyle: {
+                backgroundColor: "#009387",
+              },
+              headerRight: () => <IconOption />,
+
               headerTintColor: "#fff",
               headerTitleStyle: {
                 fontWeight: "bold",
