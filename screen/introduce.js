@@ -104,7 +104,9 @@ export default Start = ({ navigation }) => {
               </Text>
               <Text
                 style={{ fontWeight: "bold", fontSize: 15, color: "#D86A23" }}>
-                {user ? user.firstName + user.lastName : "Nguyen Vuong Hao"}
+                {user
+                  ? user.firstName + " " + user.lastName
+                  : "Nguyen Vuong Hao"}
               </Text>
             </View>
           </View>

@@ -22,9 +22,7 @@ const ModalCancelTicket = ({
   SetShowModelOption,
 }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, ticket } = state;
-
-  console.log("ticket", ticket);
+  const { user, ticket, navigation } = state;
 
   return (
     <Modal
@@ -109,6 +107,8 @@ const ModalCancelTicket = ({
             onPress={() => {
               SetShowModel(!showModel);
               SetShowModelOption(!showModelOption);
+
+              navigation.navigate("Second");
             }}>
             <View>
               <Text

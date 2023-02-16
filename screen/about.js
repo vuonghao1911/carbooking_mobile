@@ -12,12 +12,30 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 const CreateAboutScreen = ({ navigation }) => {
   const [switchOnPin, setSwitchOnPin] = useState(false);
   const [switchOn, setSwitchOn] = useState(false);
   const [user, setUser] = useState("Tien Dat");
+
+  const handleClik = () => {
+    Alert.alert("Xoa Tai khoan", `Bạn muốn xóa tai khoan?`, [
+      {
+        text: "Hủy",
+        onPress: () => console.log("navigation", navigation),
+        style: "cancel",
+      },
+      {
+        text: "Đồng ý",
+        onPress: () => {
+          console.log("xoa");
+        },
+        style: "cancel",
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -49,7 +67,10 @@ const CreateAboutScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.viewCustomization}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("updateProfile");
+          }}>
           <View style={styles.viewItem}>
             <Image
               style={{ width: 70, height: 70, borderRadius: 40 }}
@@ -80,7 +101,7 @@ const CreateAboutScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("changePass")}>
           <View style={styles.viewItem}>
             <Ionicons name="sync" size={23} color={"orange"} />
             <View style={styles.viewCustomItem}>
@@ -115,7 +136,7 @@ const CreateAboutScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.viewCustomization}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleClik}>
           <View style={styles.viewItem}>
             <Ionicons name="remove-circle" size={23} color={"#8F4607"} />
             <View style={styles.viewCustomItem}>

@@ -11,7 +11,7 @@ export const SET_PLACETO = "set_PlaceTo";
 export const SET_BUSSTATION = "set_BusStation";
 export const SET_TICKETUSERINFO = "set_TicketUserInfo";
 export const SET_TICKET = "set_Ticket";
-export const SET_USERCHATTING = "set_UserChatting";
+export const SET_NAVIGATION = "set_Navigation";
 export const SET_SEARCHEDUSERS = "set_SearchUsers";
 export const SET_IDCONVERSATION = "set_IdConversation";
 export const SET_SOCKET = "set_Socket";
@@ -89,9 +89,9 @@ export const SetBusStation = (payload) => {
     payload,
   };
 };
-export const SetUserChatting = (payload) => {
+export const SetNavigation = (payload) => {
   return {
-    type: SET_USERCHATTING,
+    type: SET_NAVIGATION,
     payload,
   };
 };

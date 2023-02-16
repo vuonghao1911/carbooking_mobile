@@ -33,13 +33,9 @@ export default TicketInfo = ({ navigation }) => {
     ticketUserInfo,
     ticket,
   } = state;
-  const [busLocation, setBusLocation] = React.useState(
-    placeFrom.busStation[0].location
-  );
+
   const [fullName, setFullName] = React.useState(" Vuong Hao");
   const [phone, setPhone] = React.useState("01234213412");
-
-  console.log(ticketUserInfo);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>

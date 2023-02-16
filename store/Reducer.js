@@ -10,7 +10,7 @@ import {
   SET_BUSSTATION,
   SET_TICKETUSERINFO,
   SET_TICKET,
-  SET_USERCHATTING,
+  SET_NAVIGATION,
   SET_SEARCHEDUSERS,
   SET_IDCONVERSATION,
   SET_SOCKET,
@@ -41,7 +41,7 @@ const initState = {
   ticket: null,
 
   //user is chatting
-  userChatting: null,
+  navigation: null,
   //id cua cuoc hoi thoai dang chat
   idConversation: null,
 
@@ -110,10 +110,10 @@ const Reducer = (state, action) => {
         ...state,
         ticket: action.payload,
       };
-    case SET_USERCHATTING:
+    case SET_NAVIGATION:
       return {
         ...state,
-        userChatting: action.payload,
+        navigation: action.payload,
       };
     case SET_SEARCHEDUSERS:
       return {

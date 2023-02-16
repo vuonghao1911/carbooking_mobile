@@ -14,7 +14,12 @@ import moment from "moment";
 import Modal from "react-native-modal";
 import ModalCancelTicket from "./ModalCancelTicket";
 import Contex from "../store/Context";
-const ModalSelectOption = ({ showModel, setText, SetShowModel }) => {
+const ModalSelectOption = ({
+  showModel,
+  setText,
+  SetShowModel,
+  navigation,
+}) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, userSearched, idConversation, userChatting } = state;
   const [showModelCa, SetShowModelCa] = useState(false);
@@ -37,6 +42,7 @@ const ModalSelectOption = ({ showModel, setText, SetShowModel }) => {
           SetShowModel={SetShowModelCa}
           showModelOption={showModel}
           SetShowModelOption={SetShowModel}
+          navigation={navigation}
         />
         <View
           style={{

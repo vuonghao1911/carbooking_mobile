@@ -12,8 +12,8 @@ import RouteDetails from "./screen/route/routeDetails";
 import TicketInfo from "./screen/route/ticketInfo";
 import IconOption from "./components/IconOption";
 import TicketDetails from "./screen/route/ticketDetails";
-
-import { Text } from "react-native";
+import UpdateProfile from "./screen/updateProfile";
+import ChangePass from "./screen/changePassWord";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -21,7 +21,7 @@ import Provider from "../appchat_react/store/Provider";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App({}) {
   return (
     <Provider>
       <NavigationContainer>
@@ -132,6 +132,38 @@ export default function App() {
                 backgroundColor: "#009387",
               },
               headerRight: () => <IconOption />,
+
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="updateProfile"
+            component={UpdateProfile}
+            options={{
+              title: "Cap nhat thong tin",
+              headerStyle: {
+                backgroundColor: "#694fad",
+              },
+
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+
+          <Stack.Screen
+            name="changePass"
+            component={ChangePass}
+            options={{
+              title: "Doi mat khau",
+              headerStyle: {
+                backgroundColor: "#694fad",
+              },
 
               headerTintColor: "#fff",
               headerTitleStyle: {

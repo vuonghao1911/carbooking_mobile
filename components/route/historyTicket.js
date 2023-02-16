@@ -22,6 +22,7 @@ import {
   SetCheckLogin,
   SetRouteVehicle,
   SetTicket,
+  SetNavigation,
 } from "../../store/Actions";
 import Contex from "../../store/Context";
 
@@ -34,10 +35,15 @@ export default Items = ({ item, navigation }) => {
     <TouchableOpacity
       onPress={() => {
         depatch(SetTicket(item));
+        depatch(SetNavigation(navigation));
         navigation.navigate("ticketDetails");
       }}>
       <View style={[styles.Item]}>
-        <ModalSelectOption showModel={showModel} SetShowModel={SetShowModel} />
+        <ModalSelectOption
+          showModel={showModel}
+          SetShowModel={SetShowModel}
+          navigation={navigation}
+        />
 
         <View style={styles.viewLeft}>
           <View

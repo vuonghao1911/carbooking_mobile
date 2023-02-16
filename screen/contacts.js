@@ -16,6 +16,7 @@ import ItemHistoryTicket from "../components/route/historyTicket";
 import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
 import Contex from "../store/Context";
 const CreateContactsScreen = ({ navigation }) => {
+  console.log("Fsdfsd");
   return (
     <View style={styles.container}>
       <View style={styles.header}>
