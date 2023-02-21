@@ -54,170 +54,147 @@ export const listChair = [
   {
     seats: "01",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739a200sdac6e",
   },
   {
     seats: "02",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739a2sfac6e",
   },
   {
     seats: "03",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739a2fsfac6e",
   },
   {
     seats: "04",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717asa200fac6e",
   },
+
   {
     seats: "05",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717fsda200fac6e",
   },
   {
     seats: "06",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4dasd1739a200fac6e",
   },
   {
     seats: "07",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5fdf39a200fac6e",
   },
   {
     seats: "08",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717adf200fac6e",
   },
   {
     seats: "09",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57fdsf9a200fac6e",
   },
   {
     seats: "10",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717sfdsd200fac6e",
   },
   {
     seats: "11",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57173fsdf00fac6e",
   },
   {
     seats: "12",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739dsfs0fac6e",
   },
   {
     seats: "13",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739sfs0fac6e",
   },
   {
     seats: "14",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717sfsd200fac6e",
   },
   {
     seats: "15",
     status: true,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571fsfsd200fac6e",
   },
   {
     seats: "16",
     status: true,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57sfss9a200fac6e",
   },
   {
     seats: "17",
     status: true,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57173acvsdf00fac6e",
   },
   {
     seats: "18",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d571739fasdff0fac6e",
   },
   {
     seats: "19",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717asdf200fac6e",
   },
   {
     seats: "20",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57173ere00fac6e",
   },
   {
     seats: "21",
     status: true,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717fsda200fac6e",
   },
   {
     seats: "22",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717cdfaa200fac6e",
   },
   {
     seats: "23",
     status: false,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d5717asds200fac6e",
   },
   {
     seats: "24",
     status: true,
-    _id: {
-      $oid: "63b281f4d571739a200fac6e",
-    },
+
+    id: "63b281f4d57173asdfs00fac6e",
   },
 ];
 

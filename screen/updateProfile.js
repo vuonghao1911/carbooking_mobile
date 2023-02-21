@@ -1,33 +1,75 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   TouchableOpacity,
-  ImageBackground,
   Image,
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  ToastAndroid,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { SetUser, SetBusStation, SetTicketUserInfo } from "../store/Actions";
 import Contex from "../store/Context";
+import userApi from "../api/userApi";
 
 export default UpdateProfile = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, listChairs, placeTo, placeFrom, routeVehical } = state;
 
-  const [lastName, setLastName] = React.useState(" Vuong Hao");
-  const [firstName, setFirstName] = React.useState("  Dep Trai");
-  const [phone, setPhone] = React.useState("01234213412");
+  const [lastName, setLastName] = React.useState(user?.lastName);
+  const [firstName, setFirstName] = React.useState(user?.firstName);
+  const [phone, setPhone] = React.useState(user?.phoneNumber);
+
+  const UpdateProfile = async () => {
+    try {
+      if (lastName.length === 0) {
+        ToastAndroid.showWithGravity(
+          "Ho khong duoc rong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      } else if (firstName.length === 0) {
+        ToastAndroid.showWithGravity(
+          "Ten khong duoc rong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      }
+      const customer = {
+        id: user._id,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phone,
+      };
+
+      const customerUpdate = await userApi.changeInfo(customer);
+      if (customerUpdate) {
+        console.log("success");
+        depatch(SetUser(customerUpdate));
+        ToastAndroid.showWithGravity(
+          "Cap nhat thanh cong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        //navigation.navigate("Second");
+      } else {
+        console.log("register failed");
+      }
+
+      console.log(customerUpdate);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -107,11 +149,12 @@ export default UpdateProfile = ({ navigation }) => {
                 styles.viewSearch,
                 { borderWidth: 1, borderColor: "#694fad" },
               ]}
-              onPress={() => {
-                depatch(SetBusStation(busLocation));
-                depatch(SetTicketUserInfo({ fullName, phone }));
+              onPress={
+                // depatch(SetBusStation(busLocation));
+                // depatch(SetTicketUserInfo({ fullName, phone }));
+                UpdateProfile
                 //  navigation.navigate("ticketInfo");
-              }}>
+              }>
               <View>
                 <Text
                   style={{

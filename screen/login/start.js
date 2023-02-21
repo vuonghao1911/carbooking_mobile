@@ -18,7 +18,6 @@ export default Start = ({ navigation }) => {
     const getListCar = async () => {
       try {
         const result = await routeApi.getCar("63b2e4adeaca88ce6a368a22");
-        console.log("result", result);
       } catch (error) {
         console.log("Failed to fetch : ", error);
       }
@@ -55,8 +54,9 @@ export default Start = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.viewButton}
-        // onPress={() => navigation.navigate("InStart")}
-        onPress={() => navigation.navigate("Second")}>
+        onPress={() => navigation.navigate("InStart")}
+        //</View> onPress={() => navigation.navigate("Second")}
+      >
         <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
           BẮT ĐẦU
         </Text>

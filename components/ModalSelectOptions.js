@@ -14,6 +14,7 @@ import moment from "moment";
 import Modal from "react-native-modal";
 import ModalCancelTicket from "./ModalCancelTicket";
 import Contex from "../store/Context";
+
 const ModalSelectOption = ({
   showModel,
   setText,
@@ -21,9 +22,18 @@ const ModalSelectOption = ({
   navigation,
 }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, userSearched, idConversation, userChatting } = state;
+  const { user, ticket } = state;
   const [showModelCa, SetShowModelCa] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
+  React.useEffect(() => {
+    if (new Date(ticket?.startDate) <= new Date()) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    console.log(ticket);
+  }, [ticket]);
   const date = moment(new Date()).format("yyyy-MM-DD");
 
   return (
@@ -58,13 +68,24 @@ const ModalSelectOption = ({
         </View>
 
         <View style={{ flexDirection: "column", marginLeft: 10 }}>
-          <TouchableOpacity onPress={() => SetShowModelCa(!showModelCa)}>
-            <View style={styles.viewPlace}>
-              <Ionicons name="trash" color={"#009387"} size={27} />
-              <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                Huy ve
-              </Text>
-            </View>
+          <TouchableOpacity
+            disabled={disabled}
+            onPress={() => SetShowModelCa(!showModelCa)}>
+            {disabled ? (
+              <View style={styles.viewPlace}>
+                <Ionicons name="trash" color={"gray"} size={27} />
+                <Text style={{ fontSize: 16, color: "gray", marginLeft: 15 }}>
+                  Huy ve
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.viewPlace}>
+                <Ionicons name="trash" color={"#009387"} size={27} />
+                <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
+                  Huy ve
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.viewPlace}>

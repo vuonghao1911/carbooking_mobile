@@ -20,6 +20,7 @@ import "intl/locale-data/jsonp/en";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { SetUser, SetBusStation, SetTicketUserInfo } from "../../store/Actions";
 import Contex from "../../store/Context";
+import moment from "moment";
 
 export default TicketInfo = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
@@ -34,8 +35,9 @@ export default TicketInfo = ({ navigation }) => {
     ticket,
   } = state;
 
-  const [fullName, setFullName] = React.useState(" Vuong Hao");
-  const [phone, setPhone] = React.useState("01234213412");
+  const [discountAmount, setDiscountAmount] = React.useState(
+    ticket.promotionresults[0]?.discountAmount
+  );
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -49,7 +51,7 @@ export default TicketInfo = ({ navigation }) => {
               Ho va Ten
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10 }}>
-              {ticket.lastName} {ticket.firstName}
+              {ticket.firstName} {ticket.lastName}
             </Text>
           </View>
 
@@ -58,7 +60,7 @@ export default TicketInfo = ({ navigation }) => {
               So Dien Thoai
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10 }}>
-              {ticket.phone}
+              {ticket.phoneNumber}
             </Text>
           </View>
         </View>
@@ -79,11 +81,11 @@ export default TicketInfo = ({ navigation }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontSize: 15, marginRight: 10 }}>
-                {ticket.departure}
+                {ticket.departure.name}
               </Text>
               <Ionicons name="shuffle" size={20} color={"#009387"} />
               <Text style={{ fontSize: 15, marginLeft: 10 }}>
-                {ticket.destination}
+                {ticket.destination.name}
               </Text>
             </View>
           </View>
@@ -100,7 +102,9 @@ export default TicketInfo = ({ navigation }) => {
                   color: "#009387",
                   fontWeight: "bold",
                 }}>
-                {ticket.startTime} - {ticket.endTime}
+                {moment(new Date(ticket.startDate)).format("HH:mm")}
+                {" - "}
+                {moment(new Date(ticket.endDate)).format("HH:mm")}
               </Text>
             </View>
           </View>
@@ -148,14 +152,19 @@ export default TicketInfo = ({ navigation }) => {
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
               Diem len xe
             </Text>
-            <View style={{ flexDirection: "row", width: "60%" }}>
+            <View
+              style={[
+                ticket.locaDeparture.length > 20
+                  ? { flexDirection: "row", width: "60%" }
+                  : { flexDirection: "row" },
+              ]}>
               <Text
                 style={{
                   fontSize: 15,
                   marginRight: 10,
                   color: "black",
                 }}>
-                {ticket.busStation}
+                {ticket.locaDeparture}
               </Text>
             </View>
           </View>
@@ -163,7 +172,7 @@ export default TicketInfo = ({ navigation }) => {
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
               Tong Tien
             </Text>
-            <View style={{ flexDirection: "row", width: "60%" }}>
+            <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
                   fontSize: 15,
@@ -183,7 +192,12 @@ export default TicketInfo = ({ navigation }) => {
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
               Khuyen mai
             </Text>
-            <View style={{ flexDirection: "row", width: "60%" }}>
+            <View
+              style={[
+                ticket.promotions[0]?.title?.length > 25
+                  ? { flexDirection: "row", width: "60%" }
+                  : { flexDirection: "row" },
+              ]}>
               <Text
                 style={{
                   fontSize: 15,
@@ -191,7 +205,7 @@ export default TicketInfo = ({ navigation }) => {
                   color: "#009387",
                   fontStyle: "italic",
                 }}>
-                Mua trên 3 ve giam 10% giá hóa đơn tối đa 200.000đ
+                {ticket.promotions[0]?.title}
               </Text>
             </View>
           </View>
@@ -209,7 +223,16 @@ export default TicketInfo = ({ navigation }) => {
                     marginRight: 20,
                     fontSize: 16,
                   }}>
-                  60.000
+                  {ticket.promotionresults.length == 0 ? (
+                    <>0 d</>
+                  ) : (
+                    <>
+                      {new Intl.NumberFormat("en-US").format(
+                        `${ticket.promotionresults[0]?.discountAmount}`
+                      )}{" "}
+                      d
+                    </>
+                  )}
                 </Text>
               </View>
               <View style={styles.viewPrice}>
@@ -221,10 +244,22 @@ export default TicketInfo = ({ navigation }) => {
                     marginRight: 20,
                     color: "#009387",
                   }}>
-                  {new Intl.NumberFormat("en-US").format(
-                    `${ticket.price * ticket.chair.length - 60000}`
-                  )}{" "}
-                  d
+                  {ticket.promotionresults.length == 0 ? (
+                    <>
+                      {" "}
+                      {new Intl.NumberFormat("en-US").format(
+                        `${ticket.price * ticket.chair.length}`
+                      )}{" "}
+                      d
+                    </>
+                  ) : (
+                    <>
+                      {new Intl.NumberFormat("en-US").format(
+                        `${ticket.price * ticket.chair.length - discountAmount}`
+                      )}{" "}
+                      d
+                    </>
+                  )}
                 </Text>
               </View>
             </View>

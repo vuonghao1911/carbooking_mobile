@@ -14,7 +14,6 @@ import moment from "moment";
 import Modal from "react-native-modal";
 
 import Contex from "../store/Context";
-import { SetTicket } from "../store/Actions";
 const ModalCancelTicket = ({
   showModel,
   SetShowModel,
@@ -65,7 +64,7 @@ const ModalCancelTicket = ({
                 marginRight: 15,
                 fontWeight: "bold",
               }}>
-              {ticket.departure}
+              {ticket.departure.name}
             </Text>
             <Ionicons name="shuffle" color={"#009387"} size={27} />
             <Text
@@ -75,13 +74,15 @@ const ModalCancelTicket = ({
                 marginLeft: 15,
                 fontWeight: "bold",
               }}>
-              {ticket.destination}
+              {ticket.destination.name}
             </Text>
           </View>
 
           <View style={styles.viewPlace}>
             <Text style={{ fontSize: 20, color: "black", marginLeft: 15 }}>
-              {ticket.startTime} - {ticket.endTime}
+              {moment(new Date(ticket.startDate)).format("HH:mm")}
+              {" - "}
+              {moment(new Date(ticket.endDate)).format("HH:mm")}
             </Text>
           </View>
 
@@ -93,7 +94,7 @@ const ModalCancelTicket = ({
                 marginLeft: 15,
                 fontWeight: "bold",
               }}>
-              {ticket.date}
+              {moment(new Date(ticket.startDate)).format("DD-MM-yyyy")}
             </Text>
           </View>
         </View>

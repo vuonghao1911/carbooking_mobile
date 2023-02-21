@@ -22,6 +22,7 @@ export default Items = ({ item, navigation, setPrice }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, routeVehical, listChairs } = state;
   const [pressOn, setPressOn] = React.useState(false);
+  const [selectedId, setSelectedId] = useState();
 
   const removeElement = (array, elem) => {
     var index = array.indexOf(elem);
@@ -38,6 +39,9 @@ export default Items = ({ item, navigation, setPrice }) => {
     } else if (pressOn) {
       removeElement(listChairs, item);
       console.log("list", listChairs);
+    } else if (selectedId) {
+      removeElement(listChairs, item);
+      setSelectedId(!selectedId);
     } else {
       if (listChairs.length > 0) {
         if (listChairs.length == 5) {
@@ -57,8 +61,20 @@ export default Items = ({ item, navigation, setPrice }) => {
       console.log("list", item._id);
     }
 
-    setPressOn(!pressOn);
+    if (selectedId) {
+      setPressOn(false);
+    } else {
+      setPressOn(!pressOn);
+    }
   };
+
+  React.useEffect(() => {
+    listChairs.forEach((element) => {
+      if (item.id === element.id) {
+        setSelectedId(true);
+      }
+    });
+  }, []);
 
   return (
     <TouchableOpacity

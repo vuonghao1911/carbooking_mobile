@@ -14,11 +14,11 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-
+import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
+import Contex from "../store/Context";
 const CreateAboutScreen = ({ navigation }) => {
-  const [switchOnPin, setSwitchOnPin] = useState(false);
-  const [switchOn, setSwitchOn] = useState(false);
-  const [user, setUser] = useState("Tien Dat");
+  const { state, depatch } = React.useContext(Contex);
+  const { user, vetificaitonId } = state;
 
   const handleClik = () => {
     Alert.alert("Xoa Tai khoan", `Bạn muốn xóa tai khoan?`, [
@@ -86,9 +86,11 @@ const CreateAboutScreen = ({ navigation }) => {
                     fontWeight: "bold",
                     marginBottom: 5,
                   }}>
-                  Nguyen Vuong Hao
+                  {user?.firstName} {user?.lastName}
                 </Text>
-                <Text style={{ fontSize: 17, color: "gray" }}>012354856</Text>
+                <Text style={{ fontSize: 17, color: "gray" }}>
+                  {user?.phoneNumber}
+                </Text>
               </View>
 
               <Ionicons

@@ -14,11 +14,11 @@ import { LocaleConfig } from "react-native-calendars";
 import Modal from "react-native-modal";
 
 import Contex from "../store/Context";
-const ModalCalendar = ({ showModel, setText, SetShowModel }) => {
+const ModalCalendar = ({ showModel, setText, SetShowModel, date }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, userSearched, idConversation, userChatting } = state;
 
-  const date = moment(new Date()).format("yyyy-MM-DD");
+  const currenDate = moment(new Date()).format("yyyy-MM-DD");
   console.log(date);
   console.log("user  context", user);
 
@@ -72,14 +72,14 @@ const ModalCalendar = ({ showModel, setText, SetShowModel }) => {
       animationOut={"fadeOut"}
       onBackdropPress={() => SetShowModel(!showModel)}>
       <Calendar
-        initialDate={"2023-02-04"}
+        initialDate={date.dateString}
         style={{ marginTop: 0, borderRadius: 10 }}
         onDayPress={(day) => {
           console.log("selected day", day);
           setText(day);
           SetShowModel(!showModel);
         }}
-        minDate={date}
+        minDate={currenDate}
         onMonthChange={(month) => {
           console.log("month changed", month);
         }}

@@ -14,6 +14,10 @@ const routeApi = {
   register: (customer) => {
     return axiosClient.post(`/register`, customer);
   },
+  getListPlace: () => {
+    const url = `/places/all/getPlace`;
+    return axiosClient.get(url);
+  },
 };
 
 export default routeApi;

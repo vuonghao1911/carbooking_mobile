@@ -70,7 +70,7 @@ export default Items = ({ item, navigation, setPrice }) => {
 
   React.useEffect(() => {
     listChairs.forEach((element) => {
-      if (item.id == element.id) {
+      if (item.id === element.id) {
         setSelectedId(true);
       }
     });

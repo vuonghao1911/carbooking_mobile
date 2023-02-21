@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import {
-  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
   View,
   Button,
   KeyboardAvoidingView,
+  ToastAndroid,
 } from "react-native";
 import routeApi from "../../api/routeApi";
 import { firebaseConfig } from "../../fireBaseConfig";
@@ -30,19 +30,27 @@ const LoginScreen = ({ navigation }) => {
     const login = await routeApi.login(passWord, code);
     console.log(login.checklogin);
     if (login.checklogin) {
-      const confirmation = new firebase.auth.PhoneAuthProvider();
-      console.log("conf", phoneNumber);
-      confirmation
-        .verifyPhoneNumber(phoneNumber, applicationVerifier.current)
-        .then((result) => {
-          setConfirm(result);
-          depatch(SetVetificaitonId(result));
-          depatch(SetUser(login.user));
-          navigation.navigate("VetifyCode");
-          setSDT("");
-        })
-        .catch((error) => console.log("error", error));
-      console.log("conf", vetificaitonId);
+      if (login.role) {
+        ToastAndroid.showWithGravity(
+          "Tai khoan khong hop le",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      } else {
+        const confirmation = new firebase.auth.PhoneAuthProvider();
+        console.log("conf", phoneNumber);
+        confirmation
+          .verifyPhoneNumber(phoneNumber, applicationVerifier.current)
+          .then((result) => {
+            setConfirm(result);
+            depatch(SetVetificaitonId(result));
+            depatch(SetUser(login.user));
+            navigation.navigate("VetifyCode");
+            setSDT("");
+          })
+          .catch((error) => console.log("error", error));
+        console.log("conf", vetificaitonId);
+      }
     } else {
       console.log("sai mat khau");
     }

@@ -30,8 +30,6 @@ export default RouteDetails = ({ navigation }) => {
   const [fullName, setFullName] = React.useState(" Vuong Hao");
   const [phone, setPhone] = React.useState("01234213412");
 
-  console.log(placeFrom.busStation, placeTo.busStation);
-
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>

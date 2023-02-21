@@ -25,11 +25,13 @@ import {
   SetNavigation,
 } from "../../store/Actions";
 import Contex from "../../store/Context";
+import moment from "moment";
 
 export default Items = ({ item, navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, routeVehical } = state;
   const [showModel, SetShowModel] = useState(false);
+  moment(new Date()).format("yyyy-MM-DD");
 
   return (
     <TouchableOpacity
@@ -56,10 +58,10 @@ export default Items = ({ item, navigation }) => {
               Gio Xuat Ben
             </Text>
             <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5 }}>
-              {item.startTime}
+              {moment(new Date(item.startDate)).format("DD-MM-yyyy")}
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 5 }}>
-              {item.date}
+              {moment(new Date(item.startDate)).format("HH:mm")}
             </Text>
           </View>
         </View>
@@ -76,7 +78,7 @@ export default Items = ({ item, navigation }) => {
             <View style={styles.viewPlace}>
               <Ionicons name="paper-plane" color={"orange"} size={17} />
               <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                {item.departure}
+                {item.departure.name}
               </Text>
             </View>
 
@@ -93,7 +95,7 @@ export default Items = ({ item, navigation }) => {
                   color: "black",
                   marginLeft: 15,
                 }}>
-                {item.destination}
+                {item.destination.name}
               </Text>
             </View>
             <View style={styles.viewPlace}>

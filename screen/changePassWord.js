@@ -11,6 +11,7 @@ import {
   ImageBackground,
   Image,
   KeyboardAvoidingView,
+  ToastAndroid,
   ScrollView,
 } from "react-native";
 
@@ -20,18 +21,79 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { SetUser, SetBusStation, SetTicketUserInfo } from "../store/Actions";
 import Contex from "../store/Context";
+import userApi from "../api/userApi";
 
 export default ChangePassWord = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, listChairs, placeTo, placeFrom, routeVehical } = state;
 
-  const [pass, setPass] = React.useState(" Vuong Hao");
-  const [newPass, setNewPass] = React.useState("  Dep Trai");
-  const [passConfirm, setPassConfirm] = React.useState("01234213412");
+  const [pass, setPass] = React.useState("");
+  const [newPass, setNewPass] = React.useState("");
+  const [passConfirm, setPassConfirm] = React.useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [passwordVisibleNew, setPasswordVisibleNew] = useState(true);
   const [passwordVisibleConfirm, setPasswordVisibleConfirm] = useState(true);
-  console.log(pass);
+  const ChangePass = async () => {
+    try {
+      if (pass.length === 0) {
+        ToastAndroid.showWithGravity(
+          "Mat khau khong duoc rong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      } else if (newPass.length === 0) {
+        ToastAndroid.showWithGravity(
+          "mat khau moi khong duoc rong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      } else if (passConfirm.length === 0) {
+        ToastAndroid.showWithGravity(
+          "mat khau khong duoc rong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      } else if (passConfirm !== newPass) {
+        ToastAndroid.showWithGravity(
+          "mat khau moi khong khop",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        return;
+      }
+
+      const { checkChangePass } = await userApi.changePassWord(
+        user.phoneNumber,
+        newPass,
+        pass
+      );
+      if (checkChangePass) {
+        console.log("success");
+        setNewPass("");
+        setPass("");
+        setPassConfirm("");
+        ToastAndroid.showWithGravity(
+          "Doi mat khau thang cong",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        //navigation.navigate("Second");
+      } else {
+        ToastAndroid.showWithGravity(
+          "Mat khau cu khong dung",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      }
+
+      console.log(checkChangePass);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -52,6 +114,7 @@ export default ChangePassWord = ({ navigation }) => {
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <TextInput
                 style={styles.input}
+                value={pass}
                 label="Mat khau cu"
                 theme={{
                   colors: {
@@ -76,6 +139,7 @@ export default ChangePassWord = ({ navigation }) => {
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <TextInput
                 label="Mat khau moi"
+                value={newPass}
                 theme={{
                   colors: {
                     placeholder: "#694fad",
@@ -99,13 +163,13 @@ export default ChangePassWord = ({ navigation }) => {
             <View style={{ flexDirection: "column" }}>
               <TextInput
                 label="Nhap lai mat khau"
+                value={passConfirm}
                 theme={{
                   colors: {
                     placeholder: "#694fad",
                   },
                 }}
                 style={styles.input}
-                value={passConfirm}
                 secureTextEntry={passwordVisibleConfirm}
                 underlineColor="#694fad"
                 activeUnderlineColor="gray"
@@ -129,10 +193,7 @@ export default ChangePassWord = ({ navigation }) => {
                 styles.viewSearch,
                 { borderWidth: 1, borderColor: "#694fad" },
               ]}
-              onPress={() => {
-                depatch(SetTicketUserInfo({ fullName, phone }));
-                //  navigation.navigate("ticketInfo");
-              }}>
+              onPress={ChangePass}>
               <View>
                 <Text
                   style={{

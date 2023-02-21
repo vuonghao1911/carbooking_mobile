@@ -82,11 +82,11 @@ export default TicketInfo = ({ navigation }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontSize: 15, marginRight: 10 }}>
-                {placeFrom.name}
+                {routeVehical.departure}
               </Text>
               <Ionicons name="shuffle" size={20} color={"#730E80"} />
               <Text style={{ fontSize: 15, marginLeft: 10 }}>
-                {placeTo.name}
+                {routeVehical.destination}
               </Text>
             </View>
           </View>

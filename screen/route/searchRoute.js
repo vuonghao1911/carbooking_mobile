@@ -28,6 +28,7 @@ import {
   SetListChairs,
   SetPlaceFrom,
   SetPlaceTo,
+  SetRouteVehicle,
 } from "../../store/Actions";
 import Contex from "../../store/Context";
 
@@ -39,19 +40,20 @@ export default SearchRoute = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleDes, setModalVisibleDes] = useState(false);
 
+  const [listRouteVehical, setListRouteVehical] = useState([]);
+
   const [depture, setDepture] = useState({ name: "Ben Tre" });
   const [destination, setDestination] = useState({ name: "TpHcm" });
   const [selectedIdDes, setSelectedIdDes] = useState();
   const [selectedIdDep, setSelectedIdDep] = useState();
 
   console.log("date", date.dateString);
-  date = moment(date).format("DD/MM");
 
   const handleRepeat = () => {
     setDepture(destination);
     setDestination(depture);
-    setSelectedIdDep(destination.id);
-    setSelectedIdDes(depture.id);
+    setSelectedIdDep(destination._id);
+    setSelectedIdDes(depture._id);
   };
 
   //   const date = new Date().toLocaleString("en-US", {
@@ -167,13 +169,14 @@ export default SearchRoute = ({ navigation }) => {
                   fontSize: 15,
                   color: "#D86A23",
                 }}>
-                {date}
+                {moment(date).format("DD/MM")}
               </Text>
             </TouchableOpacity>
             <ModalCalendar
               showModel={showModel}
               setText={setDate}
               SetShowModel={SetShowModel}
+              date={date}
             />
           </View>
         </View>
@@ -186,6 +189,7 @@ export default SearchRoute = ({ navigation }) => {
               // navigation.navigate("Second")
               depatch(SetPlaceFrom(depture));
               depatch(SetPlaceTo(destination));
+              //   setListRouteVehical(Listroute);
             }}>
             <Text
               style={{

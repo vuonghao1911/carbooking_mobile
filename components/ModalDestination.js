@@ -8,7 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import routeApi from "../api/routeApi";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { SetTicket, SetPlaceTo } from "../store/Actions";
+import Contex from "../store/Context";
 const Items = ({ item, onPress, backgroundColor, textColor }) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -28,51 +31,34 @@ const ModalDestination = ({
   setSelectedIdDes,
   selectedIdDes,
 }) => {
-  const [depture, setDept] = useState([
-    {
-      name: "Ben Tre",
-      id: 1,
-      busStation: [
-        {
-          location:
-            "Bến xe Miền Tây(số 395 Kinh Dương Vương, Phường An Lạc, Quận Bình Tân, TP.HCM)",
-          _id: {
-            $oid: "63da8c5cee09e7dba6d76fb2",
-          },
-        },
-        {
-          location:
-            "Bến xe Miền Đông(số 501 đường Hoàng Hữu Nam, Phường Long Bình, Quận 9, Tp. Thủ Đức)",
-          _id: {
-            $oid: "63da8c5cee09e7dba6d76fb3",
-          },
-        },
-        {
-          location:
-            "Bến xe An Sương(số 720, quốc lộ 1A, khu phố 3B, phường Thạnh Lộc, Quận 12, TPHCM)",
-          _id: {
-            $oid: "63da8c5cee09e7dba6d76fb4",
-          },
-        },
-      ],
-    },
-    { name: "TpHcm", id: 2 },
-    { name: "Ha Noi", id: 3 },
-    { name: "Da Nang", id: 4 },
-    { name: "Quang Ngai", id: 5 },
-  ]);
+  const [depture, setDept] = useState([]);
+  const { state, depatch } = React.useContext(Contex);
+  const { user, userSearched, idConversation, userChatting } = state;
+  React.useEffect(() => {
+    const getListPlace = async () => {
+      try {
+        const result = await routeApi.getListPlace();
 
+        setDept(result);
+      } catch (error) {
+        console.log("Failed to fetch : ", error);
+      }
+    };
+
+    getListPlace();
+  }, []);
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedIdDes ? "#D86A23" : "white";
-    const color = item.id === selectedIdDes ? "white" : "black";
+    const backgroundColor = item._id === selectedIdDes ? "#D86A23" : "white";
+    const color = item._id === selectedIdDes ? "white" : "black";
 
     return (
       <Items
         item={item}
         onPress={() => {
-          setSelectedIdDes(item.id);
+          setSelectedIdDes(item._id);
           setModalVisibleDes(!modalVisibleDes);
           setDestination(item);
+          depatch(SetPlaceTo(item));
           console.log(item.name);
         }}
         backgroundColor={backgroundColor}

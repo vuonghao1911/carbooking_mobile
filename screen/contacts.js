@@ -10,13 +10,28 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { ListTicket } from "../data/dataTest";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ItemHistoryTicket from "../components/route/historyTicket";
 import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
 import Contex from "../store/Context";
+import ticketApi from "../api/ticketApi";
 const CreateContactsScreen = ({ navigation }) => {
-  console.log("Fsdfsd");
+  const [listTicketUser, setListTicketUser] = React.useState([]);
+  React.useEffect(() => {
+    const getListTicket = async () => {
+      try {
+        const result = await ticketApi.getListTicket(
+          "63edd1b210390b9dc1a53bc4"
+        );
+
+        setListTicketUser(result);
+      } catch (error) {
+        console.log("Failed to fetch : ", error);
+      }
+    };
+
+    getListTicket();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -49,7 +64,7 @@ const CreateContactsScreen = ({ navigation }) => {
 
       <View>
         <FlatList
-          data={ListTicket}
+          data={listTicketUser}
           renderItem={({ item }) => (
             <ItemHistoryTicket item={item} navigation={navigation} />
           )}
@@ -64,7 +79,7 @@ export default CreateContactsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.89,
     marginTop: Platform.OS === "ios" ? 30 : 25,
     justifyContent: "center",
     alignItems: "center",
