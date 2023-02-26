@@ -60,7 +60,7 @@ export default TicketInfo = ({ navigation }) => {
             <Text style={{ fontSize: 15, color: "gray", marginLeft: 10 }}>
               So Dien Thoai
             </Text>
-            <Text style={{ fontSize: 15, marginRight: 10 }}>
+            <Text style={{ fontSize: 15, marginRight: 10, fontWeight: "bold" }}>
               {ticketUserInfo.phone}
             </Text>
           </View>
@@ -100,7 +100,7 @@ export default TicketInfo = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginRight: 10,
-                  color: "#730E80",
+                  color: "black",
                   fontWeight: "bold",
                 }}>
                 {routeVehical.startTime} - {routeVehical.endTime}
@@ -135,7 +135,7 @@ export default TicketInfo = ({ navigation }) => {
                       style={{
                         fontSize: 15,
                         marginRight: 10,
-                        color: "#730E80",
+                        color: "black",
                         fontWeight: "bold",
                       }}>
                       {item.seats}
@@ -171,7 +171,7 @@ export default TicketInfo = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginRight: 10,
-                  color: "#730E80",
+                  color: "black",
                   fontWeight: "bold",
                 }}>
                 {new Intl.NumberFormat("en-US").format(
@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: "90%",
-    borderColor: "#9506D8",
+    borderColor: "gray",
+    backgroundColor: "#F2F2F2",
   },
 });

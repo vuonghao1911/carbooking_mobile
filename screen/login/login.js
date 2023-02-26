@@ -7,12 +7,19 @@ import {
   Button,
   KeyboardAvoidingView,
   ToastAndroid,
+  TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import routeApi from "../../api/routeApi";
 import { firebaseConfig } from "../../fireBaseConfig";
 import firebase from "firebase/compat/app";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { SetUser, SetVetificaitonId, SetCheckLogin } from "../../store/Actions";
+import {
+  SetUser,
+  SetVetificaitonId,
+  SetCheckLogin,
+  SetCheckForgotPassword,
+} from "../../store/Actions";
 import Contex from "../../store/Context";
 
 const LoginScreen = ({ navigation }) => {
@@ -102,6 +109,22 @@ const LoginScreen = ({ navigation }) => {
               />
             </View>
           </View>
+          <TouchableOpacity
+            onPress={() => {
+              depatch(SetCheckForgotPassword(true));
+              navigation.navigate("inNumber");
+            }}>
+            <Text
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+                fontSize: 15,
+                marginTop: 10,
+                fontStyle: "italic",
+              }}>
+              Quen mat khau ?
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>

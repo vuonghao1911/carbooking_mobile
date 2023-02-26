@@ -110,6 +110,22 @@ export default TicketInfo = ({ navigation }) => {
           </View>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
+              Xe
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginRight: 10,
+                  color: "black",
+                  fontWeight: "bold",
+                }}>
+                {ticket.licensePlates}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.viewItemInfo}>
+            <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
               So Ghe
             </Text>
             <View style={{ flexDirection: "row" }}>
@@ -272,7 +288,7 @@ export default TicketInfo = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.9,
     flexDirection: "column",
 
     justifyContent: "space-around",

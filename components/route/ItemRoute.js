@@ -55,6 +55,14 @@ export default Items = ({ item, navigation }) => {
             }}>
             {item.carType}
           </Text>
+          <Ionicons name="ellipse" color={"gray"} />
+          <Text
+            style={{
+              fontSize: 17,
+              color: "black",
+            }}>
+            {item.licensePlates}
+          </Text>
         </View>
         <View
           style={{
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === "ios" ? 30 : 25,
     flexDirection: "column",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "white",
   },
 
   Item: {
@@ -124,16 +132,21 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: 350,
     height: 200,
-    backgroundColor: "white",
+
     justifyContent: "space-around",
     alignItems: "flex-start",
     padding: 0,
     borderWidth: 0,
-    borderColor: "gray",
+    borderColor: "#f1f1f1",
     borderTopEndRadius: 25,
     margin: 10,
     paddingLeft: 15,
     borderWidth: 1,
+    backgroundColor: "white",
+    shadowColor: "black",
+    shadowRadius: 15,
+    elevation: 10,
+    borderRadius: 10,
   },
   viewPrice: {
     justifyContent: "space-around",
@@ -142,7 +155,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "gray",
-    width: "65%",
+    width: "90%",
     height: 35,
   },
   viewPlace: {

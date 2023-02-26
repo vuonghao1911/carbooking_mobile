@@ -16,12 +16,15 @@ import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
 import Contex from "../store/Context";
 import ticketApi from "../api/ticketApi";
 const CreateContactsScreen = ({ navigation }) => {
+  const { state, depatch } = React.useContext(Contex);
+  const { user, vetificaitonId, placeTo } = state;
+
   const [listTicketUser, setListTicketUser] = React.useState([]);
   React.useEffect(() => {
     const getListTicket = async () => {
       try {
         const result = await ticketApi.getListTicket(
-          "63edd1b210390b9dc1a53bc4"
+          "63f5b52a0437997420cf95df"
         );
 
         setListTicketUser(result);
@@ -31,7 +34,7 @@ const CreateContactsScreen = ({ navigation }) => {
     };
 
     getListTicket();
-  }, []);
+  }, [placeTo]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

@@ -14,6 +14,7 @@ import IconOption from "./components/IconOption";
 import TicketDetails from "./screen/route/ticketDetails";
 import UpdateProfile from "./screen/updateProfile";
 import ChangePass from "./screen/changePassWord";
+import ForgotPass from "./screen/login/forgotPass";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -64,7 +65,16 @@ export default function App({}) {
           <Stack.Screen
             name="register"
             component={Register}
-            options={{ headerShown: false }}
+            options={{
+              title: "Tao tai khoan",
+              headerStyle: {
+                backgroundColor: "#D86A23",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
           <Stack.Screen
             name="SearchRoute"
@@ -163,6 +173,21 @@ export default function App({}) {
               title: "Doi mat khau",
               headerStyle: {
                 backgroundColor: "#694fad",
+              },
+
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="forgotPass"
+            component={ForgotPass}
+            options={{
+              title: "Quen mat khau",
+              headerStyle: {
+                backgroundColor: "#D86A23",
               },
 
               headerTintColor: "#fff",

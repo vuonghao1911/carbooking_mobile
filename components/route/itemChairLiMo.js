@@ -87,18 +87,17 @@ export default Items = ({ item, navigation, setPrice }) => {
           item.status
             ? {
                 flexDirection: "column",
-                width: 80,
-
-                height: 45,
-                backgroundColor: "#163E69",
+                width: 60,
+                height: 40,
+                backgroundColor: "gray",
                 justifyContent: "space-around",
 
                 padding: 0,
                 borderWidth: 0,
                 borderColor: "#E3FAF4",
                 borderRadius: 10,
-                margin: 5,
-                marginRight: 25,
+                margin: 3,
+                marginRight: 55,
               }
             : pressOn
             ? styles.viewItemSelect
@@ -116,8 +115,8 @@ const styles = StyleSheet.create({
   Item: {
     //flex: 1 / 2,
     flexDirection: "column",
-    width: 80,
-    height: 45,
+    width: 60,
+    height: 40,
     backgroundColor: "#1FADD8",
     justifyContent: "space-around",
 
@@ -125,8 +124,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "#E3FAF4",
     borderRadius: 10,
-    margin: 5,
-    marginRight: 25,
+    margin: 3,
+    marginRight: 55,
   },
   textSeats: {
     textAlign: "center",
@@ -135,8 +134,8 @@ const styles = StyleSheet.create({
   },
   viewItemSelect: {
     flexDirection: "column",
-    width: 80,
-    height: 45,
+    width: 60,
+    height: 40,
     backgroundColor: "",
     justifyContent: "space-around",
     backgroundColor: "orange",
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "#E3FAF4",
     borderRadius: 10,
-    margin: 5,
-    marginRight: 25,
+    margin: 3,
+    marginRight: 55,
   },
 });

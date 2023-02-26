@@ -58,27 +58,7 @@ export default Register = ({ navigation }) => {
   };
   return (
     <View style={styles.AndroidSafeArea}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.headerBack}
-          onPress={() => {
-            navigation.navigate("Login");
-          }}>
-          <Ionicons name="chevron-back" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
       <View style={styles.container}>
-        {/* btn back */}
-
-        {/* <View style={styles.topView}>
-            <Image
-              source={fastfood}
-              resizeMode="center"
-              style={styles.image}
-            ></Image>
-          </View> */}
-        {/* input info */}
-
         <View style={styles.body}>
           <Text
             style={{
@@ -167,7 +147,7 @@ const styles = StyleSheet.create({
     //  backgroundColor: "red",
     alignItems: "center",
     justifyContent: "space-around",
-    marginTop: -55,
+    marginTop: -120,
   },
   header: {
     justifyContent: "center",

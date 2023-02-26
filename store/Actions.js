@@ -12,7 +12,7 @@ export const SET_BUSSTATION = "set_BusStation";
 export const SET_TICKETUSERINFO = "set_TicketUserInfo";
 export const SET_TICKET = "set_Ticket";
 export const SET_NAVIGATION = "set_Navigation";
-export const SET_SEARCHEDUSERS = "set_SearchUsers";
+export const SET_CHECKFORGOTPASSWORD = "set_ForgotPassword";
 export const SET_IDCONVERSATION = "set_IdConversation";
 export const SET_SOCKET = "set_Socket";
 
@@ -96,9 +96,9 @@ export const SetNavigation = (payload) => {
   };
 };
 
-export const SetSearchedUser = (payload) => {
+export const SetCheckForgotPassword = (payload) => {
   return {
-    type: SET_SEARCHEDUSERS,
+    type: SET_CHECKFORGOTPASSWORD,
     payload,
   };
 };

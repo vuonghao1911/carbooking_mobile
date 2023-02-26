@@ -109,14 +109,14 @@ export default Items = ({ item, navigation }) => {
                 Thời gian: {item.intendTime} tiếng
               </Text>
             </View>
-            <View style={styles.viewItemInfo}>
-              <Text style={{ fontSize: 15, color: "black" }}>Ghe: </Text>
+            <View style={[styles.viewItemInfo]}>
+              <Text style={{ fontSize: 15, color: "black" }}>Ghe: {"  "} </Text>
               <FlatList
                 data={item.chair}
+                numColumns={2}
                 renderItem={({ item, index }) => {
                   return <Text style={styles.textSeats}>{item.seats}</Text>;
                 }}
-                horizontal
               />
             </View>
           </View>

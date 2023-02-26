@@ -29,7 +29,7 @@ const VeifyCode = ({ navigation }) => {
     setValue,
   });
   const { state, depatch } = React.useContext(Contex);
-  const { user, vetificationId, checkLogin } = state;
+  const { user, vetificationId, checkLogin, checkForgotPassword } = state;
   console.log("value", vetificationId);
   console.log("CheckLogin", checkLogin);
 
@@ -43,10 +43,14 @@ const VeifyCode = ({ navigation }) => {
       .signInWithCredential(credential)
       .then((result) => {
         console.log("result", result);
-        if (checkLogin) {
-          navigation.navigate("Second");
+        if (checkForgotPassword) {
+          navigation.navigate("forgotPass");
         } else {
-          navigation.navigate("register");
+          if (checkLogin) {
+            navigation.navigate("Second");
+          } else {
+            navigation.navigate("register");
+          }
         }
       })
       .catch((error) => console.log("error", error));

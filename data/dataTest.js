@@ -8,6 +8,7 @@ export const Listroute = [
     carType: "Xe Thuong",
     price: 200000,
     status: true,
+    licensePlates: "77B-4568",
   },
   {
     intendTime: 4,
@@ -18,6 +19,7 @@ export const Listroute = [
     carType: "Limoshine",
     price: 300000,
     status: false,
+    licensePlates: "77B-4568",
   },
   {
     intendTime: 4,
@@ -28,6 +30,7 @@ export const Listroute = [
     carType: "Limoshine",
     price: 300000,
     status: false,
+    licensePlates: "77B-4568",
   },
   {
     intendTime: 4,
@@ -38,6 +41,7 @@ export const Listroute = [
     carType: "Xe Thuong",
     price: 200000,
     status: true,
+    licensePlates: "77B-4568",
   },
   {
     intendTime: 4,
@@ -48,6 +52,7 @@ export const Listroute = [
     carType: "Xe Thuong",
     price: 200000,
     status: false,
+    licensePlates: "77B-4568",
   },
 ];
 export const listChair = [

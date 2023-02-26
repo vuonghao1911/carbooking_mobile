@@ -174,7 +174,7 @@ export default SelectChair = ({ navigation }) => {
               style={{ marginLeft: 15 }}
               name="square"
               size={18}
-              color={"#1FADD8"}
+              color={"#DEF3FF"}
             />
             <Text style={styles.styteTextChair}>Còn trống</Text>
             <Ionicons
@@ -188,7 +188,7 @@ export default SelectChair = ({ navigation }) => {
               style={{ marginLeft: 20 }}
               name="square"
               size={18}
-              color={"#163E69"}
+              color={"#D5D9DD"}
             />
             <Text style={styles.styteTextChair}>Đã đặt</Text>
           </View>
@@ -247,15 +247,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
 
-    marginTop: 10,
+    marginTop: 20,
     height: 50,
   },
 
   viewBody: {
-    height: 400,
+    height: 350,
     width: "85%",
 
-    //marginLeft: 30,
+    marginTop: 20,
   },
   viewInFoRoute: {
     flexDirection: "column",
@@ -283,7 +283,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginBottom: 10,
+    marginBottom: 20,
+    marginTop: -20,
   },
   text1: {
     fontSize: 16,

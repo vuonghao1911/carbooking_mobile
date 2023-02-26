@@ -48,13 +48,21 @@ export default RouteDetails = ({ navigation }) => {
                 }}>
                 {routeVehical.price} d
               </Text>
-              <Ionicons name="ellipse" color={"gray"} />
+              <Ionicons name="ellipse" color={"#D86A23"} />
               <Text
                 style={{
                   fontSize: 15,
                   color: "black",
                 }}>
                 {routeVehical.carType}
+              </Text>
+              <Ionicons name="ellipse" color={"#D86A23"} />
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}>
+                {routeVehical.licensePlates}
               </Text>
             </View>
             <View
@@ -135,13 +143,19 @@ export default RouteDetails = ({ navigation }) => {
             <Picker
               selectedValue={busLocation}
               style={{ height: 30 }}
+              itemStyle={{ color: "red" }}
               onValueChange={(itemValue, itemIndex) => {
                 setBusLocation(itemValue);
               }}>
               {placeFrom.busStation.map((item, index) => {
                 return (
                   <Picker.Item
-                    style={{ fontSize: 12 }}
+                    style={{
+                      fontSize: 12,
+                      borderWidth: 1,
+                      borderColor: "black",
+                    }}
+                    itemStyle={{ color: "red" }}
                     label={item.location}
                     value={item.location}
                     key={index}
@@ -233,7 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "orange",
-    width: "50%",
+    width: "80%",
     height: 30,
   },
   viewPlace: {

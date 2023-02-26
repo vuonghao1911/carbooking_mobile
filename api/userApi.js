@@ -21,6 +21,12 @@ const userApi = {
       oldPass: oldPass,
     });
   },
+  forgotPassWord: (phoneNumber, passWord) => {
+    return axiosClient.post(`/forgot`, {
+      newPass: passWord,
+      phoneNumber: phoneNumber,
+    });
+  },
 };
 
 export default userApi;

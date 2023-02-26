@@ -27,7 +27,7 @@ const ModalSelectOption = ({
   const [disabled, setDisabled] = useState(false);
 
   React.useEffect(() => {
-    if (new Date(ticket?.startDate) <= new Date()) {
+    if (new Date(ticket?.startDate).toISOString <= new Date().toISOString) {
       setDisabled(true);
     } else {
       setDisabled(false);
@@ -95,6 +95,15 @@ const ModalSelectOption = ({
               </Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ticketDetails")}>
+            <View style={styles.viewPlace}>
+              <Ionicons name="information" color={"#009387"} size={30} />
+              <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
+                Chi Tiet
+              </Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => SetShowModel(!showModel)}>
             <View style={styles.viewPlace}>
               <Ionicons name="close" color={"red"} size={30} />
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    height: 200,
+    height: 250,
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,

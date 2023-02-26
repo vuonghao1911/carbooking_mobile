@@ -207,7 +207,7 @@ export default SearchRoute = ({ navigation }) => {
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          color: "#D86A23",
+          color: "black",
           marginLeft: 20,
           marginBottom: 10,
         }}>
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     borderColor: "#D86A23",
     shadowColor: "#9506D8",
     shadowRadius: 10,
-    elevation: 20,
+    elevation: 25,
     borderRadius: 10,
   },
   viewBody: {

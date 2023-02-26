@@ -23,6 +23,8 @@ export default Items = ({ item, navigation, setPrice }) => {
   const { user, routeVehical, listChairs } = state;
   const [pressOn, setPressOn] = React.useState(false);
   const [selectedId, setSelectedId] = useState();
+  const [spaceChair, setSpaceChair] = useState();
+  const [lastSeat, setLastSeat] = useState();
 
   const removeElement = (array, elem) => {
     var index = array.indexOf(elem);
@@ -74,36 +76,101 @@ export default Items = ({ item, navigation, setPrice }) => {
         setSelectedId(true);
       }
     });
+
+    if (
+      item.seats === "02" ||
+      item.seats === "06" ||
+      item.seats === "10" ||
+      item.seats === "14" ||
+      item.seats === "18"
+    ) {
+      setSpaceChair(true);
+    }
+    if (
+      item.seats === "21" ||
+      item.seats === "22" ||
+      item.seats === "23" ||
+      item.seats === "24"
+    ) {
+      setLastSeat(true);
+    }
   }, []);
 
   return (
     <TouchableOpacity
+      disabled={item.status}
       onPress={() => {
         handleSelectChair(item);
         setPrice(routeVehical.price * listChairs.length);
       }}>
       <View
         style={[
-          item.status
+          spaceChair
+            ? item.status
+              ? {
+                  flexDirection: "column",
+                  width: 60,
+
+                  height: 45,
+                  backgroundColor: "#D5D9DD",
+                  justifyContent: "space-around",
+
+                  padding: 0,
+                  borderWidth: 1,
+                  borderColor: "gray",
+                  borderRadius: 10,
+                  margin: 5,
+                  marginRight: 45,
+                }
+              : pressOn
+              ? styles.ItemSelectSpace
+              : styles.ItemSpace
+            : lastSeat
+            ? item.status
+              ? {
+                  flexDirection: "column",
+                  width: 75,
+
+                  height: 45,
+                  backgroundColor: "#D5D9DD",
+                  justifyContent: "space-around",
+
+                  padding: 0,
+                  borderWidth: 1,
+                  borderColor: "gray",
+                  borderRadius: 10,
+                  margin: 3,
+                }
+              : pressOn
+              ? styles.viewItemSelectLastRow
+              : styles.ItemLastRow
+            : item.status
             ? {
                 flexDirection: "column",
                 width: 60,
 
                 height: 45,
-                backgroundColor: "#163E69",
+                backgroundColor: "#D5D9DD",
                 justifyContent: "space-around",
 
                 padding: 0,
-                borderWidth: 0,
-                borderColor: "#E3FAF4",
+                borderWidth: 1,
+                borderColor: "gray",
                 borderRadius: 10,
-                margin: 10,
+                margin: 5,
               }
             : pressOn
             ? styles.viewItemSelect
             : styles.Item,
         ]}>
-        <Text style={styles.textSeats}>{item.seats}</Text>
+        <Text
+          style={[
+            pressOn
+              ? { textAlign: "center", color: "white", fontWeight: "bold" }
+              : styles.textSeats,
+          ]}>
+          {item.seats}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -115,18 +182,30 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: 60,
     height: 45,
-    backgroundColor: "#1FADD8",
+    backgroundColor: "#DEF3FF",
     justifyContent: "space-around",
 
-    padding: 0,
-    borderWidth: 0,
-    borderColor: "#E3FAF4",
+    borderWidth: 1,
+    borderColor: "#65959C",
     borderRadius: 10,
-    margin: 10,
+    margin: 5,
+  },
+  ItemLastRow: {
+    //flex: 1 / 2,
+    flexDirection: "column",
+    width: 75,
+    height: 45,
+    backgroundColor: "#DEF3FF",
+    justifyContent: "space-around",
+
+    borderWidth: 1,
+    borderColor: "#65959C",
+    borderRadius: 10,
+    margin: 3,
   },
   textSeats: {
     textAlign: "center",
-    color: "white",
+    color: "black",
     fontWeight: "bold",
   },
   viewItemSelect: {
@@ -140,6 +219,47 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: "#E3FAF4",
     borderRadius: 10,
-    margin: 10,
+    margin: 5,
+  },
+  viewItemSelectLastRow: {
+    flexDirection: "column",
+    width: 75,
+    height: 45,
+    backgroundColor: "orange",
+    justifyContent: "space-around",
+
+    padding: 0,
+    borderWidth: 0,
+    borderColor: "#E3FAF4",
+    borderRadius: 10,
+    margin: 3,
+  },
+  ItemSpace: {
+    //flex: 1 / 2,
+    flexDirection: "column",
+    width: 60,
+    height: 45,
+    backgroundColor: "#DEF3FF",
+    justifyContent: "space-around",
+
+    borderWidth: 1,
+    borderColor: "#65959C",
+    borderRadius: 10,
+    margin: 5,
+    marginRight: 45,
+  },
+  ItemSelectSpace: {
+    //flex: 1 / 2,
+    flexDirection: "column",
+    width: 60,
+    height: 45,
+    backgroundColor: "orange",
+    justifyContent: "space-around",
+
+    borderWidth: 0,
+    borderColor: "#E3FAF4",
+    borderRadius: 10,
+    margin: 5,
+    marginRight: 45,
   },
 });

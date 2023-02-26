@@ -11,7 +11,7 @@ import {
   SET_TICKETUSERINFO,
   SET_TICKET,
   SET_NAVIGATION,
-  SET_SEARCHEDUSERS,
+  SET_CHECKFORGOTPASSWORD,
   SET_IDCONVERSATION,
   SET_SOCKET,
 } from "./Actions";
@@ -29,7 +29,7 @@ const initState = {
 
   //user is searching
   // userSearched: null,
-  userSearched: [],
+  checkForgotPassword: false,
   placeTo: null,
 
   // state searching currently
@@ -115,10 +115,10 @@ const Reducer = (state, action) => {
         ...state,
         navigation: action.payload,
       };
-    case SET_SEARCHEDUSERS:
+    case SET_CHECKFORGOTPASSWORD:
       return {
         ...state,
-        searchedUsers: action.payload,
+        checkForgotPassword: action.payload,
       };
     case SET_IDCONVERSATION:
       return {

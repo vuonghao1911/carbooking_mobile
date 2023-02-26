@@ -54,9 +54,8 @@ export default Start = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.viewButton}
-        onPress={() => navigation.navigate("InStart")}
-        //</View> onPress={() => navigation.navigate("Second")}
-      >
+        // onPress={() => navigation.navigate("InStart")}
+        onPress={() => navigation.navigate("Second")}>
         <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
           BẮT ĐẦU
         </Text>
