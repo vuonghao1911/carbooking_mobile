@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, DatePickerAndroid } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+// import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import DatePicker from "react-native-date-picker";
+
 import moment from "moment";
 import { LocaleConfig } from "react-native-calendars";
 import Modal from "react-native-modal";
@@ -10,8 +12,6 @@ import Contex from "../store/Context";
 const ModalCalendar = ({ showModel, setText, SetShowModel, date }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, userSearched, idConversation, userChatting } = state;
-
-  const currenDate = moment(new Date()).format("yyyy-MM-DD");
 
   LocaleConfig.locales["vn"] = {
     monthNames: [
@@ -62,19 +62,28 @@ const ModalCalendar = ({ showModel, setText, SetShowModel, date }) => {
       animationIn={"fadeIn"}
       animationOut={"fadeOut"}
       onBackdropPress={() => SetShowModel(!showModel)}>
-      <Calendar
-        initialDate={date.dateString}
+      {/* <Calendar
+        initialDate={date.dateString.toString()}
         style={{ marginTop: 0, borderRadius: 10 }}
         onDayPress={(day) => {
           console.log("selected day", day);
           setText(day);
           SetShowModel(!showModel);
         }}
-        minDate={currenDate}
         onMonthChange={(month) => {
           console.log("month changed", month);
         }}
-      />
+      /> */}
+
+      {/* <DateTimePicker
+        display={"default"}
+        timeZoneOffsetInMinutes={0}
+        value={new Date(date)}
+        mode="date"
+        minimumDate={new Date(1920, 10, 20)}
+        maximumDate={new Date()}
+      /> */}
+      <DatePicker date={new Date()} onDateChange={setText} />
     </Modal>
   );
 };

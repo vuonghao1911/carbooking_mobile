@@ -14,18 +14,45 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import DatePicker from "react-native-date-picker";
 
-import { SetUser, SetBusStation, SetTicketUserInfo } from "../store/Actions";
+import { SetUser } from "../store/Actions";
 import Contex from "../store/Context";
 import userApi from "../api/userApi";
-
+import ModalProvince from "../components/ModalProvince";
+import listProvince from "../local.json";
+import ModalCalendarBoD from "../components/ModalCalendarDoB";
+import moment from "moment";
 export default UpdateProfile = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, listChairs, placeTo, placeFrom, routeVehical } = state;
 
   const [lastName, setLastName] = React.useState(user?.lastName);
   const [firstName, setFirstName] = React.useState(user?.firstName);
-  const [phone, setPhone] = React.useState(user?.phoneNumber);
+  const [email, setEmail] = React.useState(user?.email ? user.email : "");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleDis, setModalVisibleDis] = useState(false);
+  const [modalVisibleWard, setModalVisibleWard] = useState(false);
+
+  const [province, setProvince] = useState({
+    name: user?.address?.province ? user?.address?.province : null,
+  });
+  const [selectedIdProvince, setSelectedIdProvince] = useState();
+
+  const [district, setDistrict] = useState({
+    name: user?.address?.district ? user?.address?.district : null,
+  });
+  const [selectedIdDistrict, setSelectedIdDistrict] = useState();
+
+  const [ward, setWard] = useState({
+    name: user?.address?.ward ? user?.address?.ward : null,
+  });
+  const [selectedIdWard, setSelectedIdWard] = useState();
+
+  const [dob, setDob] = useState({
+    dateString: user?.dateOfBirth ? new Date(user.dateOfBirth) : "",
+  });
+  const [showModelBoD, SetShowModelBoD] = useState(false);
 
   const UpdateProfile = async () => {
     try {
@@ -48,9 +75,16 @@ export default UpdateProfile = ({ navigation }) => {
         id: user._id,
         firstName: firstName,
         lastName: lastName,
-        phoneNumber: phone,
-      };
+        address: {
+          ward: ward.name,
+          district: district.name,
 
+          province: province.name,
+        },
+        dateOfBirth: dob.dateString,
+        email: email,
+      };
+      console.log("custer", customer);
       const customerUpdate = await userApi.changeInfo(customer);
       if (customerUpdate) {
         console.log("success");
@@ -75,18 +109,114 @@ export default UpdateProfile = ({ navigation }) => {
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
         <ScrollView>
+          <ModalProvince
+            setModalVisible={setModalVisible}
+            modalVisible={modalVisible}
+            setProvince={setProvince}
+            selectedIdProvince={selectedIdProvince}
+            setSelectedIdProvince={setSelectedIdProvince}
+            listData={listProvince}
+          />
+
           <View
             style={{ backgroundColor: "white", padding: 15, marginBottom: 10 }}>
+            <ModalProvince
+              setModalVisible={setModalVisibleDis}
+              modalVisible={modalVisibleDis}
+              setProvince={setDistrict}
+              selectedIdProvince={selectedIdDistrict}
+              setSelectedIdProvince={setSelectedIdDistrict}
+              listData={province.districts}
+            />
+            <ModalProvince
+              setModalVisible={setModalVisibleWard}
+              modalVisible={modalVisibleWard}
+              setProvince={setWard}
+              selectedIdProvince={selectedIdWard}
+              setSelectedIdProvince={setSelectedIdWard}
+              listData={district.wards}
+            />
+
+            <ModalCalendarBoD
+              showModel={showModelBoD}
+              setText={setDob}
+              SetShowModel={SetShowModelBoD}
+              date={dob}
+            />
+
+            {/* <DatePicker
+              modal
+              open={showModelBoD}
+              date={new Date()}
+              onConfirm={(date) => {
+                SetShowModelBoD(false);
+                setDob(date);
+              }}
+              onCancel={() => {
+                SetShowModelBoD(false);
+              }}
+            /> */}
             <Text
               style={{
                 fontSize: 20,
                 fontStyle: "italic",
                 color: "gray",
-                marginBottom: 20,
+                marginBottom: 10,
                 fontWeight: "bold",
               }}>
-              Cap nhat thong tin
+              Cập Nhật Thông Tin
             </Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}>
+              <View
+                style={{
+                  flexDirection: "column",
+                  width: "30%",
+                  marginBottom: 30,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontStyle: "italic",
+                    color: "gray",
+
+                    marginLeft: 15,
+                  }}>
+                  Họ
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  value={firstName}
+                  onChangeText={(text) => {
+                    setFirstName(text);
+                  }}></TextInput>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginBottom: 30,
+                  width: "60%",
+                }}>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontStyle: "italic",
+                    color: "gray",
+
+                    marginLeft: 15,
+                  }}>
+                  Tên
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  value={lastName}
+                  onChangeText={(text) => {
+                    setLastName(text);
+                  }}></TextInput>
+              </View>
+            </View>
+
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <Text
                 style={{
@@ -96,16 +226,24 @@ export default UpdateProfile = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                Ho
+                Email
               </Text>
               <TextInput
                 style={styles.input}
-                value={firstName}
+                value={email}
                 onChangeText={(text) => {
-                  setFirstName(text);
+                  setEmail(text);
                 }}></TextInput>
             </View>
-            <View style={{ flexDirection: "column", marginBottom: 30 }}>
+
+            <View
+              style={{
+                flexDirection: "column",
+                marginTop: 0,
+                borderBottomWidth: 1,
+                padding: 5,
+                borderBottomColor: "#D86A23",
+              }}>
               <Text
                 style={{
                   fontSize: 14,
@@ -114,16 +252,46 @@ export default UpdateProfile = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                Ten
+                Tỉnh / Thành Phố
               </Text>
-              <TextInput
-                style={styles.input}
-                value={lastName}
-                onChangeText={(text) => {
-                  setLastName(text);
-                }}></TextInput>
+              <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    width: "100%",
+                  }}>
+                  <Text style={{ textAlign: "center", fontSize: 15 }}>
+                    {province.name
+                      ? province.name
+                      : "------ Tỉnh / Thành Phố --------"}
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 20,
+
+                      alignItems: "center",
+                      marginLeft: 10,
+                    }}>
+                    <Ionicons
+                      name="caret-down-outline"
+                      size={20}
+                      color={"gray"}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: "column" }}>
+            <View
+              style={{
+                flexDirection: "column",
+                marginTop: 20,
+                borderBottomWidth: 1,
+                padding: 5,
+                borderBottomColor: "#D86A23",
+              }}>
               <Text
                 style={{
                   fontSize: 14,
@@ -132,17 +300,132 @@ export default UpdateProfile = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                So Dien Thoai
+                Quận / Huyện
               </Text>
-              <TextInput
-                style={styles.input}
-                value={phone}
-                keyboardType="number-pad"
-                onChangeText={(text) => {
-                  setPhone(text);
-                }}></TextInput>
+              <TouchableOpacity
+                onPress={() => setModalVisibleDis(!modalVisibleDis)}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    width: "100%",
+                  }}>
+                  <Text style={{ textAlign: "center", fontSize: 15 }}>
+                    {district.name
+                      ? district.name
+                      : "------ Quận / Huyện --------"}
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 20,
+
+                      alignItems: "center",
+                      marginLeft: 10,
+                    }}>
+                    <Ionicons
+                      name="caret-down-outline"
+                      size={20}
+                      color={"gray"}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                marginTop: 20,
+                borderBottomWidth: 1,
+                padding: 5,
+                borderBottomColor: "#D86A23",
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontStyle: "italic",
+                  color: "gray",
+
+                  marginLeft: 15,
+                }}>
+                Phường / Xã
+              </Text>
+              <TouchableOpacity
+                onPress={() => setModalVisibleWard(!modalVisibleWard)}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    width: "100%",
+                  }}>
+                  <Text style={{ textAlign: "center", fontSize: 15 }}>
+                    {ward.name ? ward.name : "------ Phường / Xã --------"}
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 20,
+
+                      alignItems: "center",
+                      marginLeft: 10,
+                    }}>
+                    <Ionicons
+                      name="caret-down-outline"
+                      size={20}
+                      color={"gray"}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                marginTop: 20,
+                borderBottomWidth: 1,
+                padding: 5,
+                borderBottomColor: "#D86A23",
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontStyle: "italic",
+                  color: "gray",
+
+                  marginLeft: 15,
+                }}>
+                Ngay Sinh
+              </Text>
+              <TouchableOpacity onPress={() => SetShowModelBoD(!showModelBoD)}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    width: "100%",
+                  }}>
+                  <Text style={{ textAlign: "center", fontSize: 15 }}>
+                    {dob.dateString != ""
+                      ? moment(dob.dateString).format("DD/MM/YYYY")
+                      : ""}
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 20,
+
+                      alignItems: "center",
+                      marginLeft: 10,
+                    }}>
+                    <Ionicons name="calendar" size={20} color={"gray"} />
+                  </View>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
+
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={[
@@ -162,12 +445,12 @@ export default UpdateProfile = ({ navigation }) => {
                     color: "#694fad",
                     fontWeight: "bold",
                   }}>
-                  Cap Nhat
+                  Cập Nhật
                 </Text>
               </View>
             </TouchableOpacity>
           </View>
-
+          {/* 
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={[styles.viewSearch, { backgroundColor: "#694fad" }]}
@@ -179,11 +462,11 @@ export default UpdateProfile = ({ navigation }) => {
               <View>
                 <Text
                   style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-                  Dang Xuat
+                  Đăng Xuất
                 </Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     </KeyboardAvoidingView>
@@ -195,6 +478,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     backgroundColor: "white",
+    justifyContent: "flex-start",
+    marginTop: -70,
   },
   viewPrice: {
     justifyContent: "space-around",
@@ -244,7 +529,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
 
-    marginTop: 15,
+    //  / marginTop: 10,
     height: 50,
   },
 });

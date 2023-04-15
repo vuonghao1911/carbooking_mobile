@@ -5,12 +5,10 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   TouchableOpacity,
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import ModalSelectOption from "../ModalSelectOptions";
 
 import { SetTicket, SetNavigation } from "../../store/Actions";
 import Contex from "../../store/Context";
@@ -27,15 +25,9 @@ export default Items = ({ item, navigation }) => {
       onPress={() => {
         depatch(SetTicket(item));
         depatch(SetNavigation(navigation));
-        navigation.navigate("ticketDetails");
+        navigation.navigate("ticketRefund");
       }}>
       <View style={[styles.Item]}>
-        <ModalSelectOption
-          showModel={showModel}
-          SetShowModel={SetShowModel}
-          navigation={navigation}
-        />
-
         <View style={styles.viewLeft}>
           <View
             style={{
@@ -50,7 +42,7 @@ export default Items = ({ item, navigation }) => {
               {moment(new Date(item.startDate)).format("DD-MM-yyyy")}
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 5 }}>
-              {moment(new Date(item.startDate)).format("HH:mm")}
+              {item.startTime}
             </Text>
           </View>
         </View>
@@ -87,26 +79,26 @@ export default Items = ({ item, navigation }) => {
                 {item.destination.name}
               </Text>
             </View>
-            <View style={styles.viewPlace}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "gray",
-                  marginTop: 5,
-                  fontStyle: "italic",
-                }}>
-                Thời gian: {item.intendTime} tiếng
-              </Text>
-            </View>
             <View style={[styles.viewItemInfo]}>
-              <Text style={{ fontSize: 15, color: "black" }}>Ghế: {"  "} </Text>
+              <Text style={{ fontSize: 15, color: "black" }}>Ghế trả: </Text>
               <FlatList
-                data={item.chair}
+                data={item.chairRefund}
                 numColumns={2}
                 renderItem={({ item, index }) => {
                   return <Text style={styles.textSeats}>{item.seats}</Text>;
                 }}
               />
+            </View>
+            <View style={styles.viewPlace}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "red",
+                  marginTop: 10,
+                }}>
+                Ngày hủy:{" "}
+                {moment(new Date(item.createdAt)).format("DD-MM-yyyy")}
+              </Text>
             </View>
           </View>
         </View>
@@ -138,7 +130,7 @@ const styles = StyleSheet.create({
   Item: {
     //flex: 1 / 2,
     flexDirection: "row",
-    width: 350,
+    width: 360,
     height: 150,
     backgroundColor: "white",
     justifyContent: "space-around",
@@ -149,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 10,
     paddingLeft: 15,
-
     borderColor: "#D86A23",
   },
   viewPrice: {
@@ -185,5 +176,6 @@ const styles = StyleSheet.create({
   viewItemInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
   },
 });

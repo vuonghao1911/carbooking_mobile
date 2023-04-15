@@ -1,21 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
-import { SetListChairs } from "../../store/Actions";
+import { SetListChairs, SetClick } from "../../store/Actions";
 import Contex from "../../store/Context";
 
 export default Items = ({ item, navigation, setPrice }) => {
@@ -72,7 +59,7 @@ export default Items = ({ item, navigation, setPrice }) => {
 
   React.useEffect(() => {
     listChairs.forEach((element) => {
-      if (item.id === element.id) {
+      if (item._id === element._id) {
         setSelectedId(true);
       }
     });
@@ -102,6 +89,7 @@ export default Items = ({ item, navigation, setPrice }) => {
       onPress={() => {
         handleSelectChair(item);
         setPrice(routeVehical.price * listChairs.length);
+        depatch(SetClick(!pressOn));
       }}>
       <View
         style={[

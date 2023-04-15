@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   TouchableOpacity,
-  ImageBackground,
-  Image,
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 
+import ModalBus from "../../components/ModalBus";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
+
 import { SetUser, SetBusStation, SetTicketUserInfo } from "../../store/Actions";
 import Contex from "../../store/Context";
+import "intl";
+import "intl/locale-data/jsonp/en";
 
 export default RouteDetails = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, listChairs, placeTo, placeFrom, routeVehical } = state;
-  const [busLocation, setBusLocation] = React.useState(
-    placeFrom.busStation[0].location
+  const [busLocation, setBusLocation] = React.useState(placeFrom.busStation[0]);
+  const [fullName, setFullName] = React.useState(
+    `${user.firstName} ` + " " + `${user.lastName}`
   );
-  const [fullName, setFullName] = React.useState(" Vuong Hao");
-  const [phone, setPhone] = React.useState("01234213412");
+  const [phone, setPhone] = React.useState(`${user.phoneNumber}`);
+  const [showModel, SetShowModel] = React.useState(false);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -37,7 +36,7 @@ export default RouteDetails = ({ navigation }) => {
           <View style={styles.viewInfo}>
             <View>
               <Text style={{ marginLeft: 5, fontSize: 20 }}>
-                {routeVehical.startTime} - {routeVehical.endTime}
+                {routeVehical.startTime} -{routeVehical.endTime}
               </Text>
             </View>
             <View style={styles.viewPrice}>
@@ -46,7 +45,8 @@ export default RouteDetails = ({ navigation }) => {
                   fontSize: 15,
                   color: "black",
                 }}>
-                {routeVehical.price} d
+                {new Intl.NumberFormat("en-US").format(`${routeVehical.price}`)}{" "}
+                đ
               </Text>
               <Ionicons name="ellipse" color={"#D86A23"} />
               <Text
@@ -73,7 +73,7 @@ export default RouteDetails = ({ navigation }) => {
               <View style={[styles.viewPlace, { marginLeft: -3 }]}>
                 <Ionicons name="paper-plane" color={"orange"} size={20} />
                 <Text style={{ fontSize: 15, color: "black", marginLeft: 15 }}>
-                  {routeVehical.departure}
+                  {routeVehical.departure.name}
                 </Text>
               </View>
               <View style={[styles.viewPlace]}>
@@ -102,13 +102,13 @@ export default RouteDetails = ({ navigation }) => {
                     color: "black",
                     marginLeft: 15,
                   }}>
-                  {routeVehical.destination}
+                  {routeVehical.destination.name}
                 </Text>
               </View>
             </View>
           </View>
           <View
-            style={{ backgroundColor: "white", padding: 15, marginBottom: 20 }}>
+            style={{ backgroundColor: "white", padding: 15, marginBottom: 15 }}>
             <Text
               style={{
                 fontSize: 15,
@@ -116,7 +116,7 @@ export default RouteDetails = ({ navigation }) => {
                 color: "gray",
                 marginBottom: 10,
               }}>
-              {`Ghe da chon (` + `${listChairs.length}` + `)`}
+              {`Ghế đã chọn (` + `${listChairs.length}` + `)`}
             </Text>
 
             <FlatList
@@ -129,7 +129,7 @@ export default RouteDetails = ({ navigation }) => {
           </View>
 
           <View
-            style={{ backgroundColor: "white", padding: 15, marginBottom: 20 }}>
+            style={{ backgroundColor: "white", padding: 15, marginBottom: 10 }}>
             <Text
               style={{
                 fontSize: 15,
@@ -137,10 +137,10 @@ export default RouteDetails = ({ navigation }) => {
                 color: "gray",
                 marginBottom: 5,
               }}>
-              Chon diem len xe
+              Chọn điểm lên xe
             </Text>
 
-            <Picker
+            {/* <Picker
               selectedValue={busLocation}
               style={{ height: 30 }}
               itemStyle={{ color: "red" }}
@@ -162,7 +162,51 @@ export default RouteDetails = ({ navigation }) => {
                   />
                 );
               })}
-            </Picker>
+            </Picker> */}
+            {/* <ModalBusStation
+              showModel={showModel}
+              SetShowModel={SetShowModel}
+              setBusLocation={setBusLocation}
+            /> */}
+            <ModalBus
+              showModel={showModel}
+              SetShowModel={SetShowModel}
+              setBusLocation={setBusLocation}
+            />
+            <TouchableOpacity onPress={() => SetShowModel(!showModel)}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  padding: 5,
+                }}>
+                <Text>
+                  {`${busLocation.address.name}` +
+                    " (" +
+                    `${busLocation.address.detailAddress}` +
+                    ", " +
+                    `${busLocation.address.ward}` +
+                    ", " +
+                    `${busLocation.address.district}` +
+                    ", " +
+                    `${busLocation.address.province}` +
+                    " )"}
+                </Text>
+                <View
+                  style={{
+                    width: 20,
+
+                    alignItems: "center",
+                    marginLeft: 10,
+                  }}>
+                  <Ionicons
+                    name="caret-down-outline"
+                    size={20}
+                    color={"gray"}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
           <View
             style={{ backgroundColor: "white", padding: 15, marginBottom: 10 }}>
@@ -173,7 +217,7 @@ export default RouteDetails = ({ navigation }) => {
                 color: "gray",
                 marginBottom: 20,
               }}>
-              Thong tin lien lac
+              Thông tin liên lạc
             </Text>
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <Text
@@ -184,7 +228,7 @@ export default RouteDetails = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                Ho va Ten
+                Họ và Tên
               </Text>
               <TextInput
                 style={styles.input}
@@ -202,7 +246,7 @@ export default RouteDetails = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                So Dien Thoai
+                Số Điện Thoại
               </Text>
               <TextInput
                 style={styles.input}

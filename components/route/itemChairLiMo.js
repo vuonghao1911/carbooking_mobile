@@ -1,21 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
-import { SetListChairs } from "../../store/Actions";
+import { SetListChairs, SetClick } from "../../store/Actions";
 import Contex from "../../store/Context";
 
 export default Items = ({ item, navigation, setPrice }) => {
@@ -58,8 +45,6 @@ export default Items = ({ item, navigation, setPrice }) => {
         arrayChair.push(item);
         depatch(SetListChairs(arrayChair));
       }
-
-      console.log("list", item._id);
     }
     if (selectedId) {
       setPressOn(false);
@@ -70,7 +55,7 @@ export default Items = ({ item, navigation, setPrice }) => {
 
   React.useEffect(() => {
     listChairs.forEach((element) => {
-      if (item.id === element.id) {
+      if (item._id === element._id) {
         setSelectedId(true);
       }
     });
@@ -81,6 +66,7 @@ export default Items = ({ item, navigation, setPrice }) => {
       onPress={() => {
         handleSelectChair(item);
         setPrice(routeVehical.price * listChairs.length);
+        depatch(SetClick(!pressOn));
       }}>
       <View
         style={[
@@ -89,12 +75,12 @@ export default Items = ({ item, navigation, setPrice }) => {
                 flexDirection: "column",
                 width: 60,
                 height: 40,
-                backgroundColor: "gray",
+                backgroundColor: "#D5D9DD",
                 justifyContent: "space-around",
 
                 padding: 0,
-                borderWidth: 0,
-                borderColor: "#E3FAF4",
+                borderWidth: 1,
+                borderColor: "gray",
                 borderRadius: 10,
                 margin: 3,
                 marginRight: 55,
@@ -105,7 +91,14 @@ export default Items = ({ item, navigation, setPrice }) => {
             ? styles.viewItemSelect
             : styles.Item,
         ]}>
-        <Text style={styles.textSeats}>{item.seats}</Text>
+        <Text
+          style={[
+            pressOn || selectedId
+              ? { textAlign: "center", color: "white", fontWeight: "bold" }
+              : styles.textSeats,
+          ]}>
+          {item.seats}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -117,19 +110,19 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: 60,
     height: 40,
-    backgroundColor: "#1FADD8",
+    backgroundColor: "#DEF3FF",
     justifyContent: "space-around",
 
     padding: 0,
-    borderWidth: 0,
-    borderColor: "#E3FAF4",
+    borderWidth: 1,
+    borderColor: "#65959C",
     borderRadius: 10,
     margin: 3,
     marginRight: 55,
   },
   textSeats: {
     textAlign: "center",
-    color: "white",
+    color: "black",
     fontWeight: "bold",
   },
   viewItemSelect: {

@@ -72,7 +72,7 @@ export default function SecondScreen({ navigation, route }) {
         //name="Feed"
         // component={Feed}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Nhà",
           tabBarColor: "#D86A23",
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" color={color} size={25} />
@@ -83,7 +83,7 @@ export default function SecondScreen({ navigation, route }) {
         name="Contacts"
         component={ContactsSreen}
         options={{
-          tabBarLabel: "Lich Su",
+          tabBarLabel: "Lich Sử",
           tabBarColor: "#009387",
           tabBarIcon: ({ color }) => (
             <Ionicons name="timer" color={color} size={25} />
@@ -95,7 +95,7 @@ export default function SecondScreen({ navigation, route }) {
         component={AboutScreen}
         //  options={{headerShown: false, }}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Hồ sơ",
           tabBarColor: "#694fad",
           tabBarIcon: ({ color }) => (
             <Ionicons name="person" color={color} size={25} />
@@ -103,12 +103,12 @@ export default function SecondScreen({ navigation, route }) {
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Khuyến Mãi"
         component={SettingScreen}
         //  options={{headerShown: false, }}
         options={{
-          tabBarLabel: "Settings",
-          tabBarColor: "#C282D8",
+          tabBarLabel: "Khuyen Mai",
+          tabBarColor: "#D74A80",
           tabBarIcon: ({ color }) => (
             <Ionicons name="list" color={color} size={25} />
           ),

@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import routeApi from "../api/routeApi";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { SetTicket, SetPlaceTo } from "../store/Actions";
 import Contex from "../store/Context";
+
 const Items = ({ item, onPress, backgroundColor, textColor }) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -24,42 +23,29 @@ const Items = ({ item, onPress, backgroundColor, textColor }) => {
   );
 };
 
-const ModalDestination = ({
-  modalVisibleDes,
-  setModalVisibleDes,
-  setDestination,
-  setSelectedIdDes,
-  selectedIdDes,
+const ModalDepture = ({
+  modalVisible,
+  setModalVisible,
+  setProvince,
+  selectedIdProvince,
+  setSelectedIdProvince,
+  listData,
 }) => {
-  const [depture, setDept] = useState([]);
   const { state, depatch } = React.useContext(Contex);
   const { user, userSearched, idConversation, userChatting } = state;
-  React.useEffect(() => {
-    const getListPlace = async () => {
-      try {
-        const result = await routeApi.getListPlace();
 
-        setDept(result.data.reverse());
-      } catch (error) {
-        console.log("Failed to fetch : ", error);
-      }
-    };
-
-    getListPlace();
-  }, []);
   const renderItem = ({ item }) => {
-    const backgroundColor = item._id === selectedIdDes ? "#D86A23" : "white";
-    const color = item._id === selectedIdDes ? "white" : "black";
+    const backgroundColor =
+      item.id === selectedIdProvince ? "#694fad" : "white";
+    const color = item.id === selectedIdProvince ? "white" : "black";
 
     return (
       <Items
         item={item}
         onPress={() => {
-          setSelectedIdDes(item._id);
-          setModalVisibleDes(!modalVisibleDes);
-          setDestination(item);
-          depatch(SetPlaceTo(item));
-          console.log(item.name);
+          setSelectedIdProvince(item.id);
+          setModalVisible(!modalVisible);
+          setProvince(item);
         }}
         backgroundColor={backgroundColor}
         textColor={color}
@@ -76,13 +62,12 @@ const ModalDestination = ({
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
-        visible={modalVisibleDes}
+        visible={modalVisible}
         onRequestClose={() => {
-          setModalVisibleDes(!modalVisibleDes);
+          setModalVisible(!modalVisible);
         }}>
         <View style={styles.viewBar}>
-          <TouchableOpacity
-            onPress={() => setModalVisibleDes(!modalVisibleDes)}>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
             <Ionicons name="chevron-back-outline" size={25} color={"white"} />
           </TouchableOpacity>
 
@@ -92,16 +77,16 @@ const ModalDestination = ({
               color: "white",
               fontWeight: "bold",
               textAlign: "center",
-              marginLeft: 125,
+              marginLeft: 145,
             }}>
-            Chọn nơi dến
+            Địa Chỉ
           </Text>
         </View>
         <Text style={{ fontSize: 15, margin: 10, fontWeight: "bold" }}>
-          Danh sách nơi đến
+          Danh sách
         </Text>
         <FlatList
-          data={depture}
+          data={listData}
           // renderItem={({ item }) => (
           //   <Items
           //     item={item}
@@ -132,13 +117,13 @@ const styles = StyleSheet.create({
   },
   viewBar: {
     flexDirection: "row",
-    alignContent: "center",
+    alignItems: "center",
     justifyContent: "flex-start",
-    height: 45,
-    backgroundColor: "#D86A23",
+    height: 70,
+    backgroundColor: "#694fad",
     marginBottom: 10,
     padding: 5,
   },
 });
 
-export default ModalDestination;
+export default ModalDepture;

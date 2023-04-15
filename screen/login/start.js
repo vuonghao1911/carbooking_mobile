@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import routeApi from "../../api/routeApi";
+import userApi from "../../api/userApi";
 
 import {
   SafeAreaView,
@@ -13,18 +13,46 @@ import {
   Image,
 } from "react-native";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { authetication } from "../../fireBaseConfig";
+import { SetUser, SetVetificaitonId, SetCheckLogin } from "../../store/Actions";
+import Contex from "../../store/Context";
 export default Start = ({ navigation }) => {
-  React.useEffect(() => {
-    const getListCar = async () => {
-      try {
-        const result = await routeApi.getCar("63b2e4adeaca88ce6a368a22");
-      } catch (error) {
-        console.log("Failed to fetch : ", error);
-      }
-    };
+  const { state, depatch } = React.useContext(Contex);
+  const { user, vetificaitonId } = state;
 
-    getListCar();
-  });
+  React.useEffect(() => {
+    // const getListCar = async () => {
+    //   try {
+    //     const result = await routeApi.getCar("63b2e4adeaca88ce6a368a22");
+    //   } catch (error) {
+    //     console.log("Failed to fetch : ", error);
+    //   }
+    // };
+    // getListCar();
+
+    const unregisterAuthObserver = onAuthStateChanged(authetication, (u) => {
+      try {
+        if (u) {
+          const getUser = async () => {
+            const phoneString = u.phoneNumber;
+            const phoneNumber = "0" + phoneString.substring(3, 12);
+
+            const user = await userApi.getUserByPhone(phoneNumber);
+
+            depatch(SetUser(user.customer));
+            navigation.navigate("Second");
+          };
+          getUser();
+        } else {
+          console.log("Failed to");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    return () => unregisterAuthObserver();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -54,8 +82,9 @@ export default Start = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.viewButton}
-        // onPress={() => navigation.navigate("InStart")}
-        onPress={() => navigation.navigate("Second")}>
+        onPress={() => navigation.navigate("InStart")}
+        // onPress={() => navigation.navigate("Second")}
+      >
         <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
           BẮT ĐẦU
         </Text>

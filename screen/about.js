@@ -36,6 +36,23 @@ const CreateAboutScreen = ({ navigation }) => {
       },
     ]);
   };
+
+  const handleLogout = () => {
+    Alert.alert("Đăng Xuất", `Bạn muốn đăng xuất khỏi ứng dụng`, [
+      // {
+      //   text: "Hủy",
+      //   onPress: () => console.log("navigation", navigation),
+      //   style: "cancel",
+      // },
+      {
+        text: "Đồng ý",
+        onPress: () => {
+          navigation.replace("Login");
+        },
+        style: "default",
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,20 +65,14 @@ const CreateAboutScreen = ({ navigation }) => {
             marginTop: 20,
             padding: 10,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Login");
-            }}>
-            <Ionicons name="chevron-back" size={24} color="white" />
-          </TouchableOpacity>
           <Text
             style={{
-              marginLeft: 140,
+              marginLeft: 160,
               fontSize: 16,
               fontWeight: "bold",
               color: "white",
             }}>
-            Ho So
+            Hồ Sơ
           </Text>
         </View>
       </View>
@@ -107,7 +118,7 @@ const CreateAboutScreen = ({ navigation }) => {
           <View style={styles.viewItem}>
             <Ionicons name="sync" size={23} color={"orange"} />
             <View style={styles.viewCustomItem}>
-              <Text style={{ fontSize: 15 }}>Doi mat khau</Text>
+              <Text style={{ fontSize: 15 }}>Đổi mật khẩu</Text>
               <Ionicons
                 style={{}}
                 color={"#694fad"}
@@ -133,7 +144,7 @@ const CreateAboutScreen = ({ navigation }) => {
             fontWeight: "normal",
             color: "gray",
           }}>
-          Private
+          Thông tin
         </Text>
       </View>
 
@@ -142,15 +153,15 @@ const CreateAboutScreen = ({ navigation }) => {
           <View style={styles.viewItem}>
             <Ionicons name="remove-circle" size={23} color={"#8F4607"} />
             <View style={styles.viewCustomItem}>
-              <Text style={{ fontSize: 15 }}>Xoa Tai Khoan</Text>
+              <Text style={{ fontSize: 15 }}>Xóa Tài Khoản</Text>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout}>
           <View style={styles.viewItem}>
             <Ionicons name="log-out" size={23} color={"#694fad"} />
             <View style={styles.viewCustomItem}>
-              <Text style={{ fontSize: 15 }}>Dang xuat</Text>
+              <Text style={{ fontSize: 15 }}>Đăng Xuất</Text>
             </View>
           </View>
         </TouchableOpacity>

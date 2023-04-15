@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
   KeyboardAvoidingView,
-  ScrollView,
+  ToastAndroid,
+  Linking,
+  Alert,
 } from "react-native";
 
 import "intl";
 import "intl/locale-data/jsonp/en";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { SetUser, SetBusStation, SetTicketUserInfo } from "../../store/Actions";
+import { SetPlaceTo } from "../../store/Actions";
 import Contex from "../../store/Context";
-
+import moment from "moment";
+import routeApi from "../../api/routeApi";
+import ticketApi from "../../api/ticketApi";
+import ModalInfoPromotion from "../../components/ModalInfoPromotion";
+import ModalNotifi from "../../components/ModalCancelTicket1";
+import ModalNotifiStatusPayment from "../../components/ModalCancelTicket1";
 export default TicketInfo = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const {
@@ -31,34 +33,211 @@ export default TicketInfo = ({ navigation }) => {
     routeVehical,
     busStation,
     ticketUserInfo,
+    promotions,
   } = state;
-  const [busLocation, setBusLocation] = React.useState(
-    placeFrom.busStation[0].location
-  );
-  const [fullName, setFullName] = React.useState(" Vuong Hao");
-  const [phone, setPhone] = React.useState("01234213412");
 
-  console.log(ticketUserInfo);
+  const [amount, setAmount] = React.useState(
+    routeVehical.price * listChairs.length
+  );
+  const [discountAmount, setDiscountAmount] = React.useState();
+  const [showModel, SetShowModel] = React.useState(false);
+  const [infoPomotion, setInfoPromotion] = React.useState(null);
+  const [showModelNotifi, SetShowModelNotifi] = React.useState(false);
+  const [status, setStatus] = React.useState(false);
+  const [title, setTitle] = React.useState("");
+  const [showModelNotifiPayment, SetShowModelNotifiPayment] =
+    React.useState(false);
+
+  const checkPromotion = () => {
+    var discountAmount = 0;
+    var total = listChairs.length * routeVehical.price;
+    if (promotions) {
+      if (promotions?.promotion?.percentDiscount) {
+        if (total >= promotions?.promotion?.purchaseAmount) {
+          discountAmount =
+            (total * promotions?.promotion?.percentDiscount) / 100;
+          if (discountAmount < promotions?.promotion.budget) {
+            if (discountAmount < promotions?.promotion.maximumDiscount) {
+              setAmount(total - discountAmount);
+              setDiscountAmount(
+                "- " +
+                  new Intl.NumberFormat("en-US").format(`${discountAmount}`) +
+                  " đ"
+              );
+              setInfoPromotion({
+                id: promotions?.promotion?._id,
+                discountAmount,
+              });
+            } else {
+              discountAmount = promotions?.promotion.maximumDiscount;
+              setAmount(total - discountAmount);
+              setDiscountAmount(
+                "- " +
+                  new Intl.NumberFormat("en-US").format(`${discountAmount}`) +
+                  " đ"
+              );
+              setInfoPromotion({
+                id: promotions?.promotion?._id,
+                discountAmount,
+              });
+            }
+          } else {
+            setAmount(total);
+            setDiscountAmount("KM đã hết ngân sách");
+          }
+        } else {
+          setAmount(total);
+          setDiscountAmount("Chưa được áp dụng");
+        }
+      } else {
+        if (total >= promotions?.promotion?.purchaseAmount) {
+          if (
+            promotions?.promotion?.budget >= promotions.promotion?.moneyReduced
+          ) {
+            const amountTotal = total - promotions?.promotion?.moneyReduced;
+            setAmount(amountTotal);
+            setDiscountAmount(
+              "- " +
+                new Intl.NumberFormat("en-US").format(
+                  `${promotions?.promotion?.moneyReduced}`
+                ) +
+                " d"
+            );
+            setInfoPromotion({
+              id: promotions?.promotion?._id,
+              discountAmount: promotions?.promotion?.moneyReduced,
+            });
+          } else {
+            setAmount(total);
+            setDiscountAmount("KM đã hết ngân sách");
+          }
+        } else {
+          setAmount(total);
+          setDiscountAmount("Chưa được áp dụng");
+        }
+      }
+    } else {
+      setAmount(total);
+      setDiscountAmount("Chưa được áp dụng");
+    }
+  };
+  React.useEffect(() => {
+    // checkPromotion();
+    if (promotions) {
+      var discount = 0;
+      for (const elem of promotions) {
+        discount += elem.discountAmount;
+      }
+      setAmount(routeVehical.price * listChairs.length - discount);
+      setDiscountAmount(discount);
+    } else {
+      setDiscountAmount(0 + " đ");
+    }
+  }, [routeVehical, listChairs]);
+  const handleBooking = async (navigation) => {
+    try {
+      const customer = {
+        lastNameCustomer: ticketUserInfo.fullName,
+      };
+      const ticket = {
+        vehicleRouteId: routeVehical._id,
+        customer: customer,
+        phoneNumber: ticketUserInfo.phone,
+        idPromotion: infoPomotion?.id,
+        discountAmount: infoPomotion?.discountAmount,
+        locationBus: busStation,
+        chair: listChairs,
+        quantity: listChairs.length,
+        priceId: routeVehical.priceId,
+        promotion: promotions,
+      };
+
+      ticketApi
+        .payment(amount)
+        .then((res) => {
+          Linking.openURL(res.zalo.order_url);
+          console.log(res.zalo.order_url);
+          ticketApi
+            .getStatusPayment(res.appTransId, res.appTime, ticket)
+            .then((result) => {
+              console.log("res", result);
+              if (result.status) {
+                SetShowModelNotifi(!showModelNotifi);
+                setTitle("Bạn đã đặt vé thành công");
+                setStatus(true);
+                SetShowModelNotifiPayment(!showModelNotifiPayment);
+                // navigation.navigate("Second");
+                depatch(SetPlaceTo(null));
+                console.log("ticket ", result.data);
+              } else {
+                SetShowModelNotifi(!showModelNotifi);
+                setTitle("Thanh toán không thành công");
+                setStatus(false);
+                SetShowModelNotifiPayment(!showModelNotifiPayment);
+              }
+            });
+          SetShowModelNotifiPayment(!showModelNotifiPayment);
+          setTitle("Thanh toán không thành công");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // const ticketSave = await routeApi.bookingTicket(ticket);
+      // if (ticketSave) {
+      //   navigation.navigate("Second");
+      //   depatch(SetPlaceTo(null));
+      //   ToastAndroid.showWithGravity(
+      //     "Đặt vé thành công",
+      //     ToastAndroid.SHORT,
+      //     ToastAndroid.BOTTOM
+      //   );
+      // } else {
+      //   console.log("Loi");
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
+        <ModalInfoPromotion
+          showModel={showModel}
+          SetShowModel={SetShowModel}
+          data={promotions}
+        />
+        <ModalNotifi
+          showModel={showModelNotifi}
+          SetShowModel={SetShowModelNotifi}
+          status={status}
+          title={title}
+          navigation={navigation}
+        />
+
+        <ModalNotifiStatusPayment
+          showModel={showModelNotifiPayment}
+          SetShowModel={SetShowModelNotifiPayment}
+          status={false}
+          title={title}
+          navigation={navigation}
+        />
         <View style={styles.viewInfo}>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
-            Thong tin khach hang
+            Thông tin khách hàng
           </Text>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "gray", marginLeft: 10 }}>
-              Ho va Ten
+              Họ và Tên
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10 }}>
               {ticketUserInfo.fullName}
             </Text>
           </View>
-
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "gray", marginLeft: 10 }}>
-              So Dien Thoai
+              Số Điện Thoại
             </Text>
             <Text style={{ fontSize: 15, marginRight: 10, fontWeight: "bold" }}>
               {ticketUserInfo.phone}
@@ -74,26 +253,26 @@ export default TicketInfo = ({ navigation }) => {
               color: "black",
               marginBottom: 10,
             }}>
-            Thong Tin Chuyen Di
+            Thông Tin Chuyến Đi
           </Text>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Chuyen Di
+              Chuyến Đi
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontSize: 15, marginRight: 10 }}>
-                {routeVehical.departure}
+                {routeVehical.departure.name}
               </Text>
               <Ionicons name="shuffle" size={20} color={"#730E80"} />
               <Text style={{ fontSize: 15, marginLeft: 10 }}>
-                {routeVehical.destination}
+                {routeVehical.destination.name}
               </Text>
             </View>
           </View>
 
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Thoi Gian
+              Thời Gian
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -103,13 +282,13 @@ export default TicketInfo = ({ navigation }) => {
                   color: "black",
                   fontWeight: "bold",
                 }}>
-                {routeVehical.startTime} - {routeVehical.endTime}
+                {routeVehical.startTime} -{routeVehical.endTime}
               </Text>
             </View>
           </View>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
-              So Ghe
+              Số Ghế
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -124,7 +303,7 @@ export default TicketInfo = ({ navigation }) => {
           </View>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
-              Ghe
+              Ghế
             </Text>
             <View style={{ flexDirection: "row" }}>
               <FlatList
@@ -149,7 +328,7 @@ export default TicketInfo = ({ navigation }) => {
 
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
-              Diem len xe
+              Điểm lên xe
             </Text>
             <View style={{ flexDirection: "row", width: "60%" }}>
               <Text
@@ -158,13 +337,22 @@ export default TicketInfo = ({ navigation }) => {
                   marginRight: 10,
                   color: "black",
                 }}>
-                {busStation}
+                {`${busStation.address.name}` +
+                  " (" +
+                  `${busStation.address.detailAddress}` +
+                  ", " +
+                  `${busStation.address.ward}` +
+                  ", " +
+                  `${busStation.address.district}` +
+                  ", " +
+                  `${busStation.address.province}` +
+                  " )"}
               </Text>
             </View>
           </View>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Tong Tien
+              Tổng Tiền
             </Text>
             <View style={{ flexDirection: "row", width: "60%" }}>
               <Text
@@ -177,25 +365,29 @@ export default TicketInfo = ({ navigation }) => {
                 {new Intl.NumberFormat("en-US").format(
                   `${routeVehical.price * listChairs.length}`
                 )}{" "}
-                d
+                đ
               </Text>
             </View>
           </View>
 
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Khuyen mai
+              Khuyến Mãi
             </Text>
             <View style={{ flexDirection: "row", width: "60%" }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 10,
-                  color: "#730E80",
-                  fontStyle: "italic",
-                }}>
-                Mua trên 3 ve giam 10% giá hóa đơn tối đa 200.000đ
-              </Text>
+              <TouchableOpacity onPress={() => SetShowModel(!showModel)}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginRight: 10,
+                    color: "#730E80",
+                    fontStyle: "italic",
+                  }}>
+                  {`Khuyến mãi được áp dụng ${
+                    promotions?.length > 0 ? `(${promotions?.length}` + ")" : ""
+                  }`}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={{ flexDirection: "column", alignItems: "center" }}>
@@ -207,7 +399,7 @@ export default TicketInfo = ({ navigation }) => {
                   {new Intl.NumberFormat("en-US").format(
                     `${routeVehical.price * listChairs.length}`
                   )}{" "}
-                  d
+                  đ
                 </Text>
               </View>
               <View style={styles.viewPrice}>
@@ -222,11 +414,12 @@ export default TicketInfo = ({ navigation }) => {
                     marginRight: 20,
                     fontSize: 16,
                   }}>
-                  60.000
+                  - {new Intl.NumberFormat("en-US").format(`${discountAmount}`)}{" "}
+                  đ
                 </Text>
               </View>
               <View style={styles.viewPrice}>
-                <Text style={{ fontSize: 18 }}>Tong Tien Ve: </Text>
+                <Text style={{ fontSize: 18 }}>Tổng Tiền Vé: </Text>
                 <Text
                   style={{
                     fontWeight: "bold",
@@ -234,20 +427,17 @@ export default TicketInfo = ({ navigation }) => {
                     marginRight: 20,
                     color: "#730E80",
                   }}>
-                  {new Intl.NumberFormat("en-US").format(
-                    `${routeVehical.price * listChairs.length - 60000}`
-                  )}{" "}
-                  d
+                  {new Intl.NumberFormat("en-US").format(`${amount}`)} đ
                 </Text>
               </View>
             </View>
             <TouchableOpacity
               style={styles.viewSearch}
-              onPress={() => navigation.navigate("routeDetails")}>
+              onPress={() => handleBooking(navigation)}>
               <View>
                 <Text
                   style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-                  Xac Nhan
+                  Xác Nhận
                 </Text>
               </View>
             </TouchableOpacity>

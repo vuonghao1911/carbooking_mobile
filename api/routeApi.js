@@ -15,8 +15,18 @@ const routeApi = {
     return axiosClient.post(`/register`, customer);
   },
   getListPlace: () => {
-    const url = `/places/all/getPlace`;
+    const url = `/places/all/getPlace?page=0&size=50`;
     return axiosClient.get(url);
+  },
+  searchRoute: (departure, destination, startDate) => {
+    return axiosClient.post(`/routes/searchRoute`, {
+      departure: departure,
+      destination: destination,
+      startDate: startDate,
+    });
+  },
+  bookingTicket: (ticket) => {
+    return axiosClient.post(`/tickets/booking`, ticket);
   },
 };
 

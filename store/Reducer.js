@@ -12,8 +12,8 @@ import {
   SET_TICKET,
   SET_NAVIGATION,
   SET_CHECKFORGOTPASSWORD,
-  SET_IDCONVERSATION,
-  SET_SOCKET,
+  SET_PROMOTIONS,
+  SET_CLICK,
 } from "./Actions";
 
 //innite state
@@ -27,28 +27,24 @@ const initState = {
   placeFrom: null,
   ticketUserInfo: null,
 
-  //user is searching
-  // userSearched: null,
+  //
   checkForgotPassword: false,
   placeTo: null,
 
   // state searching currently
   busStation: null,
 
-  //0: tab message
-  //1: tab friend
-  //2: something
   ticket: null,
 
-  //user is chatting
+  //set navigation for options
   navigation: null,
-  //id cua cuoc hoi thoai dang chat
-  idConversation: null,
+  //info promotion
+  promotions: null,
 
-  //list of searched users
+  // vetificationId for otp
   vetificationId: null,
 
-  socket: null,
+  click: true,
 };
 
 //depatch
@@ -120,15 +116,15 @@ const Reducer = (state, action) => {
         ...state,
         checkForgotPassword: action.payload,
       };
-    case SET_IDCONVERSATION:
+    case SET_PROMOTIONS:
       return {
         ...state,
-        idConversation: action.payload,
+        promotions: action.payload,
       };
-    case SET_SOCKET:
+    case SET_CLICK:
       return {
         ...state,
-        socket: action.payload,
+        click: action.payload,
       };
   }
 };

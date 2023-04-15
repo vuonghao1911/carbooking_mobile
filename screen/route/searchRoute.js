@@ -1,36 +1,27 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
 } from "react-native";
 
 import moment from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
 import ModalCalendar from "../../components/ModalCalendar";
 import ModalDepture from "../../components/ModalDepture";
 import ModalDestination from "../../components/ModalDestination";
-import { Listroute } from "../../data/dataTest";
 import ItemRoute from "../../components/route/ItemRoute";
 import {
-  SetUser,
-  SetVetificaitonId,
-  SetCheckLogin,
   SetListChairs,
   SetPlaceFrom,
   SetPlaceTo,
   SetRouteVehicle,
 } from "../../store/Actions";
 import Contex from "../../store/Context";
+import routeApi from "../../api/routeApi";
 
 export default SearchRoute = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
@@ -42,12 +33,12 @@ export default SearchRoute = ({ navigation }) => {
 
   const [listRouteVehical, setListRouteVehical] = useState([]);
 
-  const [depture, setDepture] = useState({ name: "Ben Tre" });
-  const [destination, setDestination] = useState({ name: "TpHcm" });
+  const [depture, setDepture] = useState({ name: "Chọn Nơi Đi" });
+  const [destination, setDestination] = useState({ name: "Chọn Nơi Đến" });
   const [selectedIdDes, setSelectedIdDes] = useState();
   const [selectedIdDep, setSelectedIdDep] = useState();
 
-  console.log("date", date.dateString);
+  console.log("date1", date);
 
   const handleRepeat = () => {
     setDepture(destination);
@@ -60,6 +51,43 @@ export default SearchRoute = ({ navigation }) => {
   //     timeZone: "Asia/Ho_Chi_Minh",
   //   });
   //   console.log(new Date().toString());
+
+  const handleSearchRoute = async () => {
+    try {
+      if (date?.dateString) {
+        const result = await routeApi.searchRoute(
+          depture._id,
+          destination._id,
+          date.dateString
+        );
+        if (result) {
+          setListRouteVehical(result);
+          depatch(SetPlaceFrom(depture));
+          depatch(SetPlaceTo(destination));
+        } else {
+          setListRouteVehical([]);
+        }
+        console.log(result);
+      } else {
+        const date = new Date().toISOString();
+
+        const result = await routeApi.searchRoute(
+          depture._id,
+          destination._id,
+          date
+        );
+        if (result) {
+          setListRouteVehical(result);
+          depatch(SetPlaceFrom(depture));
+          depatch(SetPlaceTo(destination));
+        } else {
+          setListRouteVehical([]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={[styles.container]}>
@@ -169,7 +197,7 @@ export default SearchRoute = ({ navigation }) => {
                   fontSize: 15,
                   color: "#D86A23",
                 }}>
-                {moment(date).format("DD/MM")}
+                {moment(date.dateString).format("DD/MM")}
               </Text>
             </TouchableOpacity>
             <ModalCalendar
@@ -185,12 +213,7 @@ export default SearchRoute = ({ navigation }) => {
           <Ionicons name="search-outline" size={25} color={"#9506D8"} />
           <TouchableOpacity
             // onPress={() => navigation.navigate("InStart")}
-            onPress={() => {
-              // navigation.navigate("Second")
-              depatch(SetPlaceFrom(depture));
-              depatch(SetPlaceTo(destination));
-              //   setListRouteVehical(Listroute);
-            }}>
+            onPress={handleSearchRoute}>
             <Text
               style={{
                 fontSize: 18,
@@ -215,7 +238,7 @@ export default SearchRoute = ({ navigation }) => {
       </Text>
       <View style={styles.viewBody}>
         <FlatList
-          data={Listroute}
+          data={listRouteVehical}
           renderItem={({ item }) => (
             <ItemRoute item={item} navigation={navigation} />
           )}

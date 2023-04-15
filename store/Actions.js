@@ -13,8 +13,8 @@ export const SET_TICKETUSERINFO = "set_TicketUserInfo";
 export const SET_TICKET = "set_Ticket";
 export const SET_NAVIGATION = "set_Navigation";
 export const SET_CHECKFORGOTPASSWORD = "set_ForgotPassword";
-export const SET_IDCONVERSATION = "set_IdConversation";
-export const SET_SOCKET = "set_Socket";
+export const SET_PROMOTIONS = "set_Promotions";
+export const SET_CLICK = "set_Click";
 
 export const SetPhoneNumber = (payload) => {
   return {
@@ -103,15 +103,15 @@ export const SetCheckForgotPassword = (payload) => {
   };
 };
 
-export const SetIdConversation = (payload) => {
+export const SetPromotions = (payload) => {
   return {
-    type: SET_IDCONVERSATION,
+    type: SET_PROMOTIONS,
     payload,
   };
 };
-export const SetSocket = (payload) => {
+export const SetClick = (payload) => {
   return {
-    type: SET_SOCKET,
+    type: SET_CLICK,
     payload,
   };
 };

@@ -72,7 +72,7 @@ export default ForgotPassWord = ({ navigation }) => {
         //navigation.navigate("Second");
       } else {
         ToastAndroid.showWithGravity(
-          "sdt chua co tai khoan",
+          "SDT chưa có tài khoản",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );

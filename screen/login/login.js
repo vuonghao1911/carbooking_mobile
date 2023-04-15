@@ -36,6 +36,8 @@ const LoginScreen = ({ navigation }) => {
   const signInWithPhoneNumber = async (phoneNumber) => {
     const login = await routeApi.login(passWord, code);
     console.log(login.checklogin);
+    depatch(SetCheckLogin(true));
+    depatch(SetCheckForgotPassword(false));
     if (login.checklogin) {
       if (login.role) {
         ToastAndroid.showWithGravity(
@@ -59,7 +61,11 @@ const LoginScreen = ({ navigation }) => {
         console.log("conf", vetificaitonId);
       }
     } else {
-      console.log("sai mat khau");
+      ToastAndroid.showWithGravity(
+        "Mật khẩu hoặc tài khoản không chính xác",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     }
   };
 
@@ -69,6 +75,7 @@ const LoginScreen = ({ navigation }) => {
         <FirebaseRecaptchaVerifierModal
           ref={applicationVerifier}
           firebaseConfig={firebaseConfig}
+          onVerify={(token) => setRecaptchaToken(token)}
         />
         <View style={styles.image}>
           <Text

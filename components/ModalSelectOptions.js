@@ -27,7 +27,7 @@ const ModalSelectOption = ({
   const [disabled, setDisabled] = useState(false);
 
   React.useEffect(() => {
-    if (new Date(ticket?.startDate).toISOString <= new Date().toISOString) {
+    if (new Date(ticket?.startDate) <= new Date()) {
       setDisabled(true);
     } else {
       setDisabled(false);

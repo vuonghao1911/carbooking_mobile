@@ -109,13 +109,13 @@ export default ChangePassWord = ({ navigation }) => {
                 marginBottom: 20,
                 fontWeight: "bold",
               }}>
-              Doi mat khau
+              Đổi mật khẩu
             </Text>
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <TextInput
                 style={styles.input}
                 value={pass}
-                label="Mat khau cu"
+                label="Mật khẩu cũ"
                 theme={{
                   colors: {
                     placeholder: "#694fad",
@@ -138,7 +138,7 @@ export default ChangePassWord = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "column", marginBottom: 30 }}>
               <TextInput
-                label="Mat khau moi"
+                label="Mật khẩu mới"
                 value={newPass}
                 theme={{
                   colors: {
@@ -162,7 +162,7 @@ export default ChangePassWord = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "column" }}>
               <TextInput
-                label="Nhap lai mat khau"
+                label="Nhập lại mật khẩu"
                 value={passConfirm}
                 theme={{
                   colors: {
@@ -201,7 +201,7 @@ export default ChangePassWord = ({ navigation }) => {
                     color: "#694fad",
                     fontWeight: "bold",
                   }}>
-                  Doi mat khau
+                  Đổi Mật Khẩu
                 </Text>
               </View>
             </TouchableOpacity>

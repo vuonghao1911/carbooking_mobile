@@ -1,42 +1,65 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
   StatusBar,
   TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
 } from "react-native";
+import "intl";
+import "intl/locale-data/jsonp/en";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
-import {
-  SetUser,
-  SetVetificaitonId,
-  SetCheckLogin,
-  SetRouteVehicle,
-} from "../../store/Actions";
+import moment from "moment";
+
+import { SetRouteVehicle } from "../../store/Actions";
 import Contex from "../../store/Context";
 
 export default Items = ({ item, navigation }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, routeVehical } = state;
+  const [disable, setDisable] = React.useState(false);
+  React.useEffect(() => {
+    if (!item.price) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+    console.log("dis", disable);
+  });
 
   return (
     <TouchableOpacity
+      disabled={disable}
       onPress={() => {
         depatch(SetRouteVehicle(item));
+        // depatch(
+        //   SetPromotions({
+        //     promotion: item?.promotion.promotion,
+        //     promotionLine: item?.promotion.promotionLine,
+        //   })
+        // );
         navigation.navigate("selectChair");
       }}>
       <View style={[styles.Item]}>
-        <View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}>
           <Text style={{ marginLeft: 5, fontSize: 25 }}>
-            {item.startTime} - {item.endTime}
+            {item.startTime} -{item.endTime}
+          </Text>
+          <Text
+            style={{
+              marginLeft: 30,
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "gray",
+            }}>
+            {moment(new Date(item.startDate)).format("DD/MM/yyyy")}
           </Text>
         </View>
         <View style={styles.viewPrice}>
@@ -45,7 +68,9 @@ export default Items = ({ item, navigation }) => {
               fontSize: 17,
               color: "black",
             }}>
-            {item.price}d
+            {item.price
+              ? new Intl.NumberFormat("en-US").format(`${item.price}`) + "đ"
+              : "Chưa có giá"}
           </Text>
           <Ionicons name="ellipse" color={"gray"} />
           <Text
@@ -72,7 +97,7 @@ export default Items = ({ item, navigation }) => {
           <View style={styles.viewPlace}>
             <Ionicons name="paper-plane" color={"orange"} size={20} />
             <Text style={{ fontSize: 20, color: "black", marginLeft: 15 }}>
-              {item.departure}
+              {item.departure.name}
             </Text>
           </View>
           <View style={styles.viewPlace}>
@@ -101,7 +126,7 @@ export default Items = ({ item, navigation }) => {
                 color: "black",
                 marginLeft: 15,
               }}>
-              {item.destination}
+              {item.destination.name}
             </Text>
             {/* <View
               style={{
@@ -131,7 +156,7 @@ const styles = StyleSheet.create({
     //flex: 1 / 2,
     flexDirection: "column",
     width: 350,
-    height: 200,
+    height: 230,
 
     justifyContent: "space-around",
     alignItems: "flex-start",
@@ -155,7 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "gray",
-    width: "90%",
+    width: "95%",
     height: 35,
   },
   viewPlace: {

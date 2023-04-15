@@ -2,7 +2,9 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAuth, getReactNativePersistence } from "firebase/auth";
+import { AsyncStorage, Platform } from "react-native";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,7 +19,10 @@ export const firebaseConfig = {
   appId: "1:985948639874:web:7542cc05a9b8649860da9b",
   measurementId: "G-33539ZFVMX",
 };
-
+const app = initializeApp(firebaseConfig);
+export const authetication = getAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 // Initialize Firebase
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 // Initialize Cloud Storage and get a reference to the service

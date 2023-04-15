@@ -40,8 +40,8 @@ const ModalDepture = ({
     const getListPlace = async () => {
       try {
         const result = await routeApi.getListPlace();
-        console.log("result", result);
-        setDept(result);
+
+        setDept(result.data.reverse());
       } catch (error) {
         console.log("Failed to fetch : ", error);
       }
@@ -62,7 +62,7 @@ const ModalDepture = ({
           setModalVisible(!modalVisible);
           setDepture(item);
           depatch(SetPlaceFrom(item));
-          console.log(item.name);
+          console.log("tiem", item.busStation[0]);
         }}
         backgroundColor={backgroundColor}
         textColor={color}

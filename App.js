@@ -15,10 +15,12 @@ import TicketDetails from "./screen/route/ticketDetails";
 import UpdateProfile from "./screen/updateProfile";
 import ChangePass from "./screen/changePassWord";
 import ForgotPass from "./screen/login/forgotPass";
+import TicketRefundDetails from "./screen/route/ticketRefundDetails";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Provider from "../appchat_react/store/Provider";
+import { AsyncStorage, Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -66,7 +68,7 @@ export default function App({}) {
             name="register"
             component={Register}
             options={{
-              title: "Tao tai khoan",
+              title: "Tạo Tài Khoản",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },
@@ -108,7 +110,7 @@ export default function App({}) {
             name="routeDetails"
             component={RouteDetails}
             options={{
-              title: "Thong Tin Lien Lac",
+              title: "Thông Tin Liên Lạc",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },
@@ -122,7 +124,7 @@ export default function App({}) {
             name="ticketInfo"
             component={TicketInfo}
             options={{
-              title: "Thong Tin ve",
+              title: "Thông Tin Vé",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },
@@ -137,7 +139,23 @@ export default function App({}) {
             name="ticketDetails"
             component={TicketDetails}
             options={{
-              title: "Thong Tin ve",
+              title: "Thông Tin Vé",
+              headerStyle: {
+                backgroundColor: "#009387",
+              },
+              headerRight: () => <IconOption />,
+
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="ticketRefund"
+            component={TicketRefundDetails}
+            options={{
+              title: "Thông Tin Vé Hủy",
               headerStyle: {
                 backgroundColor: "#009387",
               },
@@ -154,7 +172,7 @@ export default function App({}) {
             name="updateProfile"
             component={UpdateProfile}
             options={{
-              title: "Cap nhat thong tin",
+              title: "Cập nhật hồ sơ",
               headerStyle: {
                 backgroundColor: "#694fad",
               },
@@ -170,7 +188,7 @@ export default function App({}) {
             name="changePass"
             component={ChangePass}
             options={{
-              title: "Doi mat khau",
+              title: "Đổi mật khẩu",
               headerStyle: {
                 backgroundColor: "#694fad",
               },
@@ -185,7 +203,7 @@ export default function App({}) {
             name="forgotPass"
             component={ForgotPass}
             options={{
-              title: "Quen mat khau",
+              title: "Quên mật khẩu",
               headerStyle: {
                 backgroundColor: "#D86A23",
               },

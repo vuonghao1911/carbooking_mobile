@@ -8,43 +8,115 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
-  ImageBackground,
-  Image,
-  TextInput,
 } from "react-native";
 import "intl";
 import "intl/locale-data/jsonp/en";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Swiper from "react-native-swiper";
-import {
-  SetUser,
-  SetVetificaitonId,
-  SetCheckLogin,
-  SetListChairs,
-} from "../../store/Actions";
+
+import { SetListChairs, SetPromotions } from "../../store/Actions";
 import Contex from "../../store/Context";
 import { listChair, listChairLiMo } from "../../data/dataTest";
 import ItemChair from "../../components/route/ItemChair";
 import ItemChairLiMo from "../../components/route/itemChairLiMo";
 import ItemChairLiMoSe from "../../components/route/itemChairLiMoSecond";
+import ModalTitlePromotion from "../../components/ModalTitlePromotion";
 
 export default SelectChair = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, routeVehical, listChairs } = state;
+  const { user, routeVehical, listChairs, promotions, click } = state;
   const [price, setPrice] = React.useState();
-
-  console.log("chair", price);
-  const listFirstFloor = listChairLiMo.slice(0, listChairLiMo.length / 2);
-  const listSecondFloor = listChairLiMo.slice(
-    listChairLiMo.length / 2,
-    listChairLiMo.length
+  const [titlePromo, setTitlePromo] = React.useState(
+    "Chưa có khuyến mãi được áp dụng"
   );
+  const [infoPomotion, setInfoPromotion] = React.useState(null);
+  const [showModel, SetShowModel] = React.useState(false);
+  const [listFirstFloor, setlistFirstFloor] = React.useState();
+  const [listSecondFloor, setlistSecondFloor] = React.useState();
+
+  const [disable, setDisable] = React.useState(false);
 
   const [typing, setTyping] = useState("Floor1");
 
   React.useEffect(() => {
     depatch(SetListChairs([]));
+
+    if (routeVehical.chair.length > 29) {
+      setlistFirstFloor(
+        routeVehical.chair.slice(0, routeVehical.chair.length / 2)
+      );
+      setlistSecondFloor(
+        routeVehical.chair.slice(
+          routeVehical.chair.length / 2,
+          routeVehical.chair.length
+        )
+      );
+    }
   }, [routeVehical]);
+  const checkPromotion = () => {
+    const arrayPromotion = [];
+    var discountAmount = 0;
+    var total = listChairs.length * routeVehical.price;
+    if (routeVehical.promotion.length > 0) {
+      for (const elem of routeVehical.promotion) {
+        if (elem?.promotionDetail?.percentDiscount) {
+          if (total >= elem?.promotionDetail?.purchaseAmount) {
+            discountAmount =
+              (total * elem?.promotionDetail?.percentDiscount) / 100;
+            if (discountAmount < elem?.promotionDetail?.remainingBudget) {
+              if (discountAmount < elem?.promotionDetail?.maximumDiscount) {
+                arrayPromotion.push({ promotions: elem, discountAmount });
+              } else {
+                discountAmount = elem?.promotionDetail?.maximumDiscount;
+
+                arrayPromotion.push({ promotions: elem, discountAmount });
+              }
+            } else {
+            }
+          } else {
+          }
+        } else {
+          if (total >= elem?.promotionDetail?.purchaseAmount) {
+            if (
+              elem?.promotionDetail?.remainingBudget >=
+              elem?.promotionDetail?.moneyReduced
+            ) {
+              arrayPromotion.push({
+                promotions: elem,
+                discountAmount: elem?.promotionDetail?.moneyReduced,
+              });
+            }
+          }
+        }
+      }
+    }
+
+    const arrayPromoResult = [];
+    if (arrayPromotion.length > 0) {
+      for (const elem of arrayPromotion) {
+        arrayPromoResult.push({
+          idPromotion: elem?.promotions.promotionLine._id,
+          discountAmount: elem.discountAmount,
+          promotionTitle: elem.promotions.promotionLine.title,
+        });
+      }
+      setInfoPromotion(arrayPromoResult);
+    } else {
+      setInfoPromotion(null);
+    }
+  };
+  console.log("promo", infoPomotion);
+  React.useEffect(() => {
+    checkPromotion();
+
+    if (listChairs.length == 0) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+    return () => {
+      checkPromotion();
+    };
+  }, [listChairs, click]);
 
   return (
     <View style={styles.container}>
@@ -56,6 +128,11 @@ export default SelectChair = ({ navigation }) => {
           }
         }>
         <View style={styles.viewInFo}>
+          <ModalTitlePromotion
+            showModel={showModel}
+            SetShowModel={SetShowModel}
+            data={infoPomotion}
+          />
           <View
             style={{
               flexDirection: "column",
@@ -64,7 +141,7 @@ export default SelectChair = ({ navigation }) => {
               marginLeft: 20,
             }}>
             <Text style={{ fontSize: 25, color: "black" }}>
-              {routeVehical.departure} - {routeVehical.destination}
+              {routeVehical.departure.name} - {routeVehical.destination.name}
             </Text>
             <Text
               style={{
@@ -73,7 +150,7 @@ export default SelectChair = ({ navigation }) => {
                 fontSize: 15,
                 color: "#D86A23",
               }}>
-              {routeVehical.startTime} - {routeVehical.endTime}
+              {routeVehical.startTime} -{routeVehical.endTime}
             </Text>
           </View>
         </View>
@@ -93,9 +170,9 @@ export default SelectChair = ({ navigation }) => {
           alignItems: "center",
         }}>
         <View style={styles.viewBody}>
-          {routeVehical.carType == "Xe Thuong" ? (
+          {routeVehical.carType == "Xe Thường" ? (
             <FlatList
-              data={listChair}
+              data={routeVehical.chair}
               numColumns={4}
               columnWrapperStyle={styles.row}
               renderItem={({ item }) => (
@@ -114,9 +191,9 @@ export default SelectChair = ({ navigation }) => {
                     setTyping("Floor1");
                   }}>
                   {typing === "Floor1" ? (
-                    <Text style={styles.text2}>TANG 1</Text>
+                    <Text style={styles.text2}>TẦNG 1</Text>
                   ) : (
-                    <Text style={styles.text1}>TANG 1</Text>
+                    <Text style={styles.text1}>TẦNG 1</Text>
                   )}
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -124,9 +201,9 @@ export default SelectChair = ({ navigation }) => {
                     setTyping("Floor2");
                   }}>
                   {typing === "Floor2" ? (
-                    <Text style={styles.text2}>TANG 2</Text>
+                    <Text style={styles.text2}>TÂNG 2</Text>
                   ) : (
-                    <Text style={styles.text1}>TANG 2</Text>
+                    <Text style={styles.text1}>TẦNG 2</Text>
                   )}
                 </TouchableOpacity>
               </View>
@@ -198,21 +275,48 @@ export default SelectChair = ({ navigation }) => {
               {new Intl.NumberFormat("en-US").format(
                 `${routeVehical.price * listChairs.length}`
               )}{" "}
-              d
+              đ
             </Text>
           </View>
-          <View style={styles.viewPrice}>
-            <Text style={{ fontStyle: "italic", color: "gray" }}>
-              *Khuyến mãi:
-            </Text>
-            <Text style={{ fontStyle: "italic", color: "gray", marginLeft: 5 }}>
-              Mua trên 3 ve giam 10% giá hóa đơn tối đa 200.000đ
-            </Text>
-          </View>
+          <TouchableOpacity onPress={() => SetShowModel(!showModel)}>
+            <View style={styles.viewPrice}>
+              <Text style={{ fontStyle: "italic", color: "gray" }}>
+                {`*Khuyến mãi: ${
+                  infoPomotion?.length > 0
+                    ? `(${infoPomotion?.length}` + ")"
+                    : ""
+                }`}
+              </Text>
+
+              <Text
+                style={{ fontStyle: "italic", color: "gray", marginLeft: 5 }}>
+                {infoPomotion ? infoPomotion[0]?.promotionTitle : titlePromo}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={styles.viewSearch}
-          onPress={() => navigation.navigate("routeDetails")}>
+          style={[
+            disable
+              ? {
+                  backgroundColor: "gray",
+                  width: "70%",
+
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  borderRadius: 20,
+
+                  marginTop: 20,
+                  height: 50,
+                }
+              : styles.viewSearch,
+          ]}
+          disabled={disable}
+          onPress={() => {
+            depatch(SetPromotions(infoPomotion));
+            navigation.navigate("routeDetails");
+          }}>
           <View>
             <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
               Tiếp Theo

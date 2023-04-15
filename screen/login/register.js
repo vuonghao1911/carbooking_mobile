@@ -2,20 +2,15 @@ import {
   View,
   Text,
   StyleSheet,
-  StatusBar,
   TextInput,
   TouchableOpacity,
-  Image,
-  ScrollView,
   Alert,
-  KeyboardAvoidingView,
 } from "react-native";
 import React, { useContext, useState } from "react";
 import routeApi from "../../api/routeApi";
 
 import Contex from "../../store/Context";
 import { SetUser } from "../../store/Actions";
-import { Ionicons } from "@expo/vector-icons";
 
 export default Register = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
@@ -30,10 +25,10 @@ export default Register = ({ navigation }) => {
   const register = async () => {
     try {
       if (lastName.length === 0) {
-        Alert.alert("Name is not empty");
+        Alert.alert("Tên không được rỗng");
         return;
       } else if (password !== repassword) {
-        Alert.alert("The password must be same");
+        Alert.alert("Mật khẩu không được rỗng");
         return;
       }
       const customer = {
@@ -47,8 +42,10 @@ export default Register = ({ navigation }) => {
       const account = await routeApi.register(customer);
       if (account.checkRegister) {
         navigation.navigate("Second");
+        depatch(SetUser(account.user));
       } else {
-        console.log("register failed");
+        Alert.alert("SDT đã được đăng ký tài khoản");
+        return;
       }
 
       console.log(account);

@@ -34,19 +34,13 @@ export default TicketInfo = ({ navigation }) => {
 
   React.useEffect(() => {
     // checkPromotion();
-    const arrayPromoResult = [];
-    if (ticket?.listPromotions?.length > 0) {
+
+    if (ticket?.promotionresults?.length > 0) {
       var discount = 0;
-      for (const elem of ticket.listPromotions) {
-        discount += elem.PromotionResults.discountAmount;
-        arrayPromoResult.push({
-          idPromotion: elem?.PromotionLine._id,
-          discountAmount: elem.PromotionResults.discountAmount,
-          promotionTitle: elem.PromotionLine.title,
-        });
+      for (const elem of ticket.promotionresults) {
+        discount += elem.discountAmount;
       }
-      setPromotionInfo(arrayPromoResult);
-      setAmount(ticket.price * ticket.chair.length - discount);
+      setAmount(ticket.price * ticket.chairTicket.length - discount);
       setDiscountAmount(discount);
     } else {
       setDiscountAmount(0 + " đ");
@@ -56,11 +50,6 @@ export default TicketInfo = ({ navigation }) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <ModalInfoPromotion
-          showModel={showModel}
-          SetShowModel={SetShowModel}
-          data={promotionInfo}
-        />
         <View style={styles.viewInfo}>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "#009387" }}>
             Thông tin khách hàng
@@ -84,7 +73,7 @@ export default TicketInfo = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={{ backgroundColor: "white", padding: 15 }}>
+        <View style={{ backgroundColor: "white", padding: 15, marginTop: 15 }}>
           <Text
             style={{
               fontSize: 18,
@@ -94,15 +83,7 @@ export default TicketInfo = ({ navigation }) => {
             }}>
             Thông Tin Chuyến Đi
           </Text>
-          <View style={styles.viewItemInfo}>
-            <FlatList
-              data={ticket.chair}
-              renderItem={({ item, index }) => {
-                return <ItemQrCode item={item} />;
-              }}
-              horizontal
-            />
-          </View>
+
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
               Chuyến Đi
@@ -120,7 +101,7 @@ export default TicketInfo = ({ navigation }) => {
 
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Thời Gian
+              Thời gian
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -154,7 +135,7 @@ export default TicketInfo = ({ navigation }) => {
           </View>
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
-              Số Ghế
+              Ngày đi
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -163,7 +144,22 @@ export default TicketInfo = ({ navigation }) => {
                   marginRight: 10,
                   color: "black",
                 }}>
-                {ticket.chair.length}
+                {moment(new Date(ticket.startDate)).format("DD-MM-yyyy")}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.viewItemInfo}>
+            <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
+              Ngày hủy
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginRight: 10,
+                  color: "red",
+                }}>
+                {moment(new Date(ticket.createdAt)).format("DD-MM-yyyy")}
               </Text>
             </View>
           </View>
@@ -173,7 +169,7 @@ export default TicketInfo = ({ navigation }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <FlatList
-                data={ticket.chair}
+                data={ticket.chairTicket}
                 renderItem={({ item, index }) => {
                   return (
                     <Text
@@ -191,135 +187,62 @@ export default TicketInfo = ({ navigation }) => {
               />
             </View>
           </View>
-
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 12 }}>
-              Điểm Lên Xe
+              Ghế hủy
             </Text>
-            <View
-              style={[
-                ticket.locaDeparture.address.name.length > 10
-                  ? { flexDirection: "row", width: "60%" }
-                  : { flexDirection: "row" },
-              ]}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 10,
-                  color: "black",
-                }}>
-                {`${ticket.locaDeparture.address.name}` +
-                  " (" +
-                  `${ticket.locaDeparture.address.detailAddress}` +
-                  ", " +
-                  `${ticket.locaDeparture.address.ward}` +
-                  ", " +
-                  `${ticket.locaDeparture.address.district}` +
-                  ", " +
-                  `${ticket.locaDeparture.address.province}` +
-                  " )"}
-              </Text>
+            <View style={{ flexDirection: "row" }}>
+              <FlatList
+                data={ticket.chairRefund}
+                renderItem={({ item, index }) => {
+                  return (
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        marginRight: 10,
+                      }}>
+                      {item.seats}
+                    </Text>
+                  );
+                }}
+                horizontal
+              />
             </View>
           </View>
+
           <View style={styles.viewItemInfo}>
             <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Tổng Tiền
+              Tổng Tiền Mua
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
                   fontSize: 15,
                   marginRight: 10,
+                  color: "black",
+                  fontWeight: "bold",
+                }}>
+                {new Intl.NumberFormat("en-US").format(`${amount}`)} đ
+              </Text>
+            </View>
+          </View>
+          <View style={styles.viewItemInfo}>
+            <Text style={{ fontSize: 17, color: "black", marginLeft: 10 }}>
+              Tổng Tiền Hoàn Trả
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginRight: 10,
                   color: "#009387",
                   fontWeight: "bold",
                 }}>
                 {new Intl.NumberFormat("en-US").format(
-                  `${ticket.price * ticket.chair.length}`
+                  `${ticket.returnAmount}`
                 )}{" "}
                 đ
               </Text>
-            </View>
-          </View>
-
-          <View style={styles.viewItemInfo}>
-            <Text style={{ fontSize: 15, color: "black", marginLeft: 10 }}>
-              Khuyến Mãi
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                SetShowModel(!showModel);
-              }}>
-              <View
-                style={[
-                  ticket.pomrotionLine?.title?.length > 25
-                    ? { flexDirection: "row", width: "60%" }
-                    : { flexDirection: "row" },
-                ]}>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    marginRight: 10,
-                    color: "#009387",
-                    fontStyle: "italic",
-                  }}>
-                  {`Khuyến mãi được áp dụng ${
-                    ticket?.listPromotions?.length > 0
-                      ? `(${ticket?.listPromotions?.length}` + ")"
-                      : "(0)"
-                  }`}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "column", alignItems: "center" }}>
-            <View style={styles.viewInFoRoute}>
-              <View style={styles.viewPrice}>
-                <Text
-                  style={{ fontStyle: "italic", color: "gray", fontSize: 16 }}>
-                  Khuyến mãi:
-                </Text>
-                <Text
-                  style={{
-                    fontStyle: "italic",
-                    color: "gray",
-                    marginRight: 20,
-                    fontSize: 16,
-                  }}>
-                  {ticket.promotionresults.length == 0 ? (
-                    <>0 đ</>
-                  ) : (
-                    <>
-                      -{" "}
-                      {new Intl.NumberFormat("en-US").format(
-                        `${discountAmount}`
-                      )}{" "}
-                      d
-                    </>
-                  )}
-                </Text>
-              </View>
-              <View style={styles.viewPrice}>
-                <Text style={{ fontSize: 18 }}>Tổng Tiền Vé: </Text>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    marginRight: 20,
-                    color: "#009387",
-                  }}>
-                  {ticket.promotionresults.length == 0 ? (
-                    <>
-                      {" "}
-                      {new Intl.NumberFormat("en-US").format(
-                        `${ticket.price * ticket.chair.length}`
-                      )}{" "}
-                      đ
-                    </>
-                  ) : (
-                    <>{new Intl.NumberFormat("en-US").format(`${amount}`)} đ</>
-                  )}
-                </Text>
-              </View>
             </View>
           </View>
         </View>
@@ -333,7 +256,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
 
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
   },
 
   viewInfo: {

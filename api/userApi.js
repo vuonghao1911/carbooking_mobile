@@ -27,6 +27,11 @@ const userApi = {
       phoneNumber: phoneNumber,
     });
   },
+
+  getUserByPhone: (phone) => {
+    const url = `/customers/?phone=${phone}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default userApi;

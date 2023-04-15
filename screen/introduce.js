@@ -17,6 +17,20 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Swiper from "react-native-swiper";
 import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
 import Contex from "../store/Context";
+const array = [
+  {
+    img: "https://cnm1.s3.ap-southeast-1.amazonaws.com/6ef96c55-6533-4292-89b7-e75fdf2fcce8-1680578649288.png",
+  },
+  {
+    img: "https://cnm1.s3.ap-southeast-1.amazonaws.com/b41f95a2-a671-496c-b20e-b55438530bc5-1672882309703.png",
+  },
+  {
+    img: "https://cnm1.s3.ap-southeast-1.amazonaws.com/efcbd1e6-b648-480f-8f91-5f03e9a94fd1-1679105293199.png",
+  },
+  {
+    img: "https://cnm1.s3.ap-southeast-1.amazonaws.com/f61e554b-c6f5-48ca-b69c-0b1fbae73fd7-1654309450420.jpg",
+  },
+];
 
 const Items = ({ item, navigation }) => (
   <TouchableOpacity
@@ -59,12 +73,6 @@ export default Start = ({ navigation }) => {
 
   console.log("user", user);
 
-  const [listImg, setListImg] = useState([
-    "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135062/istockphoto-869683786-612x612_ffddpd.png",
-    "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135060/360_F_266909519_YCRZy0e3fPNHOXkPMDq3RSFyTN3BGAVe_u7skua.png",
-    "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135058/360_F_71848853_001bQi5QfpAOahc3ZPr42IL9j20NBlB1_cuz6wn.png",
-  ]);
-
   const renderItem = ({ item }) => (
     <Items item={item} navigation={navigation} />
   );
@@ -85,18 +93,19 @@ export default Start = ({ navigation }) => {
               alignContent: "center",
               alignItems: "center",
             }}>
-            <Image
+            {/* <Image
               style={{ width: 50, height: 50, borderRadius: 40 }}
               source={{
                 uri: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/908.jpg",
               }}
-            />
+            /> */}
+            <Ionicons name="person-circle" size={50} color={"#D86A23"} />
             <View
               style={{
                 flexDirection: "column",
                 //alignContent: "center",
                 // alignItems: "center",
-                marginLeft: 20,
+                marginLeft: 10,
               }}>
               <Text
                 style={{ fontSize: 14, fontStyle: "italic", color: "#9506D8" }}>
@@ -111,12 +120,13 @@ export default Start = ({ navigation }) => {
             </View>
           </View>
 
-          <Image
+          {/* <Image
             style={{ width: 50, height: 50, borderRadius: 10 }}
             source={{
               uri: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/908.jpg",
             }}
-          />
+          /> */}
+          <Ionicons name="logo-foursquare" size={50} color={"#D86A23"} />
         </View>
         <View style={styles.viewPaner}>
           <Text style={{ fontSize: 40, color: "#D86A23" }}>FURISAS</Text>
@@ -141,25 +151,33 @@ export default Start = ({ navigation }) => {
         style={{
           fontSize: 20,
           fontWeight: "bold",
-          color: "green",
+          color: "#D86A23",
           marginLeft: 20,
+          textDecorationLine: "underline",
+          textDecorationColor: "#D86A23",
         }}>
-        Categories
+        Tin tức mới nhất về Furisas
       </Text>
       <View style={styles.viewBody}>
         <Swiper style={styles.wrapper} loop={true} autoplay={true}>
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135058/360_F_71848853_001bQi5QfpAOahc3ZPr42IL9j20NBlB1_cuz6wn.png",
-            }}
-          />
-          <Image
-            style={{ height: 350, width: 400, borderRadius: 100 }}
-            source={{
-              uri: "https://res.cloudinary.com/ddlalxay6/image/upload/v1672135060/360_F_266909519_YCRZy0e3fPNHOXkPMDq3RSFyTN3BGAVe_u7skua.png",
-            }}
-          />
+          {array.map((item, index) => {
+            return (
+              <Image
+                style={{
+                  height: 300,
+                  width: 380,
+                  borderRadius: 10,
+                  marginLeft: 5,
+                  alignItems: "center",
+                  marginTop: 20,
+                }}
+                key={index}
+                source={{
+                  uri: item.img,
+                }}
+              />
+            );
+          })}
         </Swiper>
       </View>
     </View>
@@ -216,6 +234,13 @@ const styles = StyleSheet.create({
   },
   viewBody: {
     height: 400,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  wrapper: {
+    alignItems: "center",
+    justifyContent: "center",
   },
   Item: {
     //flex: 1 / 2,
