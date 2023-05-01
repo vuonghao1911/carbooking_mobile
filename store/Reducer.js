@@ -14,6 +14,7 @@ import {
   SET_CHECKFORGOTPASSWORD,
   SET_PROMOTIONS,
   SET_CLICK,
+  SET_CLICK_2,
 } from "./Actions";
 
 //innite state
@@ -45,6 +46,7 @@ const initState = {
   vetificationId: null,
 
   click: true,
+  click2: true,
 };
 
 //depatch
@@ -125,6 +127,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         click: action.payload,
+      };
+    case SET_CLICK_2:
+      return {
+        ...state,
+        click2: action.payload,
       };
   }
 };

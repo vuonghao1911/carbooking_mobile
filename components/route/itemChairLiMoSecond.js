@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { SetListChairs, SetClick } from "../../store/Actions";
+import { SetListChairs, SetClick2 } from "../../store/Actions";
 import Contex from "../../store/Context";
 
 export default Items = ({ item, navigation, setPrice }) => {
   const { state, depatch } = React.useContext(Contex);
   const { user, routeVehical, listChairs } = state;
   const [pressOn, setPressOn] = React.useState(false);
+  const [pressOn2, setPressOn2] = React.useState(false);
   const [selectedId, setSelectedId] = useState();
   var check = false;
   const removeElement = (array, elem) => {
@@ -53,6 +54,8 @@ export default Items = ({ item, navigation, setPrice }) => {
     } else {
       setPressOn(!pressOn);
     }
+    setPressOn2(!pressOn2);
+    depatch(SetClick2(pressOn2));
   };
 
   React.useEffect(() => {
@@ -61,6 +64,8 @@ export default Items = ({ item, navigation, setPrice }) => {
         setSelectedId(true);
       }
     });
+    setPressOn2(!pressOn2);
+    depatch(SetClick2(pressOn2));
   }, []);
 
   return (
@@ -68,7 +73,7 @@ export default Items = ({ item, navigation, setPrice }) => {
       onPress={() => {
         handleSelectChair(item);
         setPrice(routeVehical.price * listChairs.length);
-        depatch(SetClick(!pressOn));
+        depatch(SetClick2(pressOn2));
       }}>
       <View
         style={[

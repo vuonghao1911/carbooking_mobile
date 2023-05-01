@@ -217,9 +217,14 @@ export default RouteDetails = ({ navigation }) => {
                 color: "gray",
                 marginBottom: 20,
               }}>
-              Thông tin liên lạc
+              Thông tin khách hàng
             </Text>
-            <View style={{ flexDirection: "column", marginBottom: 30 }}>
+            <View
+              style={{
+                flexDirection: "column",
+                marginBottom: 30,
+                backgroundColor: "#f1f1f1",
+              }}>
               <Text
                 style={{
                   fontSize: 14,
@@ -231,13 +236,15 @@ export default RouteDetails = ({ navigation }) => {
                 Họ và Tên
               </Text>
               <TextInput
+                editable={false}
                 style={styles.input}
                 value={fullName}
                 onChangeText={(text) => {
                   setFullName(text);
                 }}></TextInput>
             </View>
-            <View style={{ flexDirection: "column" }}>
+            <View
+              style={{ flexDirection: "column", backgroundColor: "#f1f1f1" }}>
               <Text
                 style={{
                   fontSize: 14,
@@ -249,6 +256,7 @@ export default RouteDetails = ({ navigation }) => {
                 Số Điện Thoại
               </Text>
               <TextInput
+                editable={false}
                 style={styles.input}
                 value={phone}
                 keyboardType="number-pad"
@@ -315,6 +323,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#D86A23",
+    backgroundColor: "#f1f1f1",
   },
   viewInfo: {
     backgroundColor: "white",

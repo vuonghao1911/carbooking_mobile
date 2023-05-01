@@ -37,28 +37,28 @@ export default ChangePassWord = ({ navigation }) => {
     try {
       if (pass.length === 0) {
         ToastAndroid.showWithGravity(
-          "Mat khau khong duoc rong",
+          "Mật khẩu không được rỗng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
         return;
       } else if (newPass.length === 0) {
         ToastAndroid.showWithGravity(
-          "mat khau moi khong duoc rong",
+          "Mật khẩu mới không được rỗng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
         return;
       } else if (passConfirm.length === 0) {
         ToastAndroid.showWithGravity(
-          "mat khau khong duoc rong",
+          "Mật khẩu không được rỗng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
         return;
       } else if (passConfirm !== newPass) {
         ToastAndroid.showWithGravity(
-          "mat khau moi khong khop",
+          "Mật khẩu không khớp",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
@@ -76,14 +76,14 @@ export default ChangePassWord = ({ navigation }) => {
         setPass("");
         setPassConfirm("");
         ToastAndroid.showWithGravity(
-          "Doi mat khau thang cong",
+          "Đổi mật khẩu thành công",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
         //navigation.navigate("Second");
       } else {
         ToastAndroid.showWithGravity(
-          "Mat khau cu khong dung",
+          "Mật khẩu cũ không đúng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );

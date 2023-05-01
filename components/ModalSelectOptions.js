@@ -63,44 +63,17 @@ const ModalSelectOption = ({
           }}>
           <Text
             style={{ alignItems: "center", fontSize: 20, fontWeight: "bold" }}>
-            Chon muc
+            Chọn mục
           </Text>
         </View>
 
         <View style={{ flexDirection: "column", marginLeft: 10 }}>
           <TouchableOpacity
-            disabled={disabled}
-            onPress={() => SetShowModelCa(!showModelCa)}>
-            {disabled ? (
-              <View style={styles.viewPlace}>
-                <Ionicons name="trash" color={"gray"} size={27} />
-                <Text style={{ fontSize: 16, color: "gray", marginLeft: 15 }}>
-                  Huy ve
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.viewPlace}>
-                <Ionicons name="trash" color={"#009387"} size={27} />
-                <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                  Huy ve
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.viewPlace}>
-              <Ionicons name="refresh-circle" color={"#009387"} size={30} />
-              <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                Doi ve
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={() => navigation.navigate("ticketDetails")}>
             <View style={styles.viewPlace}>
               <Ionicons name="information" color={"#009387"} size={30} />
               <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                Chi Tiet
+                Chi Tiết
               </Text>
             </View>
           </TouchableOpacity>
@@ -108,7 +81,7 @@ const ModalSelectOption = ({
             <View style={styles.viewPlace}>
               <Ionicons name="close" color={"red"} size={30} />
               <Text style={{ fontSize: 16, color: "black", marginLeft: 15 }}>
-                Thoat
+                Thoát
               </Text>
             </View>
           </TouchableOpacity>
@@ -124,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    height: 250,
+    height: 150,
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,

@@ -19,7 +19,7 @@ import { SetUser, SetVetificaitonId, SetCheckLogin } from "../../store/Actions";
 import Contex from "../../store/Context";
 export default Start = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, vetificaitonId } = state;
+  const { user, vetificaitonId, checkLogin } = state;
 
   React.useEffect(() => {
     // const getListCar = async () => {
@@ -51,7 +51,7 @@ export default Start = ({ navigation }) => {
         console.log(error);
       }
     });
-    return () => unregisterAuthObserver();
+    unregisterAuthObserver();
   }, []);
 
   return (

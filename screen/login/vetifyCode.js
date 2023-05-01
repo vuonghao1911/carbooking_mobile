@@ -49,7 +49,7 @@ const VeifyCode = ({ navigation }) => {
           if (checkLogin) {
             navigation.navigate("Second");
           } else {
-            navigation.navigate("register");
+            navigation.replace("register");
           }
         }
       })

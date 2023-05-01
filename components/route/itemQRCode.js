@@ -30,7 +30,7 @@ export default Items = ({ item, navigation, setPrice }) => {
             marginLeft: 10,
           }}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontWeight: "bold" }}>{Date.now()}</Text>
+            <Text style={{ fontWeight: "bold" }}>{ticket.code}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontWeight: "bold" }}>Ghế: </Text>

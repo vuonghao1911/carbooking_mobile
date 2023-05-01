@@ -110,7 +110,7 @@ export default Register = ({ navigation }) => {
             <TouchableOpacity style={styles.btn} onPress={() => register()}>
               <Text
                 style={{ fontSize: 15, color: "white", fontWeight: "bold" }}>
-                Register
+                Đăng Ký
               </Text>
             </TouchableOpacity>
           </View>
@@ -121,8 +121,8 @@ export default Register = ({ navigation }) => {
               flexDirection: "row",
               justifyContent: "center",
             }}>
-            <Text>Do you have a account?</Text>
-            <Text style={{ marginLeft: 8 }}>Login Now</Text>
+            <Text>Bạn đã có tài khoản ?</Text>
+            <Text style={{ marginLeft: 8 }}>Đăng nhập ngay</Text>
           </View>
         </View>
       </View>

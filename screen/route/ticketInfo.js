@@ -39,7 +39,7 @@ export default TicketInfo = ({ navigation }) => {
   const [amount, setAmount] = React.useState(
     routeVehical.price * listChairs.length
   );
-  const [discountAmount, setDiscountAmount] = React.useState();
+  const [discountAmount, setDiscountAmount] = React.useState(0);
   const [showModel, SetShowModel] = React.useState(false);
   const [infoPomotion, setInfoPromotion] = React.useState(null);
   const [showModelNotifi, SetShowModelNotifi] = React.useState(false);
@@ -131,7 +131,7 @@ export default TicketInfo = ({ navigation }) => {
       setAmount(routeVehical.price * listChairs.length - discount);
       setDiscountAmount(discount);
     } else {
-      setDiscountAmount(0 + " đ");
+      setDiscountAmount(0);
     }
   }, [routeVehical, listChairs]);
   const handleBooking = async (navigation) => {
@@ -282,7 +282,7 @@ export default TicketInfo = ({ navigation }) => {
                   color: "black",
                   fontWeight: "bold",
                 }}>
-                {routeVehical.startTime} -{routeVehical.endTime}
+                {routeVehical.startTime} -{routeVehical.endTime}{" "}
               </Text>
             </View>
           </View>

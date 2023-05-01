@@ -50,7 +50,7 @@ export default Items = ({ item, navigation }) => {
               {moment(new Date(item.startDate)).format("DD-MM-yyyy")}
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 5 }}>
-              {moment(new Date(item.startDate)).format("HH:mm")}
+              {item.startTime}
             </Text>
           </View>
         </View>

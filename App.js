@@ -143,7 +143,7 @@ export default function App({}) {
               headerStyle: {
                 backgroundColor: "#009387",
               },
-              headerRight: () => <IconOption />,
+              // headerRight: () => <IconOption />,
 
               headerTintColor: "#fff",
               headerTitleStyle: {
@@ -159,7 +159,7 @@ export default function App({}) {
               headerStyle: {
                 backgroundColor: "#009387",
               },
-              headerRight: () => <IconOption />,
+              //  headerRight: () => <IconOption />,
 
               headerTintColor: "#fff",
               headerTitleStyle: {

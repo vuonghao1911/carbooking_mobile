@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import firebase from "firebase/compat/app";
 import { SetUser, SetVetificaitonId, SetCheckLogin } from "../store/Actions";
 import Contex from "../store/Context";
 const CreateAboutScreen = ({ navigation }) => {
@@ -47,7 +48,13 @@ const CreateAboutScreen = ({ navigation }) => {
       {
         text: "Đồng ý",
         onPress: () => {
-          navigation.replace("Login");
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              navigation.replace("InStart");
+              depatch(SetUser(null));
+            });
         },
         style: "default",
       },
@@ -83,12 +90,7 @@ const CreateAboutScreen = ({ navigation }) => {
             navigation.navigate("updateProfile");
           }}>
           <View style={styles.viewItem}>
-            <Image
-              style={{ width: 70, height: 70, borderRadius: 40 }}
-              source={{
-                uri: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/908.jpg",
-              }}
-            />
+            <Ionicons name="person-circle" size={75} color={"#694fad"} />
             <View style={styles.viewCustomItem}>
               <View style={{ flexDirection: "column", padding: 10 }}>
                 <Text

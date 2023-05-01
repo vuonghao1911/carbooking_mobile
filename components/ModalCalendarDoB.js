@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, DatePickerAndroid } from "react-native";
+import { StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 // import { Calendar, CalendarList, Agenda } from "react-native-calendars";
-import DatePicker from "react-native-date-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import moment from "moment";
 import { LocaleConfig } from "react-native-calendars";
@@ -62,28 +62,21 @@ const ModalCalendar = ({ showModel, setText, SetShowModel, date }) => {
       animationIn={"fadeIn"}
       animationOut={"fadeOut"}
       onBackdropPress={() => SetShowModel(!showModel)}>
-      {/* <Calendar
-        initialDate={date.dateString.toString()}
-        style={{ marginTop: 0, borderRadius: 10 }}
-        onDayPress={(day) => {
-          console.log("selected day", day);
-          setText(day);
-          SetShowModel(!showModel);
+      <DateTimePicker
+        mode={"date"}
+        value={date.dateString != "" ? new Date(date.dateString) : new Date()}
+        display="default"
+        onChange={(day) => {
+          console.log(
+            "selected day",
+            moment(day.nativeEvent.timestamp).format("DD/MM/YYYY")
+          );
+          setText({
+            dateString: moment(day.nativeEvent.timestamp).format("DD/MM/YYYY"),
+          });
+          SetShowModel(false);
         }}
-        onMonthChange={(month) => {
-          console.log("month changed", month);
-        }}
-      /> */}
-
-      {/* <DateTimePicker
-        display={"default"}
-        timeZoneOffsetInMinutes={0}
-        value={new Date(date)}
-        mode="date"
-        minimumDate={new Date(1920, 10, 20)}
-        maximumDate={new Date()}
-      /> */}
-      <DatePicker date={new Date()} onDateChange={setText} />
+      />
     </Modal>
   );
 };

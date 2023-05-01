@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import DatePicker from "react-native-date-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { SetUser } from "../store/Actions";
 import Contex from "../store/Context";
@@ -50,7 +50,7 @@ export default UpdateProfile = ({ navigation }) => {
   const [selectedIdWard, setSelectedIdWard] = useState();
 
   const [dob, setDob] = useState({
-    dateString: user?.dateOfBirth ? new Date(user.dateOfBirth) : "",
+    timestamp: user?.dateOfBirth ? new Date(user.dateOfBirth) : "",
   });
   const [showModelBoD, SetShowModelBoD] = useState(false);
 
@@ -58,14 +58,14 @@ export default UpdateProfile = ({ navigation }) => {
     try {
       if (lastName.length === 0) {
         ToastAndroid.showWithGravity(
-          "Ho khong duoc rong",
+          "Họ không được rỗng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
         return;
       } else if (firstName.length === 0) {
         ToastAndroid.showWithGravity(
-          "Ten khong duoc rong",
+          "Tên không được rỗng",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
@@ -81,7 +81,7 @@ export default UpdateProfile = ({ navigation }) => {
 
           province: province.name,
         },
-        dateOfBirth: dob.dateString,
+        dateOfBirth: dob.timestamp,
         email: email,
       };
       console.log("custer", customer);
@@ -90,7 +90,7 @@ export default UpdateProfile = ({ navigation }) => {
         console.log("success");
         depatch(SetUser(customerUpdate));
         ToastAndroid.showWithGravity(
-          "Cap nhat thanh cong",
+          "Cập nhật thành công",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
@@ -103,6 +103,10 @@ export default UpdateProfile = ({ navigation }) => {
     } catch (error) {
       console.log("error", error);
     }
+  };
+
+  const setModal = () => {
+    SetShowModelBoD(!showModelBoD);
   };
 
   return (
@@ -137,24 +141,11 @@ export default UpdateProfile = ({ navigation }) => {
               listData={district.wards}
             />
 
-            <ModalCalendarBoD
+            {/* <ModalCalendarBoD
               showModel={showModelBoD}
               setText={setDob}
               SetShowModel={SetShowModelBoD}
               date={dob}
-            />
-
-            {/* <DatePicker
-              modal
-              open={showModelBoD}
-              date={new Date()}
-              onConfirm={(date) => {
-                SetShowModelBoD(false);
-                setDob(date);
-              }}
-              onCancel={() => {
-                SetShowModelBoD(false);
-              }}
             /> */}
             <Text
               style={{
@@ -396,9 +387,12 @@ export default UpdateProfile = ({ navigation }) => {
 
                   marginLeft: 15,
                 }}>
-                Ngay Sinh
+                Ngày sinh
               </Text>
-              <TouchableOpacity onPress={() => SetShowModelBoD(!showModelBoD)}>
+              <TouchableOpacity
+                onPress={() => {
+                  SetShowModelBoD(!showModelBoD);
+                }}>
                 <View
                   style={{
                     flexDirection: "row",
@@ -407,10 +401,30 @@ export default UpdateProfile = ({ navigation }) => {
                     width: "100%",
                   }}>
                   <Text style={{ textAlign: "center", fontSize: 15 }}>
-                    {dob.dateString != ""
-                      ? moment(dob.dateString).format("DD/MM/YYYY")
+                    {dob.timestamp != ""
+                      ? moment(dob.timestamp).format("DD/MM/YYYY")
                       : ""}
                   </Text>
+                  {showModelBoD && (
+                    <DateTimePicker
+                      mode={"date"}
+                      value={
+                        dob.timestamp != ""
+                          ? new Date(dob.timestamp)
+                          : new Date()
+                      }
+                      display="default"
+                      onChange={(day) => {
+                        SetShowModelBoD(!showModelBoD);
+
+                        setDob({
+                          timestamp: day.nativeEvent.timestamp,
+                        });
+                      }}
+                      positiveButtonLabel="Chọn"
+                      negativeButton={{ label: "Hủy", textColor: "red" }}
+                    />
+                  )}
 
                   <View
                     style={{

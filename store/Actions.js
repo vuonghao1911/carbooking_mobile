@@ -15,6 +15,7 @@ export const SET_NAVIGATION = "set_Navigation";
 export const SET_CHECKFORGOTPASSWORD = "set_ForgotPassword";
 export const SET_PROMOTIONS = "set_Promotions";
 export const SET_CLICK = "set_Click";
+export const SET_CLICK_2 = "set_Click_2";
 
 export const SetPhoneNumber = (payload) => {
   return {
@@ -112,6 +113,12 @@ export const SetPromotions = (payload) => {
 export const SetClick = (payload) => {
   return {
     type: SET_CLICK,
+    payload,
+  };
+};
+export const SetClick2 = (payload) => {
+  return {
+    type: SET_CLICK_2,
     payload,
   };
 };

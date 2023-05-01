@@ -23,7 +23,7 @@ import ModalTitlePromotion from "../../components/ModalTitlePromotion";
 
 export default SelectChair = ({ navigation }) => {
   const { state, depatch } = React.useContext(Contex);
-  const { user, routeVehical, listChairs, promotions, click } = state;
+  const { user, routeVehical, listChairs, promotions, click, click2 } = state;
   const [price, setPrice] = React.useState();
   const [titlePromo, setTitlePromo] = React.useState(
     "Chưa có khuyến mãi được áp dụng"
@@ -113,10 +113,17 @@ export default SelectChair = ({ navigation }) => {
     } else {
       setDisable(false);
     }
-    return () => {
-      checkPromotion();
-    };
-  }, [listChairs, click]);
+    console.log("clicked", click);
+
+    // return () => checkPromotion();
+  }, [listChairs, click, typing, price, click2]);
+  React.useEffect(() => {
+    checkPromotion();
+
+    console.log("clicked2", click);
+
+    // return () => checkPromotion();
+  }, [click2]);
 
   return (
     <View style={styles.container}>

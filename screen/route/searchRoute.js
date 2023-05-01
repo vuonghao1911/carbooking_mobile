@@ -67,7 +67,6 @@ export default SearchRoute = ({ navigation }) => {
         } else {
           setListRouteVehical([]);
         }
-        console.log(result);
       } else {
         const date = new Date().toISOString();
 

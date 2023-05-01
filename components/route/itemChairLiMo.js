@@ -10,6 +10,7 @@ export default Items = ({ item, navigation, setPrice }) => {
   const { user, routeVehical, listChairs } = state;
   const [pressOn, setPressOn] = React.useState(false);
   const [selectedId, setSelectedId] = useState();
+  const [pressOn2, setPressOn2] = React.useState(false);
 
   const removeElement = (array, elem) => {
     var index = array.indexOf(elem);
@@ -51,6 +52,8 @@ export default Items = ({ item, navigation, setPrice }) => {
     } else {
       setPressOn(!pressOn);
     }
+    setPressOn2(!pressOn2);
+    depatch(SetClick(pressOn2));
   };
 
   React.useEffect(() => {
@@ -59,6 +62,8 @@ export default Items = ({ item, navigation, setPrice }) => {
         setSelectedId(true);
       }
     });
+    setPressOn2(!pressOn2);
+    depatch(SetClick(pressOn2));
   }, []);
 
   return (
@@ -66,7 +71,7 @@ export default Items = ({ item, navigation, setPrice }) => {
       onPress={() => {
         handleSelectChair(item);
         setPrice(routeVehical.price * listChairs.length);
-        depatch(SetClick(!pressOn));
+        depatch(SetClick(pressOn2));
       }}>
       <View
         style={[

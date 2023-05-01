@@ -130,6 +130,8 @@ export default TicketInfo = ({ navigation }) => {
                   color: "#009387",
                   fontWeight: "bold",
                 }}>
+                {moment(new Date(ticket.startDate)).format("DD-MM-yyyy")}
+                {" | "}
                 {ticket.startTime}
                 {" - "}
                 {ticket.endTime}
