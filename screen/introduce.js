@@ -159,7 +159,11 @@ export default Start = ({ navigation }) => {
         Tin tức mới nhất về Furisas
       </Text>
       <View style={styles.viewBody}>
-        <Swiper style={styles.wrapper} loop={true} autoplay={true}>
+        <Swiper
+          style={styles.wrapper}
+          loop={true}
+          autoplay={true}
+          showsPagination={false}>
           {array.map((item, index) => {
             return (
               <Image

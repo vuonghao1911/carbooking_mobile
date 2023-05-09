@@ -33,20 +33,27 @@ const ModalDestination = ({
 }) => {
   const [depture, setDept] = useState([]);
   const { state, depatch } = React.useContext(Contex);
-  const { user, userSearched, idConversation, userChatting } = state;
+  const { placeFrom } = state;
   React.useEffect(() => {
     const getListPlace = async () => {
       try {
         const result = await routeApi.getListPlace();
+        if (placeFrom) {
+          for (let i = 0; i < result.data.length; i++) {
+            if (result.data[i]._id.toString() == placeFrom._id.toString()) {
+              result.data.splice(i, 1);
+            }
+          }
+        }
 
-        setDept(result.data.reverse());
+        setDept(result.data);
       } catch (error) {
         console.log("Failed to fetch : ", error);
       }
     };
 
     getListPlace();
-  }, []);
+  }, [placeFrom]);
   const renderItem = ({ item }) => {
     const backgroundColor = item._id === selectedIdDes ? "#D86A23" : "white";
     const color = item._id === selectedIdDes ? "white" : "black";

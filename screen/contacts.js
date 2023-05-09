@@ -57,7 +57,7 @@ const CreateContactsScreen = ({ navigation }) => {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            marginTop: 80,
+            marginTop: 140,
             padding: 10,
           }}>
           <Text
@@ -155,7 +155,7 @@ export default CreateContactsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 0.85,
-    marginTop: Platform.OS === "ios" ? 30 : 25,
+    // marginTop: Platform.OS === "ios" ? 30 : 25,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
-    height: 140,
+    height: 200,
     width: "100%",
     backgroundColor: "#009387",
   },

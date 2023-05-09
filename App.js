@@ -19,8 +19,7 @@ import TicketRefundDetails from "./screen/route/ticketRefundDetails";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Provider from "../appchat_react/store/Provider";
-import { AsyncStorage, Platform } from "react-native";
+import Provider from "./store/Provider";
 
 const Stack = createNativeStackNavigator();
 

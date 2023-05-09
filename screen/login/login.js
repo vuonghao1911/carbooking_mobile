@@ -129,7 +129,7 @@ const LoginScreen = ({ navigation }) => {
                 marginTop: 10,
                 fontStyle: "italic",
               }}>
-              Quen mat khau ?
+              Quên mật khẩu ?
             </Text>
           </TouchableOpacity>
         </View>

@@ -452,14 +452,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-
-    justifyContent: "space-between",
   },
 
   viewInfo: {
     flexDirection: "column",
     backgroundColor: "white",
     padding: 10,
+    marginBottom: 15,
   },
   textSeats: {
     fontSize: 16,

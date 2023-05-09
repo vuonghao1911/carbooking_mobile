@@ -45,6 +45,8 @@ export default SearchRoute = ({ navigation }) => {
     setDestination(depture);
     setSelectedIdDep(destination._id);
     setSelectedIdDes(depture._id);
+    depatch(SetPlaceFrom(destination));
+    depatch(SetPlaceTo(depture));
   };
 
   //   const date = new Date().toLocaleString("en-US", {

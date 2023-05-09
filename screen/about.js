@@ -151,14 +151,14 @@ const CreateAboutScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.viewCustomization}>
-        <TouchableOpacity onPress={handleClik}>
+        {/* <TouchableOpacity onPress={handleClik}>
           <View style={styles.viewItem}>
             <Ionicons name="remove-circle" size={23} color={"#8F4607"} />
             <View style={styles.viewCustomItem}>
               <Text style={{ fontSize: 15 }}>Xóa Tài Khoản</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={handleLogout}>
           <View style={styles.viewItem}>
             <Ionicons name="log-out" size={23} color={"#694fad"} />
