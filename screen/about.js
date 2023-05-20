@@ -69,7 +69,7 @@ const CreateAboutScreen = ({ navigation }) => {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            marginTop: 20,
+            //  marginTop: 20,
             padding: 10,
           }}>
           <Text
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
-    height: 100,
+    height: 80,
     width: "100%",
     backgroundColor: "#694fad",
     marginBottom: 10,

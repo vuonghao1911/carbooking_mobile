@@ -256,6 +256,8 @@ const styles = StyleSheet.create({
 
     flexDirection: "column",
     backgroundColor: "white",
+    alignContent: "flex-start",
+    justifyContent: "flex-start",
   },
 
   viewSearch: {
@@ -266,8 +268,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
     marginLeft: 80,
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: 40,
+    marginTop: 30,
     height: 50,
     borderWidth: 1,
     borderColor: "#9506D8",

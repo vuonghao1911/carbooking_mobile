@@ -9,7 +9,7 @@ import { parse, stringify } from "qs";
 
 const axiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
-  baseURL: "http://13.229.133.255",
+  baseURL: "https://13.229.133.255",
   headers: {
     Accept: "application/json",
 

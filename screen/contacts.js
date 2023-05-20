@@ -57,7 +57,7 @@ const CreateContactsScreen = ({ navigation }) => {
             justifyContent: "flex-start",
             alignItems: "center",
             width: "100%",
-            marginTop: 140,
+            marginTop: 120,
             padding: 10,
           }}>
           <Text

@@ -168,7 +168,7 @@ export default Start = ({ navigation }) => {
             return (
               <Image
                 style={{
-                  height: 300,
+                  height: 350,
                   width: 380,
                   borderRadius: 10,
                   marginLeft: 5,
@@ -191,7 +191,7 @@ export default Start = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Platform.OS === "ios" ? 30 : 25,
+    //marginTop: Platform.OS === "ios" ? 30 : 25,
     flexDirection: "column",
     backgroundColor: "white",
   },

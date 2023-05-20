@@ -314,7 +314,7 @@ export default SelectChair = ({ navigation }) => {
                   justifyContent: "space-around",
                   borderRadius: 20,
 
-                  marginTop: 20,
+                  marginTop: 30,
                   height: 50,
                 }
               : styles.viewSearch,
@@ -325,7 +325,12 @@ export default SelectChair = ({ navigation }) => {
             navigation.navigate("routeDetails");
           }}>
           <View>
-            <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+                fontWeight: "bold",
+              }}>
               Tiếp Theo
             </Text>
           </View>
@@ -358,7 +363,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     borderRadius: 20,
 
-    marginTop: 20,
+    marginTop: 30,
     height: 50,
   },
 

@@ -139,9 +139,9 @@ const styles = StyleSheet.create({
   },
   viewBar: {
     flexDirection: "row",
-    alignContent: "center",
+    alignItems: "center",
     justifyContent: "flex-start",
-    height: 45,
+    height: 60,
     backgroundColor: "#D86A23",
     marginBottom: 10,
     padding: 5,
